@@ -28,6 +28,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         [null, {\
           "packageLocation": "./",\
           "packageDependencies": [\
+            ["@types/node", "npm:20.8.0"],\
             ["@types/react", "npm:18.2.24"],\
             ["@types/react-dom", "npm:18.2.8"],\
             ["@typescript-eslint/eslint-plugin", "virtual:e9044eb4b22dc4d91b1391da976d430c56c2541bb11944f80e0ce39e201a7d939d9ac9a25093c2503a1d79eb1003ae1ba922a9d202bd108394b28226e4c344f6#npm:6.7.3"],\
@@ -863,6 +864,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-json-schema-npm-7.0.13-679a4a60fe-345df21a67.zip/node_modules/@types/json-schema/",\
           "packageDependencies": [\
             ["@types/json-schema", "npm:7.0.13"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@types/node", [\
+        ["npm:20.8.0", {\
+          "packageLocation": "./.yarn/cache/@types-node-npm-20.8.0-81ffdc4953-ebad6342d5.zip/node_modules/@types/node/",\
+          "packageDependencies": [\
+            ["@types/node", "npm:20.8.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -3371,6 +3381,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./",\
           "packageDependencies": [\
             ["rantto", "workspace:."],\
+            ["@types/node", "npm:20.8.0"],\
             ["@types/react", "npm:18.2.24"],\
             ["@types/react-dom", "npm:18.2.8"],\
             ["@typescript-eslint/eslint-plugin", "virtual:e9044eb4b22dc4d91b1391da976d430c56c2541bb11944f80e0ce39e201a7d939d9ac9a25093c2503a1d79eb1003ae1ba922a9d202bd108394b28226e4c344f6#npm:6.7.3"],\
@@ -4028,7 +4039,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["vite", "virtual:e9044eb4b22dc4d91b1391da976d430c56c2541bb11944f80e0ce39e201a7d939d9ac9a25093c2503a1d79eb1003ae1ba922a9d202bd108394b28226e4c344f6#npm:4.4.9"],\
             ["@types/less", null],\
             ["@types/lightningcss", null],\
-            ["@types/node", null],\
+            ["@types/node", "npm:20.8.0"],\
             ["@types/sass", null],\
             ["@types/stylus", null],\
             ["@types/sugarss", null],\
