@@ -11,19 +11,24 @@ export default function LastWeek() {
           "flex-col",
           "justify-between",
           "items-center",
-          "max-w-3xl",
+          "max-w-2xl",
           "h-48",
           "py-6",
           "border-2",
           "border-gray-400",
-          "rounded-lg"
+          "rounded-lg",
+          /* sm */
+          "max-sm:h-40",
+          "max-sm:py-4"
         )}
       >
         <div className={cx("text-center")}>
-          <p className={cx("font-bold", "text-2xl")}>지난 회차 당첨번호</p>
-          <p>(2023.09.28)</p>
+          <p className={cx("font-bold", "text-2xl", "max-sm:text-xl")}>
+            지난 회차 당첨번호
+          </p>
+          <p>1087회 (2023.09.30)</p>
         </div>
-        <SixBalls numbers={[1, 12, 23, 34, 44, 45]} />
+        <SixBalls numbers={[1, 12, 23, 34, 44, 45]} bonus={21} />
       </div>
     </div>
   );
