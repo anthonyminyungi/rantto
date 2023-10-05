@@ -2,12 +2,12 @@ import cx from "classnames";
 import { FixedSizeArray } from "@/types";
 import NumberBall from "@/components/NumberBall";
 
-interface SixBallsProps {
+interface NumberBallSetProps {
   numbers: FixedSizeArray<6, number>;
   bonus?: number;
 }
 
-export default function SixBalls({ numbers, bonus }: SixBallsProps) {
+export default function NumberBallSet({ numbers, bonus }: NumberBallSetProps) {
   return (
     <div
       className={cx(

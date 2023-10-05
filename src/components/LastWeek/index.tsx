@@ -1,5 +1,5 @@
 import cx from "classnames";
-import SixBalls from "@/components/SixBalls";
+import NumberBallSet from "@/components/NumberBallSet";
 
 export default function LastWeek() {
   return (
@@ -28,7 +28,7 @@ export default function LastWeek() {
           </p>
           <p>1087회 (2023.09.30)</p>
         </div>
-        <SixBalls numbers={[1, 12, 23, 34, 44, 45]} bonus={21} />
+        <NumberBallSet numbers={[1, 12, 23, 34, 44, 45]} bonus={21} />
       </div>
     </div>
   );
