@@ -43,7 +43,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react-dom", "virtual:e9044eb4b22dc4d91b1391da976d430c56c2541bb11944f80e0ce39e201a7d939d9ac9a25093c2503a1d79eb1003ae1ba922a9d202bd108394b28226e4c344f6#npm:18.2.0"],\
             ["tailwindcss", "npm:3.3.3"],\
             ["typescript", "patch:typescript@npm%3A5.2.2#~builtin<compat/typescript>::version=5.2.2&hash=f3b441"],\
-            ["vite", "virtual:e9044eb4b22dc4d91b1391da976d430c56c2541bb11944f80e0ce39e201a7d939d9ac9a25093c2503a1d79eb1003ae1ba922a9d202bd108394b28226e4c344f6#npm:4.4.9"]\
+            ["vite", "virtual:e9044eb4b22dc4d91b1391da976d430c56c2541bb11944f80e0ce39e201a7d939d9ac9a25093c2503a1d79eb1003ae1ba922a9d202bd108394b28226e4c344f6#npm:4.4.9"],\
+            ["vite-tsconfig-paths", "virtual:e9044eb4b22dc4d91b1391da976d430c56c2541bb11944f80e0ce39e201a7d939d9ac9a25093c2503a1d79eb1003ae1ba922a9d202bd108394b28226e4c344f6#npm:4.2.1"]\
           ],\
           "linkType": "SOFT"\
         }]\
@@ -3396,7 +3397,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react-dom", "virtual:e9044eb4b22dc4d91b1391da976d430c56c2541bb11944f80e0ce39e201a7d939d9ac9a25093c2503a1d79eb1003ae1ba922a9d202bd108394b28226e4c344f6#npm:18.2.0"],\
             ["tailwindcss", "npm:3.3.3"],\
             ["typescript", "patch:typescript@npm%3A5.2.2#~builtin<compat/typescript>::version=5.2.2&hash=f3b441"],\
-            ["vite", "virtual:e9044eb4b22dc4d91b1391da976d430c56c2541bb11944f80e0ce39e201a7d939d9ac9a25093c2503a1d79eb1003ae1ba922a9d202bd108394b28226e4c344f6#npm:4.4.9"]\
+            ["vite", "virtual:e9044eb4b22dc4d91b1391da976d430c56c2541bb11944f80e0ce39e201a7d939d9ac9a25093c2503a1d79eb1003ae1ba922a9d202bd108394b28226e4c344f6#npm:4.4.9"],\
+            ["vite-tsconfig-paths", "virtual:e9044eb4b22dc4d91b1391da976d430c56c2541bb11944f80e0ce39e201a7d939d9ac9a25093c2503a1d79eb1003ae1ba922a9d202bd108394b28226e4c344f6#npm:4.2.1"]\
           ],\
           "linkType": "SOFT"\
         }]\
@@ -3934,6 +3936,28 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["tsconfck", [\
+        ["npm:2.1.2", {\
+          "packageLocation": "./.yarn/cache/tsconfck-npm-2.1.2-ddaf839ffe-6fd2f7de01.zip/node_modules/tsconfck/",\
+          "packageDependencies": [\
+            ["tsconfck", "npm:2.1.2"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:c4c00005ec9f6aa8d19386c37939380a6687d8074f746d56e2ec3a3bf853e5138ad2d048d9f00802ac484e4fbfbb8ce87526d03f9444d29456dd0c58a6f66f19#npm:2.1.2", {\
+          "packageLocation": "./.yarn/__virtual__/tsconfck-virtual-0323b1571a/0/cache/tsconfck-npm-2.1.2-ddaf839ffe-6fd2f7de01.zip/node_modules/tsconfck/",\
+          "packageDependencies": [\
+            ["tsconfck", "virtual:c4c00005ec9f6aa8d19386c37939380a6687d8074f746d56e2ec3a3bf853e5138ad2d048d9f00802ac484e4fbfbb8ce87526d03f9444d29456dd0c58a6f66f19#npm:2.1.2"],\
+            ["@types/typescript", null],\
+            ["typescript", null]\
+          ],\
+          "packagePeers": [\
+            "@types/typescript",\
+            "typescript"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["type-check", [\
         ["npm:0.4.0", {\
           "packageLocation": "./.yarn/cache/type-check-npm-0.4.0-60565800ce-ec688ebfc9.zip/node_modules/type-check/",\
@@ -4069,6 +4093,31 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             "stylus",\
             "sugarss",\
             "terser"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["vite-tsconfig-paths", [\
+        ["npm:4.2.1", {\
+          "packageLocation": "./.yarn/cache/vite-tsconfig-paths-npm-4.2.1-85e1292184-8cfbd314eb.zip/node_modules/vite-tsconfig-paths/",\
+          "packageDependencies": [\
+            ["vite-tsconfig-paths", "npm:4.2.1"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:e9044eb4b22dc4d91b1391da976d430c56c2541bb11944f80e0ce39e201a7d939d9ac9a25093c2503a1d79eb1003ae1ba922a9d202bd108394b28226e4c344f6#npm:4.2.1", {\
+          "packageLocation": "./.yarn/__virtual__/vite-tsconfig-paths-virtual-c4c00005ec/0/cache/vite-tsconfig-paths-npm-4.2.1-85e1292184-8cfbd314eb.zip/node_modules/vite-tsconfig-paths/",\
+          "packageDependencies": [\
+            ["vite-tsconfig-paths", "virtual:e9044eb4b22dc4d91b1391da976d430c56c2541bb11944f80e0ce39e201a7d939d9ac9a25093c2503a1d79eb1003ae1ba922a9d202bd108394b28226e4c344f6#npm:4.2.1"],\
+            ["@types/vite", null],\
+            ["debug", "virtual:feb0771c9f8eadaf509cfed41e14a8bebbea5442233275c1c87085111077a08ef71eb773b899665b154d8203a55a489610a54117ae059fce5f5b8b844493b1b1#npm:4.3.4"],\
+            ["globrex", "npm:0.1.2"],\
+            ["tsconfck", "virtual:c4c00005ec9f6aa8d19386c37939380a6687d8074f746d56e2ec3a3bf853e5138ad2d048d9f00802ac484e4fbfbb8ce87526d03f9444d29456dd0c58a6f66f19#npm:2.1.2"],\
+            ["vite", "virtual:e9044eb4b22dc4d91b1391da976d430c56c2541bb11944f80e0ce39e201a7d939d9ac9a25093c2503a1d79eb1003ae1ba922a9d202bd108394b28226e4c344f6#npm:4.4.9"]\
+          ],\
+          "packagePeers": [\
+            "@types/vite",\
+            "vite"\
           ],\
           "linkType": "HARD"\
         }]\
