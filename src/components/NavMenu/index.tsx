@@ -1,7 +1,8 @@
-import { useState } from "react";
 import cx from "classnames";
+import { MenuKey } from "@/types";
+import { useMenuStore } from "@/store";
 
-type Tab = [string, string];
+type Tab = [MenuKey, string];
 
 interface TabsProps {
   tabs: Tab[];
@@ -9,10 +10,11 @@ interface TabsProps {
 }
 
 export default function NavMenu({ tabs }: TabsProps) {
-  const [selected, setSelected] = useState<string>(tabs[0][0]);
-  const select = (key: string) => () => {
-    if (key !== selected) {
-      setSelected(key);
+  const { menu: selected, setMenu } = useMenuStore();
+
+  const select = (menu: MenuKey) => () => {
+    if (menu !== selected) {
+      setMenu(menu);
     }
   };
 

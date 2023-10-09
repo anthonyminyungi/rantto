@@ -1,14 +1,13 @@
 import Layout from "@/components/Layout";
-import LastWeek from "@/components/LastWeek";
-import DrawSection from "@/components/DrawSection";
-import Spacer from "@/components/Spacer";
+import { useMenuStore } from "@/store";
+import MainPage from "@/pages/main";
 
 export default function App() {
+  const { menu } = useMenuStore();
   return (
     <Layout>
-      <LastWeek />
-      <Spacer direction="vertical" space={"4"} />
-      <DrawSection />
+      {menu === "main" && <MainPage />}
+      {menu === "saved" && <div> saved </div>}
     </Layout>
   );
 }
