@@ -1,17 +1,14 @@
 import Layout from "@/components/Layout";
 import LastWeek from "@/components/LastWeek";
-import NavMenu from "@/components/NavMenu";
+import DrawSection from "@/components/DrawSection";
+import Spacer from "@/components/Spacer";
 
 export default function App() {
   return (
     <Layout>
-      <NavMenu
-        tabs={[
-          ["main", "메인"],
-          ["saved", "저장 목록"],
-        ]}
-      />
       <LastWeek />
+      <Spacer direction="vertical" space={"4"} />
+      <DrawSection />
     </Layout>
   );
 }

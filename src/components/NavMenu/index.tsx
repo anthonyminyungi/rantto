@@ -30,12 +30,13 @@ export default function NavMenu({ tabs }: TabsProps) {
             /* active */
             {
               "border-b-blue-500": key === selected,
-              "font-semibold": key === selected,
+              "font-bold": key === selected,
             },
             /* note active */
             {
               "border-b-transparent": key !== selected,
               "hover:border-b-blue-300": key !== selected,
+              "hover:transition": key !== selected,
             }
           )}
           onClick={select(key)}

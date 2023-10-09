@@ -1,5 +1,6 @@
 import cx from "classnames";
 import NumberBallSet from "@/components/NumberBallSet";
+import Spacer from "../Spacer";
 
 export default function LastWeek() {
   return (
@@ -9,16 +10,14 @@ export default function LastWeek() {
           "grow",
           "flex",
           "flex-col",
-          "justify-between",
+          "justify-center",
           "items-center",
           "max-w-2xl",
-          "h-48",
           "py-6",
-          "border-2",
+          "border",
           "border-gray-400",
           "rounded-lg",
           /* sm */
-          "max-sm:h-40",
           "max-sm:py-4"
         )}
       >
@@ -28,6 +27,7 @@ export default function LastWeek() {
           </p>
           <p>1087회 (2023.09.30)</p>
         </div>
+        <Spacer direction="vertical" space={"4"} />
         <NumberBallSet numbers={[1, 12, 23, 34, 44, 45]} bonus={21} />
       </div>
     </div>
