@@ -21,17 +21,23 @@ export default function NumberBallSet({ numbers, bonus }: NumberBallSetProps) {
         {
           "grid-cols-8": !!bonus,
           "max-sm:gap-x-0.5": !!bonus,
-          "max-sm:p-1": !!bonus,
-          "max-sm:gap-x-0": !!bonus,
-        }
+        },
+        "max-sm:px-1"
       )}
     >
-      {numbers.map((num) => (
-        <NumberBall key={num} number={num} />
+      {numbers.map((num, idx) => (
+        <NumberBall key={num + idx} number={num} />
       ))}
       {bonus && (
         <>
-          <div className={cx("flex", "justify-center", "items-center")}>
+          <div
+            className={cx(
+              "flex",
+              "justify-center",
+              "items-center",
+              "text-gray-400"
+            )}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"

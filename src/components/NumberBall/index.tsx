@@ -27,7 +27,7 @@ export default function NumberBall({ number }: NumberBallProps) {
         "max-sm:text-sm"
       )}
     >
-      {number}
+      {number === 0 ? "" : number}
     </div>
   );
 }
