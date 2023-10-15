@@ -2,6 +2,7 @@ import { useState } from "react";
 import cx from "classnames";
 import Spacer from "@/components/Spacer";
 import DrawItem from "@/components/DrawItem";
+import Button from "@/components/Button";
 
 import TicketIcon from "@/assets/ticket.svg?react";
 import ClipboardIcon from "@/assets/clipboard-document.svg?react";
@@ -33,32 +34,15 @@ export default function DrawSection() {
           "max-sm:px-2"
         )}
       >
-        <button
-          className={cx(
-            "bg-blue-500",
-            "py-2",
-            "px-4",
-            "text-white",
-            "rounded-md",
-            "text-xl",
-            "font-semibold",
-            "align-middle",
-            "flex",
-            "items-center",
-            /* hover */
-            "hover:bg-blue-600",
-            "hover:transition",
-            /* sm */
-            "max-sm:py-1",
-            "max-sm:px-2",
-            "max-sm:text-lg"
-          )}
+        <Button
+          icon={
+            <TicketIcon
+              className={cx("w-6", "h-6", "max-sm:w-5", "max-sm:h-5")}
+            />
+          }
         >
-          <TicketIcon
-            className={cx("w-6", "h-6", "max-sm:w-5", "max-sm:h-5")}
-          />
-          &nbsp; 5회 뽑기
-        </button>
+          5회 뽑기
+        </Button>
         <Spacer direction="vertical" space={"4"} />
         <div>
           <DrawItem />
@@ -73,71 +57,32 @@ export default function DrawSection() {
         </div>
         <Spacer direction="vertical" space={"4"} />
         <div className={cx("flex")}>
-          <button
-            className={cx(
-              "bg-blue-500",
-              "py-2",
-              "px-4",
-              "text-white",
-              "rounded-md",
-              "text-xl",
-              "font-semibold",
-              "align-middle",
-              "flex",
-              "items-center",
-              /* hover */
-              "hover:bg-blue-600",
-              "hover:transition",
-              /* sm */
-              "max-sm:py-1",
-              "max-sm:px-2",
-              "max-sm:text-lg"
-            )}
-            onClick={copyToClipboard}
-          >
-            {copied ? (
-              <>
+          <Button
+            icon={
+              copied ? (
                 <ClipboardCheckIcon
                   className={cx("w-6", "h-6", "max-sm:w-5", "max-sm:h-5")}
                 />
-                &nbsp;복사됨
-              </>
-            ) : (
-              <>
+              ) : (
                 <ClipboardIcon
                   className={cx("w-6", "h-6", "max-sm:w-5", "max-sm:h-5")}
                 />
-                &nbsp;전체복사
-              </>
-            )}
-          </button>
-          <Spacer direction="horizontal" space={"2"} />
-          <button
-            className={cx(
-              "bg-blue-500",
-              "py-2",
-              "px-4",
-              "text-white",
-              "rounded-md",
-              "text-xl",
-              "font-semibold",
-              "align-middle",
-              "flex",
-              "items-center",
-              /* hover */
-              "hover:bg-blue-600",
-              "hover:transition",
-              /* sm */
-              "max-sm:py-1",
-              "max-sm:px-2",
-              "max-sm:text-lg"
-            )}
+              )
+            }
+            onClick={copyToClipboard}
           >
-            <InboxIcon
-              className={cx("w-6", "h-6", "max-sm:w-5", "max-sm:h-5")}
-            />
-            &nbsp; 보관하기
-          </button>
+            {copied ? "복사됨" : "전체복사"}
+          </Button>
+          <Spacer direction="horizontal" space={"2"} />
+          <Button
+            icon={
+              <InboxIcon
+                className={cx("w-6", "h-6", "max-sm:w-5", "max-sm:h-5")}
+              />
+            }
+          >
+            보관하기
+          </Button>
         </div>
       </div>
     </div>
