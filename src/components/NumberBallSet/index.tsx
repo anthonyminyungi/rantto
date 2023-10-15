@@ -2,6 +2,8 @@ import cx from "classnames";
 import { FixedSizeArray } from "@/types";
 import NumberBall from "@/components/NumberBall";
 
+import PlusIcon from "@/assets/plus.svg?react";
+
 interface NumberBallSetProps {
   numbers: FixedSizeArray<6, number>;
   bonus?: number;
@@ -38,20 +40,7 @@ export default function NumberBallSet({ numbers, bonus }: NumberBallSetProps) {
               "text-gray-400"
             )}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 4.5v15m7.5-7.5h-15"
-              />
-            </svg>
+            <PlusIcon />
           </div>
           <NumberBall number={bonus} />
         </>

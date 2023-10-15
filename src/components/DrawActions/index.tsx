@@ -7,6 +7,7 @@ import TicketIcon from "@/assets/ticket.svg?react";
 import ClipboardIcon from "@/assets/clipboard-document.svg?react";
 import ClipboardCheckIcon from "@/assets/clipboard-document-check.svg?react";
 import WindowIcon from "@/assets/window.svg?react";
+import KebabIcon from "@/assets/ellipsis-vertical.svg?react";
 
 function ActionButtonGroup() {
   const [copied, setCopied] = useState(false);
@@ -107,18 +108,7 @@ function Dropdown() {
         )}
         onClick={() => setIsOpen((prev) => !prev)}
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          className="w-8 h-8"
-        >
-          <path
-            fillRule="evenodd"
-            d="M10.5 6a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zm0 6a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zm0 6a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0z"
-            clipRule="evenodd"
-          />
-        </svg>
+        <KebabIcon className={cx("w-8", "w-8")} />
       </button>
       {isOpen && (
         <ul
