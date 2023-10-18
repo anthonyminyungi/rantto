@@ -11,6 +11,10 @@ export default {
   safelist: [...spaceSafeList],
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
+    screens: {
+      sm: "576px",
+      xs: "376px",
+    },
     extend: {},
   },
   plugins: [],

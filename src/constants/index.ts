@@ -38,4 +38,4 @@ export const spacing = [
 
 export type SpacingKey = (typeof spacing)[number];
 
-export const MOBILE_WIDTH = 640;
+export const MOBILE_WIDTH = 576;
