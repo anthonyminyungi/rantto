@@ -5,6 +5,10 @@ import { spacing } from "./src/constants";
 const spaceSafeList = [
   ...spacing.map((v) => `w-${v}`),
   ...spacing.map((v) => `h-${v}`),
+  ...[
+    ...Array.from(Array(12), (_, i) => `grid-cols-${i + 1}`),
+    "grid-cols-none",
+  ],
 ];
 
 export default {
