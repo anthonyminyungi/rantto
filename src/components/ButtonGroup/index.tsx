@@ -16,7 +16,6 @@ export default function ButtonGroup({ items }: ButtonGroupProps) {
       className={cx(
         "grid",
         `grid-cols-${items.length}`,
-        "p-2",
         "text-xs",
         "grid-cols-"
       )}
