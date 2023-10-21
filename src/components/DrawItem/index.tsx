@@ -16,6 +16,7 @@ export default function DrawItem() {
         "items-center",
         "px-3",
         "py-4",
+        // "max-w-xl",
         /* sm */
         "max-sm:px-2",
         "max-sm:py-3"

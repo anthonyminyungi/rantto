@@ -7,12 +7,11 @@ export default function LastWeek() {
     <div className={cx("flex", "justify-center", "w-full")}>
       <div
         className={cx(
-          "grow",
           "flex",
           "flex-col",
           "justify-center",
           "items-center",
-          "max-w-2xl",
+          "w-full",
           "py-6",
           "border",
           "border-gray-400",

@@ -8,7 +8,7 @@ import Dropdown from "@/components/Dropdown";
 import TicketIcon from "@/assets/ticket.svg?react";
 import ClipboardIcon from "@/assets/clipboard-document.svg?react";
 import ClipboardCheckIcon from "@/assets/clipboard-document-check.svg?react";
-import WindowIcon from "@/assets/window.svg?react";
+// import WindowIcon from "@/assets/window.svg?react";
 
 export default function DrawActions() {
   const { width } = useWindowSize();
@@ -26,7 +26,7 @@ export default function DrawActions() {
       items={[
         { icon: TicketIcon, text: "뽑기" },
         { icon: ClipboardIcon, text: "복사", onClick: copyToClipboard },
-        { icon: WindowIcon, text: "직접선택" },
+        // { icon: WindowIcon, text: "직접선택" },
       ]}
     />
   ) : (
@@ -39,7 +39,7 @@ export default function DrawActions() {
           onClick: copyToClipboard,
           disabled: copied,
         },
-        { icon: <WindowIcon />, text: "직접선택" },
+        // { icon: <WindowIcon />, text: "직접선택" },
       ]}
     />
   );
