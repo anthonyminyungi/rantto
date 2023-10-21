@@ -26,6 +26,7 @@ export default function SavedActions() {
         <Dropdown
           items={[
             {
+              /* TODO: 보관함 기능 구현 시 함께 적용 */
               icon: ClipboardIcon,
               text: "복사",
             },

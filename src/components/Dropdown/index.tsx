@@ -8,6 +8,7 @@ interface DropdownItem {
   text: string;
   icon?: FunctionComponent<SVGProps<SVGSVGElement>>;
   onClick?: () => void;
+  disabled?: boolean;
 }
 
 interface DropdownProps {
@@ -48,23 +49,32 @@ export default function Dropdown({ items }: DropdownProps) {
             "-right-6",
             "top-full",
             "overflow-hidden",
-            "w-24",
+            "min-w-max",
             "bg-gray-400",
             "text-white",
             "mt-2",
             "z-50",
             "rounded-lg",
             "py-1",
-            "px-2",
-            "text-sm"
+            "px-2"
           )}
         >
-          {items.map(({ icon: Icon, text, onClick }) => (
+          {items.map(({ icon: Icon, text, onClick, disabled }) => (
             <li
               key={text}
               role="option"
-              className={cx("flex", "items-center", "cursor-pointer", "my-1.5")}
+              className={cx(
+                "flex",
+                "items-center",
+                "cursor-pointer",
+                "m-1.5",
+                { "cursor-default": disabled },
+                { "opacity-40": disabled }
+              )}
               onClick={() => {
+                if (disabled) {
+                  return;
+                }
                 onClick?.();
                 setIsOpen(false);
               }}

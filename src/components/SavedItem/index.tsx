@@ -55,8 +55,8 @@ export default function SavedItem() {
           <NumberBallSet numbers={data[0]} />
           {isExtended && (
             <>
-              {data.slice(1).map((arr) => (
-                <NumberBallSet numbers={arr} />
+              {data.slice(1).map((arr, index) => (
+                <NumberBallSet key={index} numbers={arr} />
               ))}
             </>
           )}
