@@ -1,6 +1,7 @@
 import cx from "classnames";
-import { FixedSizeArray } from "@/types";
+
 import NumberBall from "@/components/NumberBall";
+import { FixedSizeArray } from "@/types";
 
 import PlusIcon from "@/assets/plus.svg?react";
 

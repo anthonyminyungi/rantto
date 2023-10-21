@@ -39,3 +39,5 @@ export const spacing = [
 export type SpacingKey = (typeof spacing)[number];
 
 export const MOBILE_WIDTH = 576;
+
+export const allNumbers = Array.from(Array(45), (_, index) => index + 1);
