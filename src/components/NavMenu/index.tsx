@@ -34,7 +34,7 @@ export default function NavMenu({ tabs }: TabsProps) {
               "border-b-blue-500": key === selected,
               "font-bold": key === selected,
             },
-            /* note active */
+            /* not active */
             {
               "border-b-transparent": key !== selected,
               "hover:border-b-blue-300": key !== selected,
@@ -46,7 +46,6 @@ export default function NavMenu({ tabs }: TabsProps) {
           {text}
         </div>
       ))}
-      {/* </div> */}
     </div>
   );
 }

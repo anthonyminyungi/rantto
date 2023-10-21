@@ -1,5 +1,5 @@
-import { MenuKey } from "@/types";
 import { create } from "zustand";
+import { MenuKey } from "@/types";
 
 interface MenuState {
   menu: MenuKey;
