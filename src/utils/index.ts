@@ -45,9 +45,9 @@ export async function copyDrawList(
   const list = Array.isArray(numbers[0]) ? (numbers as DrawList) : [numbers];
   const numbersToText = list
     .filter((numbers) => !isDrawEmpty(numbers))
-    .map((numbers, index) => `${index + 1}게임: ${numbers?.join(", ")}`)
+    .map((numbers, index) => `${index + 1}게임: ${numbers.join(", ")}`)
     .join("\n\n");
-  /* TODO: 유입용 템플릿 메시지 추가 */
+  /* TODO: 유입 유도용 템플릿 메시지 추가 */
   try {
     await navigator.clipboard.writeText(numbersToText);
   } catch (e) {
