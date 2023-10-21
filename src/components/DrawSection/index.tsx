@@ -4,7 +4,7 @@ import cx from "classnames";
 import Spacer from "@/components/Spacer";
 import DrawItem from "@/components/DrawItem";
 import Button from "@/components/Button";
-import { drawAllNumbers } from "@/utils";
+import { copyDrawList, drawAllNumbers, isDrawEmpty } from "@/utils";
 import { useDrawStore } from "@/store";
 import { DrawListItem } from "@/types";
 
@@ -16,11 +16,14 @@ import InboxIcon from "@/assets/inbox-arrow-down.svg?react";
 export default function DrawSection() {
   const { drawList, drawAll } = useDrawStore();
   const [copied, setCopied] = useState(false);
-  const copyToClipboard = () => {
-    setCopied(true);
-    setTimeout(() => {
-      setCopied(false);
-    }, 2000);
+
+  const handleCopy = () => {
+    copyDrawList(drawList, () => {
+      setCopied(true);
+      setTimeout(() => {
+        setCopied(false);
+      }, 2000);
+    });
   };
 
   const handleDrawAll = () => {
@@ -79,7 +82,8 @@ export default function DrawSection() {
               />
             )
           }
-          onClick={copyToClipboard}
+          onClick={handleCopy}
+          disabled={isDrawEmpty(drawList) || copied}
         >
           {copied ? "복사됨" : "전체복사"}
         </Button>
@@ -90,6 +94,7 @@ export default function DrawSection() {
               className={cx("w-6", "h-6", "max-sm:w-5", "max-sm:h-5")}
             />
           }
+          disabled={isDrawEmpty(drawList)}
         >
           보관하기
         </Button>

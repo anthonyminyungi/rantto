@@ -20,7 +20,7 @@ export default function ButtonGroup({ items }: ButtonGroupProps) {
         "grid-cols-"
       )}
     >
-      {items.map(({ text, icon, className, ...rest }) => (
+      {items.map(({ text, icon, className, disabled, ...rest }) => (
         <button
           key={text}
           className={cx(
@@ -36,10 +36,13 @@ export default function ButtonGroup({ items }: ButtonGroupProps) {
             "justify-center",
             "items-center",
             "transition-all",
+            { "cursor-not-allowed": disabled },
+            { "opacity-40": disabled },
             /* hover */
-            "hover:bg-gray-500",
+            { "hover:bg-gray-500": !disabled },
             className
           )}
+          disabled={disabled}
           {...rest}
         >
           {icon}

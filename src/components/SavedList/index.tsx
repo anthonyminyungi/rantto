@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import cx from "classnames";
 
 import SavedItem from "@/components/SavedItem";
@@ -17,12 +18,12 @@ export default function SavedList() {
   return (
     <div className={cx("w-full", "flex", "flex-col", "items-center")}>
       {list.map((_, index) => (
-        <>
+        <Fragment key={index}>
           <SavedItem />
           {index < list.length - 1 && (
             <Spacer direction="vertical" space={"2"} />
           )}
-        </>
+        </Fragment>
       ))}
     </div>
   );

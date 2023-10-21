@@ -9,7 +9,13 @@ interface ButtonProps
   disabled?: boolean;
 }
 
-export default function Button({ icon, children, ...rest }: ButtonProps) {
+export default function Button({
+  icon,
+  disabled,
+  className,
+  children,
+  ...rest
+}: ButtonProps) {
   return (
     <button
       className={cx(
@@ -23,14 +29,18 @@ export default function Button({ icon, children, ...rest }: ButtonProps) {
         "align-middle",
         "flex",
         "items-center",
+        { "cursor-not-allowed": disabled },
+        { "opacity-40": disabled },
         /* hover */
-        "hover:bg-blue-600",
+        { "hover:bg-blue-600": !disabled },
         "hover:transition",
         /* sm */
         "max-sm:py-1",
         "max-sm:px-2",
-        "max-sm:text-lg"
+        "max-sm:text-lg",
+        className
       )}
+      disabled={disabled}
       {...rest}
     >
       {icon && (
