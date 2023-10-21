@@ -2,8 +2,14 @@ import cx from "classnames";
 import Spacer from "@/components/Spacer";
 import NumberBallSet from "@/components/NumberBallSet";
 import DrawActions from "@/components/DrawActions";
+import { DrawListItem } from "@/types";
 
-export default function DrawItem() {
+interface DrawItemProps {
+  numbers: DrawListItem;
+  index: number;
+}
+
+export default function DrawItem({ numbers, index }: DrawItemProps) {
   return (
     <div
       className={cx(
@@ -21,9 +27,9 @@ export default function DrawItem() {
         "max-sm:py-3"
       )}
     >
-      <NumberBallSet numbers={[1, 11, 22, 33, 44, 45]} />
+      <NumberBallSet numbers={numbers} />
       <Spacer direction="horizontal" space={"2"} />
-      <DrawActions />
+      <DrawActions index={index} />
     </div>
   );
 }
