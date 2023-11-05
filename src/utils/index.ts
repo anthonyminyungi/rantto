@@ -1,6 +1,7 @@
 import _sampleSize from "lodash/sampleSize";
 import _sortBy from "lodash/sortBy";
 import _isEmpty from "lodash/isEmpty";
+import _intersection from "lodash/intersection";
 
 import { DrawList, DrawListItem, ObjectEntries } from "@/types";
 import { allNumbers } from "@/constants";
@@ -59,4 +60,45 @@ export async function copyDrawList(
 
 export function entriesFromObject<T extends object>(obj: T): ObjectEntries<T> {
   return Object.entries(obj) as ObjectEntries<T>;
+}
+
+export function getIntersectedNumbers(
+  draw: DrawListItem,
+  won: DrawListItem,
+  bonus: number
+): number[] {
+  const intersected = _intersection(draw, won);
+  if (intersected.length === 6) {
+    return draw;
+  } else if (intersected.length === 5 && draw.includes(bonus)) {
+    return [...intersected, bonus];
+  } else {
+    return intersected;
+  }
+}
+
+export function getHighestRankByDrawsDiff(
+  draws: DrawList,
+  won: DrawListItem,
+  bonus: number
+): number {
+  const ranks = draws
+    .map((draw) => {
+      const intersected = getIntersectedNumbers(draw, won, bonus);
+      const hasBonus = intersected.includes(bonus);
+      switch (intersected.length) {
+        case 6:
+          return hasBonus ? 2 : 1;
+        case 5:
+          return 3;
+        case 4:
+          return 4;
+        case 3:
+          return 5;
+        default:
+          return -1;
+      }
+    })
+    .filter((rank) => rank > 0);
+  return ranks.length > 0 ? Math.min(...ranks) : -1;
 }

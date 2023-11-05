@@ -1,8 +1,12 @@
 import cx from "classnames";
+
 import NumberBallSet from "@/components/NumberBallSet";
-import Spacer from "../Spacer";
+import Spacer from "@/components/Spacer";
+import { FixedSizeArray } from "@/types";
+import { useWinningHistory } from "@/hooks/winningHistory";
 
 export default function LastWeek() {
+  const { bonus, numbers, round, createdAt } = useWinningHistory();
   return (
     <div className={cx("flex", "justify-center", "w-full")}>
       <div
@@ -24,10 +28,15 @@ export default function LastWeek() {
           <p className={cx("font-bold", "text-2xl", "max-sm:text-xl")}>
             지난 회차 당첨번호
           </p>
-          <p>1087회 (2023.09.30)</p>
+          <p>
+            {round}회 ({createdAt} 추첨)
+          </p>
         </div>
         <Spacer direction="vertical" space={"4"} />
-        <NumberBallSet numbers={[1, 12, 23, 34, 44, 45]} bonus={21} />
+        <NumberBallSet
+          numbers={numbers as FixedSizeArray<6, number>}
+          bonus={bonus}
+        />
       </div>
     </div>
   );

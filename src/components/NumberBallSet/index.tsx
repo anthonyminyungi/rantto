@@ -8,9 +8,14 @@ import PlusIcon from "@/assets/plus.svg?react";
 interface NumberBallSetProps {
   numbers: FixedSizeArray<6, number>;
   bonus?: number;
+  intersectedNumbers?: number[];
 }
 
-export default function NumberBallSet({ numbers, bonus }: NumberBallSetProps) {
+export default function NumberBallSet({
+  numbers,
+  bonus,
+  intersectedNumbers,
+}: NumberBallSetProps) {
   return (
     <div
       className={cx(
@@ -29,7 +34,11 @@ export default function NumberBallSet({ numbers, bonus }: NumberBallSetProps) {
       )}
     >
       {numbers.map((num, idx) => (
-        <NumberBall key={num + idx} number={num} />
+        <NumberBall
+          key={num + idx}
+          number={num}
+          blurred={intersectedNumbers && !intersectedNumbers.includes(num)}
+        />
       ))}
       {bonus && (
         <>
