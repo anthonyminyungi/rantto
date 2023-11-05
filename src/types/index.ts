@@ -25,3 +25,10 @@ export type DrawList = [
 ];
 
 export type SavedListSortKey = keyof typeof SAVED_LIST_SORT_OPTIONS;
+
+export type WinningHistory = {
+  round: number;
+  numbers: DrawListItem;
+  bonus: number;
+  createdAt: string;
+};

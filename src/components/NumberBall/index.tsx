@@ -3,10 +3,10 @@ import { getBallBgColor } from "@/utils";
 
 interface NumberBallProps {
   number: number;
-  size?: "lg" | "sm";
+  blurred?: boolean;
 }
 
-export default function NumberBall({ number }: NumberBallProps) {
+export default function NumberBall({ number, blurred }: NumberBallProps) {
   return (
     <div
       className={cx(
@@ -20,6 +20,7 @@ export default function NumberBall({ number }: NumberBallProps) {
         "text-white",
         "font-semibold",
         getBallBgColor(number),
+        { "opacity-15": blurred },
         /* sm */
         "max-sm:w-10",
         "max-sm:h-10",

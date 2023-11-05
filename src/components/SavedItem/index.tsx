@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import cx from "classnames";
-import { format } from "date-fns";
+import { format, isAfter } from "date-fns";
 
 import NumberBallSet from "@/components/NumberBallSet";
 import SavedActions from "@/components/SavedActions";
 import Spacer from "@/components/Spacer";
 import { SavedDraw } from "@/db/savedDraw";
+import { useWinningHistory } from "@/hooks/winningHistory";
+import { getHighestRankByDrawsDiff, getIntersectedNumbers } from "@/utils";
 
 import ArrowDownIcon from "@/assets/chevron-down.svg?react";
 import ArrowUpIcon from "@/assets/chevron-up.svg?react";
@@ -17,6 +19,22 @@ interface SavedItemProps {
 export default function SavedItem({ data }: SavedItemProps) {
   const { id, draws, round, createdAt } = data;
   const [isExtended, setExtended] = useState(false);
+  const {
+    bonus: wonBonus,
+    numbers: wonNumbers,
+    createdAt: announcedAt,
+  } = useWinningHistory(round);
+  const rank = useMemo(
+    () => getHighestRankByDrawsDiff(draws, wonNumbers, wonBonus),
+    [wonBonus, draws, wonNumbers]
+  );
+
+  /* 현재 건이 당첨 발표일 이전에 생성되었고, 현재 날짜가 해당 건의 발표일 이후일 때 */
+  const isAfterAnnounce =
+    isAfter(new Date(announcedAt), new Date(createdAt)) &&
+    isAfter(new Date(), new Date(announcedAt));
+  const hasWonDraw = rank > 0;
+
   return (
     <div
       className={cx(
@@ -49,19 +67,42 @@ export default function SavedItem({ data }: SavedItemProps) {
         {"・"}
         <span className={cx("px-1.5")}>{round}회</span>
         {"・"}
-        <span className={cx("px-1.5")}>추첨전</span>
+        <span
+          className={cx("px-1.5", {
+            "font-bold": isAfterAnnounce && hasWonDraw,
+          })}
+        >
+          {!isAfterAnnounce && "추첨전"}
+          {isAfterAnnounce && hasWonDraw && `${rank}등당첨!`}
+          {isAfterAnnounce && !hasWonDraw && "낙첨"}
+        </span>
         {"・"}
         <span className={cx("px-1.5")}>
-          {format(createdAt, `yy.MM.dd${isExtended ? " HH:mm:ss" : ""}`)}에 저장
+          {format(createdAt, `yy.MM.dd${isExtended ? " HH:mm:ss" : ""}`)}
         </span>
       </p>
       <div className={cx("flex", "my-2", "justify-around")}>
         <div className={cx("flex", "flex-col")}>
-          <NumberBallSet numbers={draws[0]} />
+          <NumberBallSet
+            numbers={draws[0]}
+            intersectedNumbers={
+              isAfterAnnounce
+                ? getIntersectedNumbers(draws[0], wonNumbers, wonBonus)
+                : []
+            }
+          />
           {isExtended && (
             <>
-              {draws.slice(1).map((arr, index) => (
-                <NumberBallSet key={index} numbers={arr} />
+              {draws.slice(1).map((draw, index) => (
+                <NumberBallSet
+                  key={index}
+                  numbers={draw}
+                  intersectedNumbers={
+                    isAfterAnnounce
+                      ? getIntersectedNumbers(draw, wonNumbers, wonBonus)
+                      : []
+                  }
+                />
               ))}
             </>
           )}

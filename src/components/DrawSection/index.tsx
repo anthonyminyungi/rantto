@@ -4,10 +4,11 @@ import cx from "classnames";
 import Spacer from "@/components/Spacer";
 import DrawItem from "@/components/DrawItem";
 import Button from "@/components/Button";
+import { db } from "@/db/savedDraw";
+import { useWinningHistory } from "@/hooks/winningHistory";
 import { copyDrawList, drawAllNumbers, isDrawEmpty } from "@/utils";
 import { useDrawStore } from "@/store";
 import { DrawList, DrawListItem } from "@/types";
-import { db } from "@/db/savedDraw";
 
 import TicketIcon from "@/assets/ticket.svg?react";
 import ClipboardIcon from "@/assets/clipboard-document.svg?react";
@@ -17,6 +18,7 @@ import InboxIcon from "@/assets/inbox-arrow-down.svg?react";
 export default function DrawSection() {
   const { drawList, drawAll, clearDraw } = useDrawStore();
   const [copied, setCopied] = useState(false);
+  const { round: recentRound } = useWinningHistory();
 
   const handleCopy = () => {
     copyDrawList(drawList, () => {
@@ -35,8 +37,7 @@ export default function DrawSection() {
   const handleSave = async () => {
     await db.savedDraws.add({
       draws: drawList.filter((item) => !isDrawEmpty(item)) as DrawList,
-      /* TODO: 당첨번호 히스토리 작업과 함께 수정 필요 */
-      round: 1089,
+      round: recentRound + 1,
       createdAt: new Date(),
     });
     clearDraw();

@@ -19,7 +19,11 @@ export default {
       sm: "576px",
       xs: "376px",
     },
-    extend: {},
+    extend: {
+      opacity: {
+        15: ".15",
+      },
+    },
   },
   plugins: [],
 };
