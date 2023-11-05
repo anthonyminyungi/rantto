@@ -5,6 +5,7 @@ import { useOutsideClick } from "@/hooks";
 import ArrowDownIcon from "@/assets/chevron-down.svg?react";
 import ArrowUpIcon from "@/assets/chevron-up.svg?react";
 
+/* TODO: 주어진 entries로부터 원본 객체의 타입을 유추할 수 있는 Tuple 타입 고민 */
 type SelectOption = [string, string];
 
 interface SelectProps {

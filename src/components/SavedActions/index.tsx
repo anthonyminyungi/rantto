@@ -5,21 +5,38 @@ import { MOBILE_WIDTH } from "@/constants";
 import { useWindowSize } from "@/hooks";
 import Dropdown from "@/components/Dropdown";
 import ButtonGroup from "@/components/ButtonGroup";
+import { SavedDraw, db } from "@/db/savedDraw";
 
 import ClipboardIcon from "@/assets/clipboard-document.svg?react";
 import ClipboardCheckIcon from "@/assets/clipboard-document-check.svg?react";
 import TrashIcon from "@/assets/trash.svg?react";
+import { copyDrawList } from "@/utils";
 
-export default function SavedActions() {
+interface SavedActionsProps {
+  data: SavedDraw;
+}
+
+export default function SavedActions({ data }: SavedActionsProps) {
+  const { id, draws } = data;
   const { width } = useWindowSize();
   const isMobile = useMemo(() => width < MOBILE_WIDTH, [width]);
   const [copied, setCopied] = useState(false);
+
   const copyToClipboard = () => {
-    setCopied(true);
-    setTimeout(() => {
-      setCopied(false);
-    }, 2000);
+    copyDrawList(draws, () => {
+      setCopied(true);
+      setTimeout(() => {
+        setCopied(false);
+      }, 2000);
+    });
   };
+
+  const handleDelete = () => {
+    if (id && confirm("정말 삭제하시겠습니까?")) {
+      db.savedDraws.delete(id);
+    }
+  };
+
   return (
     <div className={cx("h-fit", { "pt-2": isMobile })}>
       {isMobile ? (
@@ -33,6 +50,7 @@ export default function SavedActions() {
             {
               icon: TrashIcon,
               text: "삭제",
+              onClick: handleDelete,
             },
           ]}
         />
@@ -48,6 +66,7 @@ export default function SavedActions() {
             {
               icon: <TrashIcon />,
               text: "삭제",
+              onClick: handleDelete,
             },
           ]}
         />

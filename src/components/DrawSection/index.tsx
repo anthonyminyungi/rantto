@@ -6,7 +6,8 @@ import DrawItem from "@/components/DrawItem";
 import Button from "@/components/Button";
 import { copyDrawList, drawAllNumbers, isDrawEmpty } from "@/utils";
 import { useDrawStore } from "@/store";
-import { DrawListItem } from "@/types";
+import { DrawList, DrawListItem } from "@/types";
+import { db } from "@/db/savedDraw";
 
 import TicketIcon from "@/assets/ticket.svg?react";
 import ClipboardIcon from "@/assets/clipboard-document.svg?react";
@@ -14,7 +15,7 @@ import ClipboardCheckIcon from "@/assets/clipboard-document-check.svg?react";
 import InboxIcon from "@/assets/inbox-arrow-down.svg?react";
 
 export default function DrawSection() {
-  const { drawList, drawAll } = useDrawStore();
+  const { drawList, drawAll, clearDraw } = useDrawStore();
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
@@ -29,6 +30,16 @@ export default function DrawSection() {
   const handleDrawAll = () => {
     const drawnList = drawAllNumbers();
     drawAll(drawnList);
+  };
+
+  const handleSave = async () => {
+    await db.savedDraws.add({
+      draws: drawList.filter((item) => !isDrawEmpty(item)) as DrawList,
+      /* TODO: 당첨번호 히스토리 작업과 함께 수정 필요 */
+      round: 1089,
+      createdAt: new Date(),
+    });
+    clearDraw();
   };
 
   return (
@@ -95,6 +106,7 @@ export default function DrawSection() {
             />
           }
           disabled={isDrawEmpty(drawList)}
+          onClick={handleSave}
         >
           보관하기
         </Button>

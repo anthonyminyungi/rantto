@@ -1,9 +1,6 @@
 import cx from "classnames";
-import { MenuKey } from "@/types";
+import { MenuKey, Tab } from "@/types";
 import { useMenuStore } from "@/store";
-
-type Tab = [MenuKey, string];
-
 interface TabsProps {
   tabs: Tab[];
   onChange?: (tab?: Tab) => void;

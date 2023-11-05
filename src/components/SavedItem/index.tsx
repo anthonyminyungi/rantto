@@ -1,22 +1,21 @@
 import { useState } from "react";
 import cx from "classnames";
+import { format } from "date-fns";
 
 import NumberBallSet from "@/components/NumberBallSet";
 import SavedActions from "@/components/SavedActions";
-import { FixedSizeArray } from "@/types";
+import Spacer from "@/components/Spacer";
+import { SavedDraw } from "@/db/savedDraw";
 
 import ArrowDownIcon from "@/assets/chevron-down.svg?react";
 import ArrowUpIcon from "@/assets/chevron-up.svg?react";
-import Spacer from "../Spacer";
 
-export default function SavedItem() {
-  const data: FixedSizeArray<6, number>[] = [
-    [1, 11, 22, 33, 44, 45],
-    [1, 11, 22, 33, 44, 45],
-    [1, 11, 22, 33, 44, 45],
-    [1, 11, 22, 33, 44, 45],
-    [1, 11, 22, 33, 44, 45],
-  ];
+interface SavedItemProps {
+  data: SavedDraw;
+}
+
+export default function SavedItem({ data }: SavedItemProps) {
+  const { id, draws, round, createdAt } = data;
   const [isExtended, setExtended] = useState(false);
   return (
     <div
@@ -46,25 +45,31 @@ export default function SavedItem() {
           "max-sm:pl-0"
         )}
       >
-        <span className={cx("px-1.5")}>1089회</span>・
-        <span className={cx("px-1.5")}>추첨전</span>・
-        <span className={cx("px-1.5")}>23.09.27에 저장</span>
+        <span className={cx("px-1.5")}>#{id}</span>
+        {"・"}
+        <span className={cx("px-1.5")}>{round}회</span>
+        {"・"}
+        <span className={cx("px-1.5")}>추첨전</span>
+        {"・"}
+        <span className={cx("px-1.5")}>
+          {format(createdAt, "yy.MM.dd")}에 저장
+        </span>
       </p>
       <div className={cx("flex", "my-2", "justify-around")}>
         <div className={cx("flex", "flex-col")}>
-          <NumberBallSet numbers={data[0]} />
+          <NumberBallSet numbers={draws[0]} />
           {isExtended && (
             <>
-              {data.slice(1).map((arr, index) => (
+              {draws.slice(1).map((arr, index) => (
                 <NumberBallSet key={index} numbers={arr} />
               ))}
             </>
           )}
         </div>
-        <SavedActions />
+        <SavedActions data={data} />
       </div>
       <hr className="my-1" />
-      {data.length - 1 > 0 && (
+      {draws.length - 1 > 0 && (
         <div
           className={cx(
             "-mx-3",
@@ -94,7 +99,7 @@ export default function SavedItem() {
             </>
           ) : (
             <>
-              <span>{`외 ${data.length - 1}개 더 보기`}</span>
+              <span>{`외 ${draws.length - 1}개 더 보기`}</span>
               <Spacer direction="horizontal" space="1" />
               <ArrowDownIcon className={cx("w-4", "h-4")} viewBox="0 0 24 24" />
             </>
