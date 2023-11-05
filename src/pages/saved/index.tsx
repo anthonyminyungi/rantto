@@ -4,7 +4,7 @@ import Select from "@/components/Select";
 import Spacer from "@/components/Spacer";
 import { SAVED_LIST_SORT_OPTIONS } from "@/constants";
 import { useSavedPageStore } from "@/store";
-import { SavedListSortKey } from "@/types";
+import { entriesFromObject } from "@/utils";
 
 export default function SavedPage() {
   const { sortKey, setSort } = useSavedPageStore();
@@ -21,9 +21,9 @@ export default function SavedPage() {
     >
       <div className={cx("w-full", "flex", "justify-end", "max-w-xl")}>
         <Select
-          options={Object.entries(SAVED_LIST_SORT_OPTIONS)}
+          options={entriesFromObject(SAVED_LIST_SORT_OPTIONS)}
           initialValue={sortKey}
-          onSelect={(selected) => setSort(selected as SavedListSortKey)}
+          onSelect={(selected) => setSort(selected)}
         />
       </div>
       <Spacer direction="vertical" space={"4"} />

@@ -4,9 +4,15 @@ export type FixedSizeArray<N extends number, T> = N extends 0
   ? []
   : { length: N } & Array<T>;
 
-export type Tab = [MenuKey, (typeof MENU_TABS)[MenuKey]];
+export type ObjectEntry<T extends object> = {
+  [K in keyof T]: [K, T[K]];
+}[keyof T];
+
+export type ObjectEntries<T extends object> = ObjectEntry<T>[];
 
 export type MenuKey = keyof typeof MENU_TABS;
+
+export type Tab = ObjectEntry<typeof MENU_TABS>;
 
 export type DrawListItem = FixedSizeArray<6, number>;
 

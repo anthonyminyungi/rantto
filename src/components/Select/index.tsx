@@ -5,24 +5,21 @@ import { useOutsideClick } from "@/hooks";
 import ArrowDownIcon from "@/assets/chevron-down.svg?react";
 import ArrowUpIcon from "@/assets/chevron-up.svg?react";
 
-/* TODO: 주어진 entries로부터 원본 객체의 타입을 유추할 수 있는 Tuple 타입 고민 */
-type SelectOption = [string, string];
+type SelectOption<TKey extends string> = [TKey, string];
 
-interface SelectProps {
-  options: SelectOption[];
-  initialValue?: string;
-  onSelect?: (selected: string) => void;
+interface SelectProps<TKey extends string> {
+  options: SelectOption<TKey>[];
+  initialValue?: TKey;
+  onSelect?: (selected: TKey) => void;
 }
 
-export default function Select({
+export default function Select<TKey extends string>({
   options,
   initialValue,
   onSelect,
-}: SelectProps) {
+}: SelectProps<TKey>) {
   const [isOpen, setIsOpen] = useState(false);
-  const [selected, setSelected] = useState<string>(
-    initialValue || options[0][0]
-  );
+  const [selected, setSelected] = useState<TKey>(initialValue || options[0][0]);
   const ref = useRef<HTMLDivElement>(null);
 
   const selectedValue = options.find(([key]) => key === selected)?.[1];
@@ -31,7 +28,7 @@ export default function Select({
     setIsOpen(false);
   });
 
-  const handleSelect = (key: string) => () => {
+  const handleSelect = (key: TKey) => () => {
     if (selected !== key) {
       setSelected(key);
       onSelect?.(key);
