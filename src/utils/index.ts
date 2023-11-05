@@ -2,7 +2,7 @@ import _sampleSize from "lodash/sampleSize";
 import _sortBy from "lodash/sortBy";
 import _isEmpty from "lodash/isEmpty";
 
-import { DrawList, DrawListItem } from "@/types";
+import { DrawList, DrawListItem, ObjectEntries } from "@/types";
 import { allNumbers } from "@/constants";
 
 export function getBallBgColor(num: number) {
@@ -55,4 +55,8 @@ export async function copyDrawList(
   } finally {
     onCopy?.();
   }
+}
+
+export function entriesFromObject<T extends object>(obj: T): ObjectEntries<T> {
+  return Object.entries(obj) as ObjectEntries<T>;
 }

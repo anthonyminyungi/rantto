@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { DrawList, DrawListItem, MenuKey } from "@/types";
+import { DrawList, DrawListItem, MenuKey, SavedListSortKey } from "@/types";
 
 interface MenuState {
   menu: MenuKey;
@@ -15,16 +15,19 @@ interface DrawState {
   drawList: DrawList;
   drawItem: (idx: number, numbers: DrawListItem) => void;
   drawAll: (list: DrawList) => void;
+  clearDraw: () => void;
 }
 
+const initialDrawList = [
+  [0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0],
+] as DrawList;
+
 export const useDrawStore = create<DrawState>((set) => ({
-  drawList: [
-    [0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0],
-  ],
+  drawList: initialDrawList,
   drawItem: (idx, numbers) =>
     set((prevState) => {
       const nextList = [...prevState.drawList];
@@ -34,4 +37,15 @@ export const useDrawStore = create<DrawState>((set) => ({
       };
     }),
   drawAll: (list) => set(() => ({ drawList: [...list] as DrawList })),
+  clearDraw: () => set(() => ({ drawList: initialDrawList })),
+}));
+
+interface SavedPageState {
+  sortKey: SavedListSortKey;
+  setSort: (key: SavedListSortKey) => void;
+}
+
+export const useSavedPageStore = create<SavedPageState>((set) => ({
+  sortKey: "CREATED_DESC",
+  setSort: (key) => set(() => ({ sortKey: key })),
 }));
