@@ -52,7 +52,7 @@ export default function SavedItem({ data }: SavedItemProps) {
         <span className={cx("px-1.5")}>추첨전</span>
         {"・"}
         <span className={cx("px-1.5")}>
-          {format(createdAt, "yy.MM.dd")}에 저장
+          {format(createdAt, `yy.MM.dd${isExtended ? " HH:mm:ss" : ""}`)}에 저장
         </span>
       </p>
       <div className={cx("flex", "my-2", "justify-around")}>
