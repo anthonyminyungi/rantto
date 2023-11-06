@@ -16,7 +16,7 @@ export default function NavMenu({ tabs }: TabsProps) {
   };
 
   return (
-    <div className={cx("flex", "justify-center", "items-center", "my-10")}>
+    <div className={cx("flex", "justify-center", "items-center", "my-6")}>
       {tabs.map(([key, text]) => (
         <div
           key={key}
