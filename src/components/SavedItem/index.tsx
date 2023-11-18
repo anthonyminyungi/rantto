@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import cx from "classnames";
-import { format, isAfter } from "date-fns";
+import { format } from "date-fns";
 
 import NumberBallSet from "@/components/NumberBallSet";
 import SavedActions from "@/components/SavedActions";
@@ -20,19 +20,17 @@ export default function SavedItem({ data }: SavedItemProps) {
   const { id, draws, round, createdAt } = data;
   const [isExtended, setExtended] = useState(false);
   const {
+    round: wonRound,
     bonus: wonBonus,
     numbers: wonNumbers,
-    createdAt: announcedAt,
   } = useWinningHistory(round);
   const rank = useMemo(
     () => getHighestRankByDrawsDiff(draws, wonNumbers, wonBonus),
     [wonBonus, draws, wonNumbers]
   );
 
-  /* 현재 건이 당첨 발표일 이전에 생성되었고, 현재 날짜가 해당 건의 발표일 이후일 때 */
-  const isAfterAnnounce =
-    isAfter(new Date(announcedAt), new Date(createdAt)) &&
-    isAfter(new Date(), new Date(announcedAt));
+  /* 가장 최근 발표된 회차가 저장된 목표 회차와 동일할 때 */
+  const isAfterAnnounce = round === wonRound;
   const hasWonDraw = rank > 0;
 
   return (
