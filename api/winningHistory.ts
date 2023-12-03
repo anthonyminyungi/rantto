@@ -27,9 +27,15 @@ export default async function handler(
     const root = parse(await data.text());
     const numbers = root
       .querySelectorAll(".nums .win .ball_645")
-      .map((elem) => elem.text);
-    const bonus = root.querySelector(".nums .bonus .ball_645")?.text;
-    const round = root.querySelector(".win_result strong")?.text.slice(0, 4);
+      .map((elem) => Number.parseInt(elem.text, 10));
+    const bonus = Number.parseInt(
+      root.querySelector(".nums .bonus .ball_645")?.text || "",
+      10
+    );
+    const round = Number.parseInt(
+      (root.querySelector(".win_result strong")?.text || "").slice(0, 4),
+      10
+    );
 
     console.log("data : ", round, numbers, bonus);
 
