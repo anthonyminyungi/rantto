@@ -29,11 +29,11 @@ export default async function handler(
       .querySelectorAll(".nums .win .ball_645")
       .map((elem) => Number.parseInt(elem.text, 10));
     const bonus = Number.parseInt(
-      root.querySelector(".nums .bonus .ball_645")?.text,
+      root.querySelector(".nums .bonus .ball_645")?.text || "",
       10
     );
     const round = Number.parseInt(
-      root.querySelector(".win_result strong")?.text.slice(0, 4),
+      (root.querySelector(".win_result strong")?.text || "").slice(0, 4),
       10
     );
 
