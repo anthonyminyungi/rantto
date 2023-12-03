@@ -1,0 +1,14 @@
+{
+  "crons": [
+    {
+      "path": "/api/winningHistory",
+      "schedule": "30 21 * * 6"
+    }
+  ],
+  "functions": {
+    "api/winningHistory.ts": {
+      "memory": 256,
+      "maxDuration": 10
+    }
+  }
+}

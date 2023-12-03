@@ -34,3 +34,9 @@ dist-ssr
 
 # vite
 .vite
+
+# vercel
+.vercel
+
+# env
+.env*.local
