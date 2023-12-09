@@ -4,11 +4,6 @@ import { parse } from "node-html-parser";
 import { format } from "date-fns";
 import stringify from "json-stringify-pretty-compact";
 
-export const config = {
-  runtime: "nodejs",
-  regions: ["icn1"],
-};
-
 export default async function handler(
   _req: VercelRequest,
   res: VercelResponse
