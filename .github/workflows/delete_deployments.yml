@@ -2,9 +2,6 @@ name: Delete Preview Deployment
 
 on: deployment_status
 
-env:
-  VERCEL_ACCESS_TOKEN: ${{ secrets.VERCEL_ACCESS_TOKEN }}
-
 jobs:
   delete_production:
     if: ${{ github.event.deployment_status.environment == 'production' && github.event.deployment_status.state == 'success' }}
@@ -19,7 +16,7 @@ jobs:
           node-version: 18
 
       - name: Run script
-        run: node --experimental-fetch ./scripts/delete_production.mjs
+        run: VERCEL_ACCESS_TOKEN=${{ secrets.VERCEL_ACCESS_TOKEN }} node --experimental-fetch ./scripts/delete_production.mjs
 
   delete_preview:
     if: ${{ github.event.deployment_status.environment == 'preview' && github.event.deployment_status.state == 'success' }}
@@ -34,4 +31,4 @@ jobs:
           node-version: 18
 
       - name: Run script
-        run: node --experimental-fetch ./scripts/delete_preview.mjs
+        run: VERCEL_ACCESS_TOKEN=${{ secrets.VERCEL_ACCESS_TOKEN }} node --experimental-fetch ./scripts/delete_preview.mjs
