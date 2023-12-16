@@ -8,4 +8,3 @@ export const vercelApi = async (path, options = {}) => {
     },
   }).then((res) => res.json());
 };
-console.log("token : ", process.env.VERCEL_ACCESS_TOKEN);
