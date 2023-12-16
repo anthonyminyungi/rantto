@@ -16,7 +16,7 @@ jobs:
           node-version: 18
 
       - name: Run script
-        run: VERCEL_ACCESS_TOKEN=${{ secrets.VERCEL_ACCESS_TOKEN }} node --experimental-fetch ./scripts/delete_production.mjs
+        run: node --experimental-fetch ./scripts/delete_production.mjs
 
   delete_preview:
     if: ${{ github.event.deployment_status.environment == 'preview' && github.event.deployment_status.state == 'success' }}
@@ -31,4 +31,9 @@ jobs:
           node-version: 18
 
       - name: Run script
-        run: VERCEL_ACCESS_TOKEN=${{ secrets.VERCEL_ACCESS_TOKEN }} node --experimental-fetch ./scripts/delete_preview.mjs
+        run: node --experimental-fetch ./scripts/delete_preview.mjs
+
+      - name: test
+        run: echo $VERCEL_ACCESS_TOKEN
+        env:
+          VERCEL_ACCESS_TOKEN: ${{ secrets.VERCEL_ACCESS_TOKEN }}
