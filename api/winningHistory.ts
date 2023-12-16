@@ -4,6 +4,9 @@ import { parse } from "node-html-parser";
 import { format } from "date-fns";
 import stringify from "json-stringify-pretty-compact";
 
+const wait = (amount = 0) =>
+  new Promise((resolve) => setTimeout(resolve, amount));
+
 export default async function handler(
   _req: VercelRequest,
   res: VercelResponse
@@ -106,6 +109,8 @@ export default async function handler(
     });
     console.log("file pr number : ", createFilePR.number);
 
+    await wait(3000);
+
     /* 생성된 pull request 병합 */
     const { data: mergeFilePR } = await octokit.rest.pulls.merge({
       owner,
@@ -123,6 +128,8 @@ export default async function handler(
       title: message,
     });
     console.log("pr number : ", createPR.number);
+
+    await wait(3000);
 
     /* 생성된 pull request 병합 */
     const { data: mergePR } = await octokit.rest.pulls.merge({
