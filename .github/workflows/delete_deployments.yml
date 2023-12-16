@@ -30,10 +30,12 @@ jobs:
         with:
           node-version: 18
 
-      - name: Run script
-        run: node --experimental-fetch ./scripts/delete_preview.mjs
-
       - name: test
         run: echo $VERCEL_ACCESS_TOKEN
+        env:
+          VERCEL_ACCESS_TOKEN: ${{ secrets.VERCEL_ACCESS_TOKEN }}
+
+      - name: Run script
+        run: node --experimental-fetch ./scripts/delete_preview.mjs
         env:
           VERCEL_ACCESS_TOKEN: ${{ secrets.VERCEL_ACCESS_TOKEN }}
