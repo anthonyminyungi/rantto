@@ -1,13 +1,18 @@
 name: Delete Preview Deployment
 
-on: deployment_status
+on:
+  pull_request:
+    types: ["closed"]
+    branches:
+      - main
+      - develop
 
 env:
   VERCEL_ACCESS_TOKEN: ${{ secrets.VERCEL_ACCESS_TOKEN }}
 
 jobs:
   delete_production:
-    if: ${{ github.event.deployment_status.environment == 'production' && github.event.deployment_status.state == 'success' }}
+    if: ${{ github.event.pull_request.base == 'main' && github.event.pull_request.merged == true }}
     runs-on: ubuntu-latest
     environment: production
     steps:
@@ -23,7 +28,7 @@ jobs:
         run: node --experimental-fetch ./scripts/delete_production.mjs
 
   delete_preview:
-    if: ${{ github.event.deployment_status.environment == 'preview' && github.event.deployment_status.state == 'success' }}
+    if: ${{ github.event.pull_request.base == 'develop' && github.event.pull_request.merged == true }}
     runs-on: ubuntu-latest
     environment: preview
     steps:
