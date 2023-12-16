@@ -1,0 +1,16 @@
+name: Delete Preview Deployment
+
+on: deployment_status
+
+jobs:
+  delete_production:
+    if: ${{ github.event.deployment_status.environment == 'production' && github.event.deployment_status.state == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: node --experimental-fetch ${{ github.action_path }}/scripts/delete_production.mjs
+
+  delete_preview:
+    if: ${{ github.event.deployment_status.environment == 'preview' && github.event.deployment_status.state == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: node --experimental-fetch ${{ github.action_path }}/scripts/delete_preview.mjs
