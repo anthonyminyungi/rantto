@@ -1,5 +1,4 @@
 export const vercelApi = async (path, options = {}) => {
-  console.log("token : ", process.env.VERCEL_ACCESS_TOKEN);
   return fetch(`https://api.vercel.com${path}`, {
     ...options,
     headers: {
