@@ -22,7 +22,6 @@ export default async function handler(
     const repo = "rantto";
     const filePath = "src/assets/winning_history.json";
     const message = "Update winning_history.json";
-    const develop = "develop";
     const main = "main";
     const tempBranch = "functions/update-winning-history";
     const dhlotteryUrl = "https://dhlottery.co.kr/gameResult.do?method=byWin";
@@ -46,18 +45,22 @@ export default async function handler(
     const { data: getRef } = await octokit.git.getRef({
       owner,
       repo,
-      ref: `heads/${develop}`,
+      ref: `heads/${main}`,
     });
-    const developSha = getRef.object.sha;
-    console.log(developSha);
+    const mainSha = getRef.object.sha;
+    console.log(mainSha);
+
+    await wait(2000);
 
     const { data: createRef } = await octokit.rest.git.createRef({
       owner,
       repo,
       ref: `refs/heads/${tempBranch}`,
-      sha: developSha,
+      sha: mainSha,
     });
     console.log("create ref : ", createRef);
+
+    await wait(2000);
 
     /* 기존 당첨번호 데이터 접근 */
     const { data: getContent } = await octokit.repos.getContent({
@@ -81,6 +84,8 @@ export default async function handler(
     });
     console.log("json : ", json);
 
+    await wait(2000);
+
     /* 임시 브랜치에 추가된 데이터 반영 update commit */
     const { data: updateFile } = await octokit.repos.createOrUpdateFileContents(
       {
@@ -99,37 +104,19 @@ export default async function handler(
     );
     console.log("commit id : ", updateFile.commit.sha);
 
-    /* 임시 브랜치 -> develop pull request 생성 */
-    const { data: createFilePR } = await octokit.rest.pulls.create({
-      owner,
-      repo,
-      head: tempBranch,
-      base: develop,
-      title: message,
-    });
-    console.log("file pr number : ", createFilePR.number);
+    await wait(2000);
 
-    await wait(3000);
-
-    /* 생성된 pull request 병합 */
-    const { data: mergeFilePR } = await octokit.rest.pulls.merge({
-      owner,
-      repo,
-      pull_number: createFilePR.number,
-    });
-    console.log("file pr merged : ", mergeFilePR.merged);
-
-    /* develop -> master pull request 생성 */
+    /* 임시 브랜치 -> main pull request 생성 */
     const { data: createPR } = await octokit.rest.pulls.create({
       owner,
       repo,
-      head: develop,
+      head: tempBranch,
       base: main,
       title: message,
     });
     console.log("pr number : ", createPR.number);
 
-    await wait(3000);
+    await wait(2000);
 
     /* 생성된 pull request 병합 */
     const { data: mergePR } = await octokit.rest.pulls.merge({
