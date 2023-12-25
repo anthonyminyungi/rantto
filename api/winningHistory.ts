@@ -50,6 +50,8 @@ export default async function handler(
     const mainSha = getRef.object.sha;
     console.log(mainSha);
 
+    await wait(2000);
+
     const { data: createRef } = await octokit.rest.git.createRef({
       owner,
       repo,
@@ -57,6 +59,8 @@ export default async function handler(
       sha: mainSha,
     });
     console.log("create ref : ", createRef);
+
+    await wait(2000);
 
     /* 기존 당첨번호 데이터 접근 */
     const { data: getContent } = await octokit.repos.getContent({
@@ -80,6 +84,8 @@ export default async function handler(
     });
     console.log("json : ", json);
 
+    await wait(2000);
+
     /* 임시 브랜치에 추가된 데이터 반영 update commit */
     const { data: updateFile } = await octokit.repos.createOrUpdateFileContents(
       {
@@ -98,6 +104,8 @@ export default async function handler(
     );
     console.log("commit id : ", updateFile.commit.sha);
 
+    await wait(2000);
+
     /* 임시 브랜치 -> main pull request 생성 */
     const { data: createPR } = await octokit.rest.pulls.create({
       owner,
@@ -108,7 +116,7 @@ export default async function handler(
     });
     console.log("pr number : ", createPR.number);
 
-    await wait(3000);
+    await wait(2000);
 
     /* 생성된 pull request 병합 */
     const { data: mergePR } = await octokit.rest.pulls.merge({
