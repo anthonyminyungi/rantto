@@ -67,7 +67,7 @@ export default async function handler(
       owner,
       repo,
       path: filePath,
-      ref: `heads/${tempBranch}`,
+      ref: `refs/heads/${tempBranch}`,
     });
     let json;
     let getContentSha = "";
@@ -104,7 +104,8 @@ export default async function handler(
     );
     console.log("commit id : ", updateFile.commit.sha);
 
-    await wait(2000);
+    // waiting for completion of preview deployment
+    await wait(40000);
 
     /* 임시 브랜치 -> main pull request 생성 */
     const { data: createPR } = await octokit.rest.pulls.create({
