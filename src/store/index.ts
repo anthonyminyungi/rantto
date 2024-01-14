@@ -1,5 +1,12 @@
 import { create } from "zustand";
-import { DrawList, DrawListItem, MenuKey, SavedListSortKey } from "@/types";
+
+import {
+  DrawList,
+  DrawListItem,
+  MenuKey,
+  SavedListSortKey,
+  ToastItem,
+} from "@/types";
 
 interface MenuState {
   menu: MenuKey;
@@ -48,4 +55,28 @@ interface SavedPageState {
 export const useSavedPageStore = create<SavedPageState>((set) => ({
   sortKey: "CREATED_DESC",
   setSort: (key) => set(() => ({ sortKey: key })),
+}));
+
+interface ToastState {
+  toastList: ToastItem[];
+  initToast: () => void;
+  addToast: (toast: ToastItem) => void;
+  removeToast: (id: ToastItem["id"]) => void;
+}
+
+export const useToastStore = create<ToastState>((set) => ({
+  toastList: [],
+  initToast: () => set({ toastList: [] }),
+  addToast: (toastItem) => {
+    set((prevState) => ({
+      toastList: [...prevState.toastList, toastItem],
+    }));
+  },
+  removeToast: (removeId) => {
+    set((prevState) => ({
+      toastList: prevState.toastList.filter(
+        (toastItem) => toastItem?.id !== removeId
+      ),
+    }));
+  },
 }));

@@ -1,5 +1,8 @@
 import { RefObject, useEffect, useState } from "react";
 
+import { useToastStore } from "@/store";
+import { ToastItem } from "@/types";
+
 export const useWindowSize = () => {
   const [width, setWidth] = useState<number>(window.innerWidth);
   const [height, setHeight] = useState<number>(window.innerHeight);
@@ -34,4 +37,23 @@ export const useOutsideClick = (
       document.removeEventListener("click", listener);
     };
   }, [handler, ref]);
+};
+
+export const useToast = () => {
+  const { addToast, removeToast } = useToastStore();
+
+  const closeToast = (toastId: ToastItem["id"]) => {
+    removeToast(toastId);
+  };
+
+  const showToast = (toastItem: ToastItem) => {
+    const id = String(new Date().getTime());
+    addToast({ ...toastItem, id });
+    setTimeout(() => removeToast(id), toastItem.duration ?? 3000);
+  };
+
+  return {
+    closeToast,
+    showToast,
+  };
 };

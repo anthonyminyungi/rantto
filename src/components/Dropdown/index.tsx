@@ -1,12 +1,14 @@
 import cx from "classnames";
-import { FunctionComponent, SVGProps, useRef, useState } from "react";
+import { ReactNode, useRef, useState } from "react";
+
+import Spacer from "@/components/Spacer";
 import { useOutsideClick } from "@/hooks";
 
 import KebabIcon from "@/assets/ellipsis-vertical.svg?react";
 
 interface DropdownItem {
   text: string;
-  icon?: FunctionComponent<SVGProps<SVGSVGElement>>;
+  icon?: ReactNode;
   onClick?: () => void;
   disabled?: boolean;
 }
@@ -59,7 +61,7 @@ export default function Dropdown({ items }: DropdownProps) {
             "px-2"
           )}
         >
-          {items.map(({ icon: Icon, text, onClick, disabled }) => (
+          {items.map(({ icon, text, onClick, disabled }) => (
             <li
               key={text}
               role="option"
@@ -79,7 +81,12 @@ export default function Dropdown({ items }: DropdownProps) {
                 setIsOpen(false);
               }}
             >
-              {Icon && <Icon className={cx("w-5", "h-5", "mr-2")} />}
+              {icon && (
+                <>
+                  {icon}
+                  <Spacer direction="horizontal" space="2" />
+                </>
+              )}
               <span>{text}</span>
             </li>
           ))}
