@@ -57,12 +57,13 @@ export default function SavedActions({ data }: SavedActionsProps) {
         <Dropdown
           items={[
             {
-              /* TODO: 보관함 기능 구현 시 함께 적용 */
-              icon: ClipboardIcon,
+              icon: <ClipboardIcon className={cx("w-5", "h-5")} />,
               text: "복사",
+              onClick: copyToClipboard,
+              disabled: copied,
             },
             {
-              icon: TrashIcon,
+              icon: <TrashIcon className={cx("w-5", "h-5")} />,
               text: "삭제",
               onClick: handleDelete,
             },

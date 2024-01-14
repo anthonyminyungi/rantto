@@ -50,9 +50,13 @@ export default function DrawActions({ index }: DrawActionsProps) {
   return isMobile ? (
     <Dropdown
       items={[
-        { icon: TicketIcon, text: "뽑기", onClick: handleClickDraw },
         {
-          icon: ClipboardIcon,
+          icon: <TicketIcon className={cx("w-5", "h-5")} />,
+          text: "뽑기",
+          onClick: handleClickDraw,
+        },
+        {
+          icon: <ClipboardIcon />,
           text: "복사",
           onClick: handleCopy,
           disabled: isDrawEmpty(currentItem),
