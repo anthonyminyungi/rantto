@@ -1,6 +1,8 @@
 import cx from "classnames";
+
 import { MenuKey, Tab } from "@/types";
 import { useMenuStore, useToastStore } from "@/store";
+
 interface TabsProps {
   tabs: Tab[];
   onChange?: (tab?: Tab) => void;

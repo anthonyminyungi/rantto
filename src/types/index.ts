@@ -1,5 +1,6 @@
-import { MENU_TABS, SAVED_LIST_SORT_OPTIONS } from "@/constants";
 import { ReactNode } from "react";
+
+import { MENU_TABS, SAVED_LIST_SORT_OPTIONS } from "@/constants";
 
 export type FixedSizeArray<N extends number, T> = N extends 0
   ? []

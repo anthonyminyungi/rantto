@@ -1,6 +1,7 @@
+import { RefObject, useEffect, useState } from "react";
+
 import { useToastStore } from "@/store";
 import { ToastItem } from "@/types";
-import { RefObject, useEffect, useState } from "react";
 
 export const useWindowSize = () => {
   const [width, setWidth] = useState<number>(window.innerWidth);
