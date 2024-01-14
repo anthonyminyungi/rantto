@@ -1,9 +1,10 @@
 import { useMemo, useState } from "react";
+import cx from "classnames";
 
 import { MOBILE_WIDTH } from "@/constants";
 import ButtonGroup from "@/components/ButtonGroup";
 import Dropdown from "@/components/Dropdown";
-import { useWindowSize } from "@/hooks";
+import { useToast, useWindowSize } from "@/hooks";
 import { copyDrawList, drawNumbers, isDrawEmpty } from "@/utils";
 import { useDrawStore } from "@/store";
 import { DrawListItem } from "@/types";
@@ -11,6 +12,7 @@ import { DrawListItem } from "@/types";
 import TicketIcon from "@/assets/ticket.svg?react";
 import ClipboardIcon from "@/assets/clipboard-document.svg?react";
 import ClipboardCheckIcon from "@/assets/clipboard-document-check.svg?react";
+import CheckCircleIcon from "@/assets/check-circle.svg?react";
 // import WindowIcon from "@/assets/window.svg?react";
 
 interface DrawActionsProps {
@@ -23,6 +25,7 @@ export default function DrawActions({ index }: DrawActionsProps) {
   const { width } = useWindowSize();
   const isMobile = useMemo(() => width < MOBILE_WIDTH, [width]);
   const [copied, setCopied] = useState(false);
+  const { showToast } = useToast();
 
   const handleCopy = () => {
     copyDrawList(currentItem, () => {
@@ -30,6 +33,12 @@ export default function DrawActions({ index }: DrawActionsProps) {
       setTimeout(() => {
         setCopied(false);
       }, 2000);
+      showToast({
+        content: "클립보드에 복사되었습니다.",
+        icon: (
+          <CheckCircleIcon className={cx("text-green-500", "w-6", "h-6")} />
+        ),
+      });
     });
   };
 
@@ -41,9 +50,13 @@ export default function DrawActions({ index }: DrawActionsProps) {
   return isMobile ? (
     <Dropdown
       items={[
-        { icon: TicketIcon, text: "뽑기", onClick: handleClickDraw },
         {
-          icon: ClipboardIcon,
+          icon: <TicketIcon className={cx("w-5", "h-5")} />,
+          text: "뽑기",
+          onClick: handleClickDraw,
+        },
+        {
+          icon: <ClipboardIcon />,
           text: "복사",
           onClick: handleCopy,
           disabled: isDrawEmpty(currentItem),
