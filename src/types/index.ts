@@ -1,4 +1,5 @@
 import { MENU_TABS, SAVED_LIST_SORT_OPTIONS } from "@/constants";
+import { ReactNode } from "react";
 
 export type FixedSizeArray<N extends number, T> = N extends 0
   ? []
@@ -26,9 +27,17 @@ export type DrawList = [
 
 export type SavedListSortKey = keyof typeof SAVED_LIST_SORT_OPTIONS;
 
-export type WinningHistory = {
+export interface WinningHistory {
   round: number;
   numbers: DrawListItem;
   bonus: number;
   createdAt: string;
-};
+}
+
+export interface ToastItem {
+  id?: string;
+  content: string;
+  duration?: number;
+  icon?: ReactNode;
+  // TODO: variant 추가
+}

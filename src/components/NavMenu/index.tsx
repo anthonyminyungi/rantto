@@ -1,6 +1,6 @@
 import cx from "classnames";
 import { MenuKey, Tab } from "@/types";
-import { useMenuStore } from "@/store";
+import { useMenuStore, useToastStore } from "@/store";
 interface TabsProps {
   tabs: Tab[];
   onChange?: (tab?: Tab) => void;
@@ -8,10 +8,12 @@ interface TabsProps {
 
 export default function NavMenu({ tabs }: TabsProps) {
   const { menu: selected, setMenu } = useMenuStore();
+  const { initToast } = useToastStore();
 
   const select = (menu: MenuKey) => () => {
     if (menu !== selected) {
       setMenu(menu);
+      initToast();
     }
   };
 
