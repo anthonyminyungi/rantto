@@ -39,10 +39,7 @@ export function isDrawEmpty(numbers: DrawList | DrawListItem) {
   );
 }
 
-export async function copyDrawList(
-  numbers: DrawList | DrawListItem,
-  onCopy?: () => void
-) {
+export function generateDrawClipboardMsg(numbers: DrawList | DrawListItem) {
   const list = Array.isArray(numbers[0]) ? (numbers as DrawList) : [numbers];
   const numbersToText = list
     .filter((numbers) => !isDrawEmpty(numbers))
@@ -52,8 +49,16 @@ export async function copyDrawList(
     )
     .join("\n\n")
     .concat("\n\n나만의 당첨 번호를 뽑아보세요!\nhttps://rantto.app");
+  return numbersToText;
+}
+
+export async function copyDrawList(
+  numbers: DrawList | DrawListItem,
+  onCopy?: () => void
+) {
+  const clipboardMessage = generateDrawClipboardMsg(numbers);
   try {
-    await navigator.clipboard.writeText(numbersToText);
+    await navigator.clipboard.writeText(clipboardMessage);
   } catch (e) {
     console.error(e);
   } finally {
