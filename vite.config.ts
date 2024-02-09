@@ -8,4 +8,12 @@ export default defineConfig({
   plugins: [react(), tsconfigPaths(), svgr()],
   // https://ahnanne.tistory.com/95
   cacheDir: "./.vite",
+  build: {
+    rollupOptions: {
+      external: [
+        "/_vercel/speed-insights/script.js",
+        "/_vercel/insights/script.js",
+      ],
+    },
+  },
 });

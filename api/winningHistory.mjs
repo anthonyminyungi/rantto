@@ -1,4 +1,3 @@
-import { VercelRequest, VercelResponse } from "@vercel/node";
 import { Octokit } from "@octokit/rest";
 import { parse } from "node-html-parser";
 import { format } from "date-fns";
@@ -7,10 +6,7 @@ import stringify from "json-stringify-pretty-compact";
 const wait = (amount = 0) =>
   new Promise((resolve) => setTimeout(resolve, amount));
 
-export default async function handler(
-  _req: VercelRequest,
-  res: VercelResponse
-) {
+export async function handler(_req, res) {
   try {
     const octokit = new Octokit({
       auth: process.env.GITHUB_ACCESS_TOKEN,
