@@ -29,7 +29,22 @@ export default function LastWeek() {
             지난 회차 당첨번호
           </p>
           <p>
-            {round}회 ({createdAt} 추첨)
+            <a
+              href="https://dhlottery.co.kr/gameResult.do?method=byWin"
+              target="_blank"
+              className={cx(
+                "text-blue-500",
+                "font-semibold",
+                "px-2",
+                "py-1",
+                "rounded-md",
+                /* hover */
+                "hover:bg-gray-100"
+              )}
+            >
+              {round}회
+            </a>{" "}
+            ({createdAt} 추첨)
           </p>
         </div>
         <Spacer direction="vertical" space={"4"} />
