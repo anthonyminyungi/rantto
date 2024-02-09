@@ -6,7 +6,7 @@
     }
   ],
   "functions": {
-    "api/winningHistory.ts": {
+    "api/winningHistory.mjs": {
       "memory": 256,
       "maxDuration": 10
     }
