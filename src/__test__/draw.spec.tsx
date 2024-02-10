@@ -1,4 +1,4 @@
-import { getByText, render, screen } from "@testing-library/react";
+import { getByText, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import _intersection from "lodash/intersection";
 
@@ -19,7 +19,7 @@ describe("번호 뽑기 테스트", () => {
       return acc && isAllDifferentNumbers;
     }, true);
 
-    expect(allSetDrawn).toBe(true);
+    await waitFor(() => expect(allSetDrawn).toBe(true));
   });
 
   test("1회 뽑기 테스트", async () => {
@@ -33,6 +33,6 @@ describe("번호 뽑기 테스트", () => {
 
     const isDrawn = _intersection(beforeDraw[0], afterDraw[0]).length === 0;
 
-    expect(isDrawn).toBe(true);
+    await waitFor(() => expect(isDrawn).toBe(true));
   });
 });
