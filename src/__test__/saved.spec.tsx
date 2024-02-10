@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import App from "../App";
@@ -11,7 +11,7 @@ describe("보관함 테스트", () => {
     await userEvent.click(await screen.findByText("5회 뽑기"));
     await userEvent.click(await screen.findByText("보관하기"));
 
-    expect(await db.savedDraws.count()).toBe(1);
+    await waitFor(async () => expect(await db.savedDraws.count()).toBe(1));
   });
 
   test("보관함 삭제 테스트", async () => {
@@ -26,6 +26,6 @@ describe("보관함 테스트", () => {
     await userEvent.click(await screen.findByText("보관함"));
     await userEvent.click(await screen.findByText("삭제"));
 
-    expect(await db.savedDraws.count()).toBe(0);
+    await waitFor(async () => expect(await db.savedDraws.count()).toBe(0));
   });
 });

@@ -1,4 +1,4 @@
-import { getByText, render, screen } from "@testing-library/react";
+import { getByText, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import App from "../App";
@@ -18,7 +18,7 @@ describe("클립보드 복사 테스트", () => {
     const clipboardText = await navigator.clipboard.readText();
     const generatedText = generateDrawClipboardMsg(drawList);
 
-    expect(clipboardText).toEqual(generatedText);
+    await waitFor(() => expect(clipboardText).toEqual(generatedText));
   });
 
   test("단건 복사 테스트", async () => {
@@ -36,6 +36,6 @@ describe("클립보드 복사 테스트", () => {
     const clipboardText = await navigator.clipboard.readText();
     const generatedText = generateDrawClipboardMsg(drawList[0]);
 
-    expect(clipboardText).toEqual(generatedText);
+    await waitFor(() => expect(clipboardText).toEqual(generatedText));
   });
 });
