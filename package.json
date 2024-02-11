@@ -13,7 +13,6 @@
   },
   "dependencies": {
     "@octokit/rest": "^20.0.2",
-    "@vercel/node": "^3.0.11",
     "classnames": "^2.3.2",
     "date-fns": "^2.30.0",
     "dexie": "^3.2.4",
