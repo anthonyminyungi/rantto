@@ -26,6 +26,7 @@ export default function DrawItem({ numbers, index }: DrawItemProps) {
         "max-sm:px-2",
         "max-sm:py-3"
       )}
+      data-testid={`draw-item-${index}`}
     >
       <NumberBallSet numbers={numbers} />
       <Spacer direction="horizontal" space={"2"} />

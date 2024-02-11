@@ -1,27 +1,29 @@
-# React + TypeScript + Vite
+# 한줄소개
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+동행복권 로또6/45 복권 구매를 위한 나만의 응모 번호를 생성하고 보관할 수 있는 웹서비스
 
-Currently, two official plugins are available:
+# 특징
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 전체, 1게임 무작위로 번호 뽑기
+- 별도 서버 없이 브라우저에 뽑은 번호를 보관
+- 뽑은 번호를 클립보드에 복사 기능
+- 지난주 당첨번호 정보 매주 자동 업데이트
 
-## Expanding the ESLint configuration
+# 사용 기술
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- Frontend
+  - Typescript
+  - React
+  - Tailwind CSS
+  - Zustand
+  - Dexie (IndexedDB)
+  - Yarn Berry
+  - Vite
+- Testing
+  - Vitest
+  - React Testing Library
+- Infra, etc.
+  - Vercel
+  - AWS Lambda
+  - Github Actions
+  - Github API (Octokit)
