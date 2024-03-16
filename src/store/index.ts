@@ -23,6 +23,7 @@ interface DrawState {
   drawItem: (idx: number, numbers: DrawListItem) => void;
   drawAll: (list: DrawList) => void;
   clearDraw: () => void;
+  clearItem: (idx: number) => void;
 }
 
 const initialDrawList = [
@@ -45,6 +46,14 @@ export const useDrawStore = create<DrawState>((set) => ({
     }),
   drawAll: (list) => set(() => ({ drawList: [...list] as DrawList })),
   clearDraw: () => set(() => ({ drawList: initialDrawList })),
+  clearItem: (idx) =>
+    set((prevState) => {
+      const nextList = [...prevState.drawList];
+      nextList[idx] = initialDrawList[0];
+      return {
+        drawList: nextList as DrawList,
+      };
+    }),
 }));
 
 interface SavedPageState {
