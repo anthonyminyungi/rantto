@@ -16,6 +16,7 @@ import ClipboardIcon from "@/assets/clipboard-document.svg?react";
 import ClipboardCheckIcon from "@/assets/clipboard-document-check.svg?react";
 import InboxIcon from "@/assets/inbox-arrow-down.svg?react";
 import CheckCircleIcon from "@/assets/check-circle.svg?react";
+import ResetIcon from "@/assets/arrow-uturn-left.svg?react";
 
 export default function DrawSection() {
   const { drawList, drawAll, clearDraw } = useDrawStore();
@@ -123,6 +124,18 @@ export default function DrawSection() {
           onClick={handleSave}
         >
           보관하기
+        </Button>
+        <Spacer direction="horizontal" space={"2"} />
+        <Button
+          icon={
+            <ResetIcon
+              className={cx("w-6", "h-6", "max-sm:w-5", "max-sm:h-5")}
+            />
+          }
+          disabled={isDrawEmpty(drawList)}
+          onClick={clearDraw}
+        >
+          초기화
         </Button>
       </div>
     </div>
