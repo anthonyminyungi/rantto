@@ -18,6 +18,9 @@ export default function ToastList() {
         container.classList.add("active");
       }
     }
+    return () => {
+      container.classList.remove("active");
+    };
   }, [container.classList, toastList.length]);
 
   return (
