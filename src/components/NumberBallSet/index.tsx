@@ -35,7 +35,7 @@ export default function NumberBallSet({
     >
       {numbers.map((num, idx) => (
         <NumberBall
-          key={num + idx}
+          key={`index-${idx}::number-${num}`}
           number={num}
           blurred={intersectedNumbers && !intersectedNumbers.includes(num)}
         />
