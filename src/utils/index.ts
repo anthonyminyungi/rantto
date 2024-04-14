@@ -110,3 +110,14 @@ export function getHighestRankByDrawsDiff(
     .filter((rank) => rank > 0);
   return ranks.length > 0 ? Math.min(...ranks) : -1;
 }
+
+export const stopScroll = () => {
+  document.body.style.cssText = `
+    position: fixed; 
+    overflow-y: hidden;
+    width: 100%;`;
+};
+
+export const startScroll = () => {
+  document.body.style.cssText = "";
+};

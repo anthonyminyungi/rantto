@@ -4,9 +4,10 @@ import cx from "classnames";
 import { MOBILE_WIDTH } from "@/constants";
 import ButtonGroup from "@/components/ButtonGroup";
 import Dropdown from "@/components/Dropdown";
+import ManualSelectModal from "@/components/Modal/ManualSelectModal";
 import { useToast, useWindowSize } from "@/hooks";
 import { copyDrawList, drawNumbers, isDrawEmpty } from "@/utils";
-import { useDrawStore } from "@/store";
+import { useDrawStore, useModalStore } from "@/store";
 import { DrawListItem } from "@/types";
 
 import TicketIcon from "@/assets/ticket.svg?react";
@@ -14,6 +15,7 @@ import ClipboardIcon from "@/assets/clipboard-document.svg?react";
 import ClipboardCheckIcon from "@/assets/clipboard-document-check.svg?react";
 import CheckCircleIcon from "@/assets/check-circle.svg?react";
 import ResetIcon from "@/assets/arrow-uturn-left.svg?react";
+import WindowIcon from "@/assets/window.svg?react";
 
 interface DrawActionsProps {
   index: number;
@@ -26,6 +28,7 @@ export default function DrawActions({ index }: DrawActionsProps) {
   const isMobile = useMemo(() => width < MOBILE_WIDTH, [width]);
   const [copied, setCopied] = useState(false);
   const { showToast } = useToast();
+  const { push } = useModalStore();
 
   const handleCopy = () => {
     copyDrawList(currentItem, () => {
@@ -51,6 +54,15 @@ export default function DrawActions({ index }: DrawActionsProps) {
     clearItem(index);
   };
 
+  const handleClickSelect = async () => {
+    await push({
+      component: ManualSelectModal,
+      props: {
+        drawIdx: index,
+      },
+    });
+  };
+
   return isMobile ? (
     <Dropdown
       items={[
@@ -71,6 +83,11 @@ export default function DrawActions({ index }: DrawActionsProps) {
           onClick: handleCopy,
           disabled: isDrawEmpty(currentItem),
         },
+        {
+          icon: <WindowIcon className={cx("w-5", "h-5")} />,
+          text: "선택",
+          onClick: handleClickSelect,
+        },
       ]}
     />
   ) : (
@@ -88,6 +105,11 @@ export default function DrawActions({ index }: DrawActionsProps) {
           text: `복사${copied ? "됨" : ""} `,
           onClick: handleCopy,
           disabled: isDrawEmpty(currentItem) || copied,
+        },
+        {
+          icon: <WindowIcon />,
+          text: "선택",
+          onClick: handleClickSelect,
         },
       ]}
     />
