@@ -2,13 +2,19 @@ import { useModalStore } from "@/store";
 import ModalItemWrapper from "./ModalItemWrapper";
 import { createPortal } from "react-dom";
 import { useLayoutEffect } from "react";
-import { startScroll, stopScroll } from "@/utils";
 
 export default function ModalRenderer() {
   const { modals } = useModalStore();
   const container = document.getElementById(
     "global-modal-container"
   ) as Element;
+
+  const stopScroll = () => {
+    document.body.classList.add("scroll-block");
+  };
+  const startScroll = () => {
+    document.body.classList.remove("scroll-block");
+  };
 
   useLayoutEffect(() => {
     if (modals.length === 0 && container.classList.contains("active")) {
