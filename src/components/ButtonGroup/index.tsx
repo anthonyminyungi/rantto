@@ -37,7 +37,7 @@ export default function ButtonGroup({ items }: ButtonGroupProps) {
             "items-center",
             "transition-all",
             { "cursor-not-allowed": disabled },
-            { "opacity-40": disabled },
+            { "bg-opacity-50": disabled },
             /* hover */
             { "hover:bg-gray-500": !disabled },
             className

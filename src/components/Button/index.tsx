@@ -48,7 +48,7 @@ export default function Button({
         "flex",
         "items-center",
         { "cursor-not-allowed": disabled },
-        { "opacity-40": disabled },
+        { "bg-opacity-50": disabled },
         /* hover */
         {
           [getButtonBgColorByVariant(variant).hover]: !disabled,
