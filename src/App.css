@@ -18,6 +18,18 @@ body {
   position: relative;
 }
 
+body.scroll-block {
+  overflow-y: auto;
+  width: 100%;
+}
+
+@media screen and (max-width: 576px) {
+  body.scroll-block {
+    overflow-y: hidden;
+    position: fixed;
+  }
+}
+
 #global-toast-container {
   position: absolute;
   z-index: 0;

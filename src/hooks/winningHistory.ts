@@ -1,11 +1,28 @@
 import _last from "lodash/last";
 import _find from "lodash/find";
 
-import { history as winningHistory } from "@/assets/winning_history.json";
 import { WinningHistory } from "@/types";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
+
+const WINNING_HISTORY_GIST_URL =
+  "https://gist.githubusercontent.com/anthonyminyungi/a7237c0717400512855c890d5b0e1ba3/raw/57ee9933c5ac0f6aaf4774adfa8c3dd169272f11/lottto-winning-history.json";
 
 export const useWinningHistory = (targetRound?: number): WinningHistory => {
+  const [winningHistory, setWinningHistory] = useState<WinningHistory[]>();
+  useEffect(() => {
+    let active = true;
+    const getWinningHistoryData = async () => {
+      const res = await fetch(WINNING_HISTORY_GIST_URL);
+      const data = await res.json();
+      if (active) {
+        setWinningHistory(data.history);
+      }
+    };
+    getWinningHistoryData();
+    return () => {
+      active = false;
+    };
+  }, []);
   const {
     round = 0,
     numbers = [0, 0, 0, 0, 0, 0],
@@ -20,7 +37,7 @@ export const useWinningHistory = (targetRound?: number): WinningHistory => {
       return lastHistory as WinningHistory;
     }
     return recentHistory as WinningHistory;
-  }, [targetRound]);
+  }, [targetRound, winningHistory]);
 
   return {
     round,
