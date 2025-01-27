@@ -72,7 +72,8 @@ export default function ManualSelectModal({
         "max-w-3xl",
         "max-sm:h-full",
         "max-sm:px-4",
-        "max-sm:rounded-none"
+        "max-sm:rounded-none",
+        "max-sm:border-none"
       )}
     >
       <header
