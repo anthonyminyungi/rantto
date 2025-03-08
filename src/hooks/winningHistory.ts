@@ -5,7 +5,7 @@ import { WinningHistory } from "@/types";
 import { useEffect, useMemo, useState } from "react";
 
 const WINNING_HISTORY_GIST_URL =
-  "https://gist.githubusercontent.com/anthonyminyungi/a7237c0717400512855c890d5b0e1ba3/raw/57ee9933c5ac0f6aaf4774adfa8c3dd169272f11/lottto-winning-history.json";
+  "https://gist.githubusercontent.com/anthonyminyungi/a7237c0717400512855c890d5b0e1ba3/raw/lotto-winning-history.json";
 
 export const useWinningHistory = (targetRound?: number): WinningHistory => {
   const [winningHistory, setWinningHistory] = useState<WinningHistory[]>();
