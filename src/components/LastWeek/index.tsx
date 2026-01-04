@@ -30,7 +30,7 @@ export default function LastWeek() {
           </p>
           <p>
             <a
-              href="https://dhlottery.co.kr/gameResult.do?method=byWin"
+              href="https://dhlottery.co.kr/lt645/result"
               target="_blank"
               className={cx(
                 "text-blue-500",
