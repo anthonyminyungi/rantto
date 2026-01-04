@@ -22,6 +22,7 @@ export default {
     extend: {
       opacity: {
         15: ".15",
+        35: ".35",
       },
     },
   },
