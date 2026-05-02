@@ -3746,7 +3746,7 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/flat-cache-npm-3.1.0-bc8074086c-0367e6dbe0.zip/node_modules/flat-cache/",\
         "packageDependencies": [\
           ["flat-cache", "npm:3.1.0"],\
-          ["flatted", "npm:3.2.9"],\
+          ["flatted", "npm:3.4.2"],\
           ["keyv", "npm:4.5.3"],\
           ["rimraf", "npm:3.0.2"]\
         ],\
@@ -3754,10 +3754,10 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["flatted", [\
-      ["npm:3.2.9", {\
-        "packageLocation": "./.yarn/cache/flatted-npm-3.2.9-0462256d3c-dc2b89e46a.zip/node_modules/flatted/",\
+      ["npm:3.4.2", {\
+        "packageLocation": "./.yarn/cache/flatted-npm-3.4.2-e32280259b-a9e78fe5c2.zip/node_modules/flatted/",\
         "packageDependencies": [\
-          ["flatted", "npm:3.2.9"]\
+          ["flatted", "npm:3.4.2"]\
         ],\
         "linkType": "HARD"\
       }]\
