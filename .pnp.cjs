@@ -49,7 +49,7 @@ const RAW_RUNTIME_STATE =
           ["fake-indexeddb", "npm:5.0.2"],\
           ["jsdom", "virtual:e9044eb4b22dc4d91b1391da976d430c56c2541bb11944f80e0ce39e201a7d939d9ac9a25093c2503a1d79eb1003ae1ba922a9d202bd108394b28226e4c344f6#npm:23.2.0"],\
           ["json-stringify-pretty-compact", "npm:4.0.0"],\
-          ["lodash", "npm:4.17.21"],\
+          ["lodash", "npm:4.18.1"],\
           ["node-html-parser", "npm:6.1.11"],\
           ["postcss", "npm:8.5.13"],\
           ["react", "npm:18.2.0"],\
@@ -4991,6 +4991,13 @@ const RAW_RUNTIME_STATE =
           ["lodash", "npm:4.17.21"]\
         ],\
         "linkType": "HARD"\
+      }],\
+      ["npm:4.18.1", {\
+        "packageLocation": "./.yarn/cache/lodash-npm-4.18.1-a64c3070ac-306fea53df.zip/node_modules/lodash/",\
+        "packageDependencies": [\
+          ["lodash", "npm:4.18.1"]\
+        ],\
+        "linkType": "HARD"\
       }]\
     ]],\
     ["lodash.merge", [\
@@ -6083,7 +6090,7 @@ const RAW_RUNTIME_STATE =
           ["fake-indexeddb", "npm:5.0.2"],\
           ["jsdom", "virtual:e9044eb4b22dc4d91b1391da976d430c56c2541bb11944f80e0ce39e201a7d939d9ac9a25093c2503a1d79eb1003ae1ba922a9d202bd108394b28226e4c344f6#npm:23.2.0"],\
           ["json-stringify-pretty-compact", "npm:4.0.0"],\
-          ["lodash", "npm:4.17.21"],\
+          ["lodash", "npm:4.18.1"],\
           ["node-html-parser", "npm:6.1.11"],\
           ["postcss", "npm:8.5.13"],\
           ["react", "npm:18.2.0"],\
