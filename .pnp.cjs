@@ -2119,10 +2119,10 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["@tootallnate/once", [\
-      ["npm:2.0.0", {\
-        "packageLocation": "./.yarn/cache/@tootallnate-once-npm-2.0.0-e36cf4f140-ad87447820.zip/node_modules/@tootallnate/once/",\
+      ["npm:2.0.1", {\
+        "packageLocation": "./.yarn/cache/@tootallnate-once-npm-2.0.1-cd8ffd9654-487b59b5ad.zip/node_modules/@tootallnate/once/",\
         "packageDependencies": [\
-          ["@tootallnate/once", "npm:2.0.0"]\
+          ["@tootallnate/once", "npm:2.0.1"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -4786,7 +4786,7 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/http-proxy-agent-npm-5.0.0-7f1f121b83-5ee19423bc.zip/node_modules/http-proxy-agent/",\
         "packageDependencies": [\
           ["http-proxy-agent", "npm:5.0.0"],\
-          ["@tootallnate/once", "npm:2.0.0"],\
+          ["@tootallnate/once", "npm:2.0.1"],\
           ["agent-base", "npm:6.0.2"],\
           ["debug", "virtual:feb0771c9f8eadaf509cfed41e14a8bebbea5442233275c1c87085111077a08ef71eb773b899665b154d8203a55a489610a54117ae059fce5f5b8b844493b1b1#npm:4.3.4"]\
         ],\
