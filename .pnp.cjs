@@ -1053,7 +1053,7 @@ const RAW_RUNTIME_STATE =
           ["globals", "npm:13.22.0"],\
           ["ignore", "npm:5.2.4"],\
           ["import-fresh", "npm:3.3.0"],\
-          ["js-yaml", "npm:4.1.0"],\
+          ["js-yaml", "npm:4.3.0"],\
           ["minimatch", "npm:3.1.5"],\
           ["strip-json-comments", "npm:3.1.1"]\
         ],\
@@ -3308,7 +3308,7 @@ const RAW_RUNTIME_STATE =
           ["cosmiconfig", "virtual:77cc138b8f03e76bc81b53d7c536b91810383e8b8e9f294aac9f969daaf6fd5a72e29c2099e3025b537aac701c45d44c7e6af1647a2799c9f61d4f4f9312b7a3#npm:8.3.6"],\
           ["@types/typescript", null],\
           ["import-fresh", "npm:3.3.0"],\
-          ["js-yaml", "npm:4.1.0"],\
+          ["js-yaml", "npm:4.3.0"],\
           ["parse-json", "npm:5.2.0"],\
           ["path-type", "npm:4.0.0"],\
           ["typescript", null]\
@@ -3996,7 +3996,7 @@ const RAW_RUNTIME_STATE =
           ["imurmurhash", "npm:0.1.4"],\
           ["is-glob", "npm:4.0.3"],\
           ["is-path-inside", "npm:3.0.3"],\
-          ["js-yaml", "npm:4.1.0"],\
+          ["js-yaml", "npm:4.3.0"],\
           ["json-stable-stringify-without-jsonify", "npm:1.0.1"],\
           ["levn", "npm:0.4.1"],\
           ["lodash.merge", "npm:4.6.2"],\
@@ -5249,10 +5249,10 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["js-yaml", [\
-      ["npm:4.1.0", {\
-        "packageLocation": "./.yarn/cache/js-yaml-npm-4.1.0-3606f32312-c138a34a3f.zip/node_modules/js-yaml/",\
+      ["npm:4.3.0", {\
+        "packageLocation": "./.yarn/cache/js-yaml-npm-4.3.0-1586601382-2bcec3a811.zip/node_modules/js-yaml/",\
         "packageDependencies": [\
-          ["js-yaml", "npm:4.1.0"],\
+          ["js-yaml", "npm:4.3.0"],\
           ["argparse", "npm:2.0.1"]\
         ],\
         "linkType": "HARD"\
