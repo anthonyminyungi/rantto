@@ -49,17 +49,31 @@ export function generateDrawClipboardMsg(numbers: DrawList | DrawListItem) {
   return numbersToText;
 }
 
-export async function copyDrawList(
+export const isWebShareSupported = typeof navigator !== "undefined" && !!navigator.share;
+
+export async function shareDrawList(
   numbers: DrawList | DrawListItem,
-  onCopy?: () => void
+  onSuccess?: (type: "share" | "copy") => void
 ) {
-  const clipboardMessage = generateDrawClipboardMsg(numbers);
-  try {
-    await navigator.clipboard.writeText(clipboardMessage);
-  } catch (e) {
-    console.error(e);
-  } finally {
-    onCopy?.();
+  const textMessage = generateDrawClipboardMsg(numbers);
+  if (isWebShareSupported) {
+    try {
+      await navigator.share({
+        text: textMessage,
+      });
+      onSuccess?.("share");
+    } catch (e) {
+      if ((e as Error).name !== "AbortError") {
+        console.error("Error sharing:", e);
+      }
+    }
+  } else {
+    try {
+      await navigator.clipboard.writeText(textMessage);
+      onSuccess?.("copy");
+    } catch (e) {
+      console.error(e);
+    }
   }
 }
 

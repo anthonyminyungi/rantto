@@ -5,10 +5,11 @@ import { useToast } from "@/hooks";
 import Dropdown from "@/components/Dropdown";
 import ButtonGroup from "@/components/ButtonGroup";
 import { SavedDraw, db } from "@/db/savedDraw";
-import { copyDrawList } from "@/utils";
+import { shareDrawList, isWebShareSupported } from "@/utils";
 import ConfirmModal from "@/components/Modal/ConfirmModal";
 import { overlay } from "overlay-kit";
 
+import ShareIcon from "@/assets/share.svg?react";
 import ClipboardIcon from "@/assets/clipboard-document.svg?react";
 import ClipboardCheckIcon from "@/assets/clipboard-document-check.svg?react";
 import TrashIcon from "@/assets/trash.svg?react";
@@ -23,14 +24,14 @@ export default function SavedActions({ data }: SavedActionsProps) {
   const [copied, setCopied] = useState(false);
   const { showToast } = useToast();
 
-  const copyToClipboard = () => {
-    copyDrawList(draws, () => {
+  const handleShare = () => {
+    shareDrawList(draws, (type) => {
       setCopied(true);
       setTimeout(() => {
         setCopied(false);
       }, 2000);
       showToast({
-        content: "클립보드에 복사되었습니다.",
+        content: type === "share" ? "공유 화면이 열립니다." : "클립보드에 복사되었습니다.",
         icon: (
           <CheckCircleIcon className={cx("text-green-500", "w-6", "h-6")} />
         ),
@@ -66,10 +67,14 @@ export default function SavedActions({ data }: SavedActionsProps) {
         <Dropdown
           items={[
             {
-              icon: <ClipboardIcon className={cx("w-5", "h-5")} />,
-              text: "복사",
-              onClick: copyToClipboard,
-              disabled: copied,
+              icon: isWebShareSupported ? (
+                <ShareIcon className={cx("w-5", "h-5")} />
+              ) : (
+                <ClipboardIcon className={cx("w-5", "h-5")} />
+              ),
+              text: isWebShareSupported ? "공유" : "복사",
+              onClick: handleShare,
+              disabled: !isWebShareSupported && copied,
             },
             {
               icon: <TrashIcon className={cx("w-5", "h-5")} />,
@@ -83,10 +88,16 @@ export default function SavedActions({ data }: SavedActionsProps) {
         <ButtonGroup
           items={[
             {
-              icon: copied ? <ClipboardCheckIcon /> : <ClipboardIcon />,
-              text: `복사${copied ? "됨" : ""} `,
-              onClick: copyToClipboard,
-              disabled: copied,
+              icon: isWebShareSupported ? (
+                <ShareIcon />
+              ) : copied ? (
+                <ClipboardCheckIcon />
+              ) : (
+                <ClipboardIcon />
+              ),
+              text: isWebShareSupported ? "공유" : `복사${copied ? "됨" : ""} `,
+              onClick: handleShare,
+              disabled: !isWebShareSupported && copied,
             },
             {
               icon: <TrashIcon />,
