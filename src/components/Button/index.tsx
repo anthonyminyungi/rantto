@@ -1,6 +1,5 @@
 import cx from "classnames";
 import { ButtonHTMLAttributes, PropsWithChildren, ReactNode } from "react";
-import Spacer from "@/components/Spacer";
 
 type ButtonColorVariant = "primary" | "secondary";
 
@@ -47,6 +46,7 @@ export default function Button({
         "align-middle",
         "flex",
         "items-center",
+        "gap-2",
         { "cursor-not-allowed": disabled },
         { "bg-opacity-50": disabled },
         /* hover */
@@ -63,12 +63,7 @@ export default function Button({
       disabled={disabled}
       {...rest}
     >
-      {icon && (
-        <>
-          {icon}
-          <Spacer direction="horizontal" space="2" />
-        </>
-      )}
+      {icon}
       {children}
     </button>
   );

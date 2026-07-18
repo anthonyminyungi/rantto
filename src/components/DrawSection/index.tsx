@@ -1,7 +1,6 @@
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import cx from "classnames";
 
-import Spacer from "@/components/Spacer";
 import DrawItem from "@/components/DrawItem";
 import Button from "@/components/Button";
 import { db } from "@/db/savedDraw";
@@ -63,6 +62,7 @@ export default function DrawSection() {
         "flex",
         "flex-col",
         "items-center",
+        "gap-4",
         "w-full",
         "border",
         "border-gray-400",
@@ -83,19 +83,16 @@ export default function DrawSection() {
       >
         5회 뽑기
       </Button>
-      <Spacer direction="vertical" space={"4"} />
-      <div className={cx("max-w-xl", "w-full")}>
-        {Array.from(Array(drawList.length)).map((_, index) => (
-          <Fragment key={index}>
-            <DrawItem numbers={drawList[index] as DrawListItem} index={index} />
-            {index < drawList.length - 1 && (
-              <Spacer direction="vertical" space="2" />
-            )}
-          </Fragment>
+      <div className={cx("max-w-xl", "w-full", "space-y-2")}>
+        {drawList.map((item, index) => (
+          <DrawItem
+            key={index}
+            numbers={item as DrawListItem}
+            index={index}
+          />
         ))}
       </div>
-      <Spacer direction="vertical" space={"4"} />
-      <div className={cx("flex")}>
+      <div className={cx("flex", "gap-2")}>
         <Button
           icon={
             copied ? (
@@ -113,7 +110,6 @@ export default function DrawSection() {
         >
           {copied ? "복사됨" : "전체복사"}
         </Button>
-        <Spacer direction="horizontal" space={"2"} />
         <Button
           icon={
             <InboxIcon
@@ -125,7 +121,6 @@ export default function DrawSection() {
         >
           보관하기
         </Button>
-        <Spacer direction="horizontal" space={"2"} />
         <Button
           icon={
             <ResetIcon

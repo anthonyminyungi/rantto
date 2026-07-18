@@ -3,7 +3,7 @@ import cx from "classnames";
 
 import NumberBallSet from "@/components/NumberBallSet";
 import SavedActions from "@/components/SavedActions";
-import Spacer from "@/components/Spacer";
+
 import { SavedDraw } from "@/db/savedDraw";
 import { useWinningHistory } from "@/hooks/winningHistory";
 import { getHighestRankByDrawsDiff, getIntersectedNumbers } from "@/utils";
@@ -131,6 +131,7 @@ export default function SavedItem({ data }: SavedItemProps) {
             "flex",
             "justify-center",
             "items-center",
+            "gap-1",
             /* sm */
             "max-sm:-mx-2",
             "max-sm:-mb-2.5",
@@ -143,13 +144,11 @@ export default function SavedItem({ data }: SavedItemProps) {
           {isExtended ? (
             <>
               <span>접기</span>
-              <Spacer direction="horizontal" space="1" />
               <ArrowUpIcon className={cx("w-4", "h-4")} viewBox="0 0 24 24" />
             </>
           ) : (
             <>
               <span>{`외 ${draws.length - 1}개 더 보기`}</span>
-              <Spacer direction="horizontal" space="1" />
               <ArrowDownIcon className={cx("w-4", "h-4")} viewBox="0 0 24 24" />
             </>
           )}

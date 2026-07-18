@@ -8,7 +8,6 @@ import NumberBallSet from "../NumberBallSet";
 import { allNumbers } from "@/constants";
 import NumberBall from "../NumberBall";
 import Button from "../Button";
-import Spacer from "../Spacer";
 
 interface NumberSelectModalProps extends ModalComponentProps {
   drawIdx: number;
@@ -68,6 +67,7 @@ export default function ManualSelectModal({
         "flex-col",
         "justify-center",
         "items-center",
+        "gap-4",
         /* sm */
         "max-w-3xl",
         "max-sm:h-full",
@@ -81,9 +81,7 @@ export default function ManualSelectModal({
       >
         {drawIdx + 1}게임 번호 선택
       </header>
-      <Spacer direction="vertical" space="4" />
       <NumberBallSet numbers={currentNumbers} />
-      <Spacer direction="vertical" space="4" />
       <div
         className={cx(
           "py-6",
@@ -110,12 +108,10 @@ export default function ManualSelectModal({
           />
         ))}
       </div>
-      <Spacer direction="vertical" space="4" />
-      <div className="flex">
+      <div className={cx("flex", "gap-2")}>
         <Button variant="secondary" onClick={handleClose}>
           닫기
         </Button>
-        <Spacer direction="horizontal" space="2" />
         <Button onClick={handleApply} disabled={zeroFiltered.length < 6}>
           적용하기
         </Button>

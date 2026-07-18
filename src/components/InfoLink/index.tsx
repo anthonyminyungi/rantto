@@ -1,7 +1,6 @@
 import cx from "classnames";
 
 import InfoCircle from "@/assets/information-circle.svg?react";
-import Spacer from "../Spacer";
 
 export default function InfoLink() {
   return (
@@ -11,6 +10,7 @@ export default function InfoLink() {
       className={cx(
         "flex",
         "items-center",
+        "gap-1",
         "w-fit",
         "text-blue-500",
         "font-semibold",
@@ -22,7 +22,6 @@ export default function InfoLink() {
       )}
     >
       <InfoCircle />
-      <Spacer direction="horizontal" space="1" />
       사용 안내
     </a>
   );
