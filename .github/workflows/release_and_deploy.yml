@@ -24,8 +24,8 @@ jobs:
         with:
           node-version: 24
 
-      - name: Install Vercel CLI
-        run: npm i -g vercel
+      - name: Install Vercel CLI & pnpm
+        run: npm i -g vercel pnpm
 
       - name: Deploy to Vercel Production
         run: |
