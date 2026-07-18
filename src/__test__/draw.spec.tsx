@@ -1,6 +1,5 @@
 import { getByText, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import _intersection from "lodash/intersection";
 
 import App from "../App";
 import { useDrawStore } from "@/store";
@@ -15,7 +14,7 @@ describe("번호 뽑기 테스트", () => {
     const allSetDrawn = beforeDraw.reduce((acc, beforeDrawnItem, idx) => {
       const afterDrawnItem = afterDraw[idx];
       const isAllDifferentNumbers =
-        _intersection(beforeDrawnItem, afterDrawnItem).length === 0;
+        beforeDrawnItem.filter((x) => afterDrawnItem.includes(x)).length === 0;
       return acc && isAllDifferentNumbers;
     }, true);
 
@@ -31,7 +30,8 @@ describe("번호 뽑기 테스트", () => {
 
     const { drawList: afterDraw } = useDrawStore.getState();
 
-    const isDrawn = _intersection(beforeDraw[0], afterDraw[0]).length === 0;
+    const isDrawn =
+      beforeDraw[0].filter((x) => afterDraw[0].includes(x)).length === 0;
 
     await waitFor(() => expect(isDrawn).toBe(true));
   });

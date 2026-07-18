@@ -1,6 +1,3 @@
-import _last from "lodash/last";
-import _find from "lodash/find";
-
 import { WinningHistory } from "@/types";
 import { useEffect, useMemo, useState } from "react";
 
@@ -29,8 +26,9 @@ export const useWinningHistory = (targetRound?: number): WinningHistory => {
     bonus = 0,
     createdAt = "",
   } = useMemo<WinningHistory>(() => {
-    const lastHistory = _last(winningHistory) || {};
-    const recentHistory = _find(winningHistory, { round: targetRound }) || {};
+    const lastHistory = winningHistory?.at(-1) || {};
+    const recentHistory =
+      winningHistory?.find((item) => item.round === targetRound) || {};
     // 아직 존재하지 않는 회차에 대해 조회할 경우 최근 회차의 데이터 반환
     // TODO: 명시적으로 드러나도록 로직 개선 필요
     if (!targetRound || !recentHistory) {

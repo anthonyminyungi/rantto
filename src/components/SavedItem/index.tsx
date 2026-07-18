@@ -1,6 +1,5 @@
 import { useMemo, useState } from "react";
 import cx from "classnames";
-import { format } from "date-fns";
 
 import NumberBallSet from "@/components/NumberBallSet";
 import SavedActions from "@/components/SavedActions";
@@ -11,6 +10,17 @@ import { getHighestRankByDrawsDiff, getIntersectedNumbers } from "@/utils";
 
 import ArrowDownIcon from "@/assets/chevron-down.svg?react";
 import ArrowUpIcon from "@/assets/chevron-up.svg?react";
+
+function formatDate(date: Date, extended: boolean): string {
+  const y = String(date.getFullYear()).slice(2);
+  const m = String(date.getMonth() + 1).padStart(2, "0");
+  const d = String(date.getDate()).padStart(2, "0");
+  if (!extended) return `${y}.${m}.${d}`;
+  const h = String(date.getHours()).padStart(2, "0");
+  const min = String(date.getMinutes()).padStart(2, "0");
+  const s = String(date.getSeconds()).padStart(2, "0");
+  return `${y}.${m}.${d} ${h}:${min}:${s}`;
+}
 
 interface SavedItemProps {
   data: SavedDraw;
@@ -76,7 +86,7 @@ export default function SavedItem({ data }: SavedItemProps) {
         </span>
         {"・"}
         <span className={cx("px-1.5")}>
-          {format(createdAt, `yy.MM.dd${isExtended ? " HH:mm:ss" : ""}`)}
+          {formatDate(createdAt, isExtended)}
         </span>
       </p>
       <div className={cx("flex", "my-2", "justify-around")}>
