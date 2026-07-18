@@ -122,7 +122,7 @@ export default function Select<TKey extends string>({
               role="listitem"
               onClick={handleSelect(key)}
               className={cx(
-                "rounded",
+                "rounded-sm",
                 "p-2",
                 "m-1",
                 "overflow-hidden",

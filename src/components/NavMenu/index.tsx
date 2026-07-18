@@ -1,52 +1,52 @@
 import cx from "classnames";
+import { Link, useLocation } from "react-router";
 
-import { MenuKey, Tab } from "@/types";
-import { useMenuStore, useToastStore } from "@/store";
+import { MENU_TABS } from "@/constants";
+import { useToastStore } from "@/store";
+import { entriesFromObject } from "@/utils";
 
-interface TabsProps {
-  tabs: Tab[];
-  onChange?: (tab?: Tab) => void;
-}
-
-export default function NavMenu({ tabs }: TabsProps) {
-  const { menu: selected, setMenu } = useMenuStore();
+export default function NavMenu() {
+  const location = useLocation();
   const { initToast } = useToastStore();
 
-  const select = (menu: MenuKey) => () => {
-    if (menu !== selected) {
-      setMenu(menu);
-      initToast();
-    }
+  const handleTabClick = () => {
+    initToast();
   };
+
+  const tabs = entriesFromObject(MENU_TABS);
 
   return (
     <div className={cx("flex", "justify-center", "items-center", "my-6")}>
-      {tabs.map(([key, text]) => (
-        <div
-          key={key}
-          className={cx(
-            "mx-1",
-            "py-2",
-            "px-2",
-            "cursor-pointer",
-            "border-b-2",
-            /* active */
-            {
-              "border-b-blue-500": key === selected,
-              "font-bold": key === selected,
-            },
-            /* not active */
-            {
-              "border-b-transparent": key !== selected,
-              "hover:border-b-blue-300": key !== selected,
-              "hover:transition": key !== selected,
-            }
-          )}
-          onClick={select(key)}
-        >
-          {text}
-        </div>
-      ))}
+      {tabs.map(([key, tab]) => {
+        const isActive = location.pathname === tab.path;
+        return (
+          <Link
+            key={key}
+            to={tab.path}
+            onClick={handleTabClick}
+            className={cx(
+              "mx-1",
+              "py-2",
+              "px-2",
+              "cursor-pointer",
+              "border-b-2",
+              /* active */
+              {
+                "border-b-blue-500": isActive,
+                "font-bold": isActive,
+              },
+              /* not active */
+              {
+                "border-b-transparent": !isActive,
+                "hover:border-b-blue-300": !isActive,
+                "hover:transition": !isActive,
+              }
+            )}
+          >
+            {tab.label}
+          </Link>
+        );
+      })}
     </div>
   );
 }

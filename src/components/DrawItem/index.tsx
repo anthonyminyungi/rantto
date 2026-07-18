@@ -1,5 +1,4 @@
 import cx from "classnames";
-import Spacer from "@/components/Spacer";
 import NumberBallSet from "@/components/NumberBallSet";
 import DrawActions from "@/components/DrawActions";
 import { DrawListItem } from "@/types";
@@ -20,6 +19,7 @@ export default function DrawItem({ numbers, index }: DrawItemProps) {
         "flex",
         "justify-around",
         "items-center",
+        "gap-2",
         "px-3",
         "py-4",
         /* sm */
@@ -29,7 +29,6 @@ export default function DrawItem({ numbers, index }: DrawItemProps) {
       data-testid={`draw-item-${index}`}
     >
       <NumberBallSet numbers={numbers} />
-      <Spacer direction="horizontal" space={"2"} />
       <DrawActions index={index} />
     </div>
   );

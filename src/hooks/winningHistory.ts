@@ -1,48 +1,61 @@
-import _last from "lodash/last";
-import _find from "lodash/find";
+import { useLiveQuery } from "dexie-react-hooks";
+import { useEffect } from "react";
 
 import { WinningHistory } from "@/types";
-import { useEffect, useMemo, useState } from "react";
+import { db, WinningHistoryRecord } from "@/db/savedDraw";
 
 const WINNING_HISTORY_GIST_URL =
   "https://gist.githubusercontent.com/anthonyminyungi/a7237c0717400512855c890d5b0e1ba3/raw/lotto-winning-history.json";
 
+/**
+ * Gist에서 당첨번호를 가져와 IndexedDB에 캐싱하고,
+ * useLiveQuery로 실시간 반영합니다.
+ *
+ * - 최초 방문: Gist fetch → IndexedDB에 bulkPut → useLiveQuery가 자동 반영
+ * - 재방문: IndexedDB 캐시 즉시 반환 → 백그라운드 Gist fetch로 신규 회차만 추가
+ */
 export const useWinningHistory = (targetRound?: number): WinningHistory => {
-  const [winningHistory, setWinningHistory] = useState<WinningHistory[]>();
+  const allHistory = useLiveQuery(
+    () => db.winningHistory.orderBy("round").toArray(),
+    [],
+    [] as WinningHistoryRecord[]
+  );
+
+  // 백그라운드에서 Gist fetch → IndexedDB 동기화
   useEffect(() => {
     let active = true;
-    const getWinningHistoryData = async () => {
-      const res = await fetch(WINNING_HISTORY_GIST_URL);
-      const data = await res.json();
-      if (active) {
-        setWinningHistory(data.history);
+    const syncFromGist = async () => {
+      try {
+        const res = await fetch(WINNING_HISTORY_GIST_URL);
+        const data = await res.json();
+        const history: WinningHistoryRecord[] = data.history ?? [];
+        if (active && history.length > 0) {
+          // bulkPut은 round(PK) 기준으로 upsert하므로 중복 걱정 없음
+          await db.winningHistory.bulkPut(history);
+        }
+      } catch (e) {
+        // 네트워크 실패 시 IndexedDB 캐시로 동작
+        console.warn("Gist fetch 실패, 캐시 데이터로 동작합니다:", e);
       }
     };
-    getWinningHistoryData();
+    syncFromGist();
     return () => {
       active = false;
     };
   }, []);
-  const {
-    round = 0,
-    numbers = [0, 0, 0, 0, 0, 0],
-    bonus = 0,
-    createdAt = "",
-  } = useMemo<WinningHistory>(() => {
-    const lastHistory = _last(winningHistory) || {};
-    const recentHistory = _find(winningHistory, { round: targetRound }) || {};
-    // 아직 존재하지 않는 회차에 대해 조회할 경우 최근 회차의 데이터 반환
-    // TODO: 명시적으로 드러나도록 로직 개선 필요
-    if (!targetRound || !recentHistory) {
-      return lastHistory as WinningHistory;
-    }
-    return recentHistory as WinningHistory;
-  }, [targetRound, winningHistory]);
+
+  // targetRound에 해당하는 회차 또는 최신 회차 반환
+  const lastHistory = allHistory[allHistory.length - 1];
+  const targetHistory = targetRound
+    ? allHistory.find((item) => item.round === targetRound)
+    : undefined;
+
+  const result = targetHistory ?? lastHistory;
 
   return {
-    round,
-    numbers,
-    bonus,
-    createdAt,
+    round: result?.round ?? 0,
+    numbers: (result?.numbers ?? [0, 0, 0, 0, 0, 0]) as WinningHistory["numbers"],
+    bonus: result?.bonus ?? 0,
+    createdAt: result?.createdAt ?? "",
   };
 };

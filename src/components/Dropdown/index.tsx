@@ -1,7 +1,7 @@
 import cx from "classnames";
 import { ReactNode, useRef, useState } from "react";
 
-import Spacer from "@/components/Spacer";
+
 import { useOutsideClick } from "@/hooks";
 
 import KebabIcon from "@/assets/ellipsis-vertical.svg?react";
@@ -68,11 +68,11 @@ export default function Dropdown({ items }: DropdownProps) {
               className={cx(
                 "flex",
                 "items-center",
+                "gap-2",
                 "cursor-pointer",
                 "m-1.5",
                 "text-white",
-                { "cursor-default": disabled },
-                { "text-opacity-50": disabled }
+                { "cursor-default opacity-50 pointer-events-none": disabled }
               )}
               onClick={() => {
                 if (disabled) {
@@ -82,12 +82,7 @@ export default function Dropdown({ items }: DropdownProps) {
                 setIsOpen(false);
               }}
             >
-              {icon && (
-                <>
-                  {icon}
-                  <Spacer direction="horizontal" space="2" />
-                </>
-              )}
+              {icon}
               <span>{text}</span>
             </li>
           ))}

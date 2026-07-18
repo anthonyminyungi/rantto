@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-import { MENU_TABS, SAVED_LIST_SORT_OPTIONS } from "@/constants";
+import { SAVED_LIST_SORT_OPTIONS } from "@/constants";
 
 export type FixedSizeArray<N extends number, T> = N extends 0
   ? []
@@ -12,9 +12,6 @@ export type ObjectEntry<T extends object> = {
 
 export type ObjectEntries<T extends object> = ObjectEntry<T>[];
 
-export type MenuKey = keyof typeof MENU_TABS;
-
-export type Tab = ObjectEntry<typeof MENU_TABS>;
 
 export type DrawListItem = FixedSizeArray<6, number>;
 

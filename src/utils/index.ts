@@ -1,7 +1,4 @@
-import _sampleSize from "lodash/sampleSize";
-import _sortBy from "lodash/sortBy";
-import _isEmpty from "lodash/isEmpty";
-import _intersection from "lodash/intersection";
+import { sampleSize, intersection } from "es-toolkit";
 
 import { DrawList, DrawListItem, ObjectEntries } from "@/types";
 import { allNumbers } from "@/constants";
@@ -19,7 +16,7 @@ export function getBallBgColor(num: number) {
 }
 
 export function drawNumbers(): DrawListItem {
-  return _sortBy(_sampleSize(allNumbers, 6)) as DrawListItem;
+  return sampleSize(allNumbers, 6).toSorted((a, b) => a - b) as DrawListItem;
 }
 
 export function drawAllNumbers(): DrawList {
@@ -32,10 +29,10 @@ export function drawAllNumbers(): DrawList {
 
 export function isDrawEmpty(numbers: DrawList | DrawListItem) {
   const list = Array.isArray(numbers[0]) ? (numbers as DrawList) : [numbers];
-  return _isEmpty(
+  return (
     list.filter(
       (numbers) => numbers?.filter((number) => number === 0).length === 0
-    )
+    ).length === 0
   );
 }
 
@@ -75,7 +72,7 @@ export function getIntersectedNumbers(
   won: DrawListItem,
   bonus: number
 ): number[] {
-  const intersected = _intersection(draw, won);
+  const intersected = intersection(draw, won);
   if (intersected.length === 6) {
     return draw;
   } else if (intersected.length === 5 && draw.includes(bonus)) {

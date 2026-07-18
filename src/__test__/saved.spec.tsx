@@ -20,11 +20,11 @@ describe("보관함 테스트", () => {
     await userEvent.click(await screen.findByText("5회 뽑기"));
     await userEvent.click(await screen.findByText("보관하기"));
 
-    // 삭제 버튼 클릭 시 노출되는 window.confirm mocking
-    vi.spyOn(window, "confirm").mockImplementationOnce(() => true);
-
     await userEvent.click(await screen.findByText("보관함"));
     await userEvent.click(await screen.findByText("삭제"));
+
+    // ConfirmModal 렌더링 대기 후 확인 버튼 클릭
+    await userEvent.click(await screen.findByText("확인"));
 
     await waitFor(async () => expect(await db.savedDraws.count()).toBe(0));
   });

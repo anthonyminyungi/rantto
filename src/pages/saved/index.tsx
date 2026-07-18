@@ -3,7 +3,6 @@ import { useLiveQuery } from "dexie-react-hooks";
 
 import SavedList from "@/components/SavedList";
 import Select from "@/components/Select";
-import Spacer from "@/components/Spacer";
 import { SAVED_LIST_SORT_OPTIONS } from "@/constants";
 import { useSavedPageStore } from "@/store";
 import { entriesFromObject } from "@/utils";
@@ -21,7 +20,8 @@ export default function SavedPage() {
         "flex",
         "flex-col",
         "justify-center",
-        "items-center"
+        "items-center",
+        "gap-4"
       )}
     >
       {total > 0 && (
@@ -33,7 +33,6 @@ export default function SavedPage() {
           />
         </div>
       )}
-      <Spacer direction="vertical" space={"4"} />
       <SavedList />
     </div>
   );
