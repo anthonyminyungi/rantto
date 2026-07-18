@@ -13,7 +13,7 @@ interface ButtonProps
 const getButtonBgColorByVariant = (variant: ButtonColorVariant) => {
   const obj = {
     primary: {
-      normal: "bg-blue-500",
+      normal: "bg-blue-600",
       hover: "hover:bg-blue-600",
     },
     secondary: {

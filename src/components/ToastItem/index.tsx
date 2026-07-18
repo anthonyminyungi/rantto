@@ -31,7 +31,7 @@ export default function ToastListItem({ id, icon, content }: ToastItem) {
     >
       {icon}
       {content}
-      <button onClick={() => closeToast(id)}>
+      <button aria-label="닫기" onClick={() => closeToast(id)}>
         <CloseIcon className={cx("w-5", "h-5")} />
       </button>
     </div>

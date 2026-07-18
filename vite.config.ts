@@ -59,4 +59,13 @@ export default defineConfig({
     }),
   ],
   cacheDir: "./.vite",
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'dexie', 'zustand', 'es-toolkit']
+        }
+      }
+    }
+  },
 });

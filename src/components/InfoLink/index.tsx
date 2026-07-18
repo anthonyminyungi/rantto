@@ -12,7 +12,7 @@ export default function InfoLink() {
         "items-center",
         "gap-1",
         "w-fit",
-        "text-blue-500",
+        "text-blue-600",
         "font-semibold",
         "px-2",
         "py-1",

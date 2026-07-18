@@ -27,6 +27,7 @@ export default function Dropdown({ items }: DropdownProps) {
   return (
     <div ref={ref} className={cx("relative")}>
       <button
+        aria-label="메뉴"
         className={cx(
           "p-1",
           "text-gray-300",
