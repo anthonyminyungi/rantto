@@ -23,8 +23,12 @@ export default function ConfirmModal({
       <div
         className={cx(
           "bg-white",
+          "dark:bg-neutral-900",
           "border",
-          "border-gray-400",
+          "border-gray-200",
+          "dark:border-neutral-700",
+          "shadow-lg",
+          "dark:shadow-neutral-900/50",
           "rounded-xl",
           "px-6",
           "py-8",
@@ -34,7 +38,9 @@ export default function ConfirmModal({
           "items-center",
           "gap-4",
           "w-80",
-          "max-w-full"
+          "max-w-full",
+          "text-neutral-900",
+          "dark:text-neutral-100"
         )}
       >
         <div className={cx("text-center", "font-medium", "text-lg")}>

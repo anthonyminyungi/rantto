@@ -46,14 +46,19 @@ export default function SavedList() {
         <button
           className={cx(
             "border",
+            "border-gray-200",
+            "dark:border-neutral-700",
             "bg-gray-100",
+            "dark:bg-neutral-900",
             "text-gray-500",
+            "dark:text-neutral-400",
             "px-6",
             "py-4",
             "my-4",
             "rounded-full",
             /* hover */
             "hover:bg-gray-200",
+            "dark:hover:bg-neutral-800",
             /* sm */
             "max-sm:px-4",
             "max-sm:py-3",

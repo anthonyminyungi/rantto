@@ -67,6 +67,7 @@ export default function DrawSection() {
         "w-full",
         "border",
         "border-gray-400",
+        "dark:border-neutral-800",
         "rounded-lg",
         "py-6",
         /* sm */

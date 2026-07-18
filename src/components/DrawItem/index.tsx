@@ -12,9 +12,12 @@ export default function DrawItem({ numbers, index }: DrawItemProps) {
   return (
     <div
       className={cx(
-        "bg-gray-100",
+        "bg-white",
+        "shadow-sm",
+        "dark:bg-neutral-900",
         "border",
         "border-gray-200",
+        "dark:border-neutral-800",
         "rounded-lg",
         "flex",
         "justify-around",

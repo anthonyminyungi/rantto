@@ -26,6 +26,7 @@ export default function ButtonGroup({ items }: ButtonGroupProps) {
             "first:rounded-s-md",
             "last:rounded-e-md",
             "bg-gray-400",
+            "dark:bg-neutral-700",
             "p-3",
             "text-white",
             "font-semibold",
@@ -37,7 +38,7 @@ export default function ButtonGroup({ items }: ButtonGroupProps) {
             "transition-all",
             { "cursor-not-allowed opacity-50": disabled },
             /* hover */
-            { "hover:bg-gray-500": !disabled },
+            { "hover:bg-gray-500 dark:hover:bg-neutral-600": !disabled },
             className
           )}
           disabled={disabled}

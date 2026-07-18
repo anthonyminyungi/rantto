@@ -25,7 +25,6 @@ export default function NumberBallSet({
         "grid-cols-6",
         "p-2",
         "rounded-xl",
-        "bg-gray-100",
         {
           "grid-cols-8": !!bonus,
           "max-sm:gap-x-0.5": !!bonus,
@@ -47,7 +46,8 @@ export default function NumberBallSet({
               "flex",
               "justify-center",
               "items-center",
-              "text-gray-400"
+              "text-gray-400",
+              "dark:text-neutral-500"
             )}
           >
             <PlusIcon />

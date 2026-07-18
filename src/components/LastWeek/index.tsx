@@ -19,6 +19,7 @@ export default function LastWeek() {
           "py-6",
           "border",
           "border-gray-400",
+          "dark:border-neutral-800",
           "rounded-lg",
           /* sm */
           "max-sm:py-4"
@@ -34,12 +35,14 @@ export default function LastWeek() {
               target="_blank"
               className={cx(
                 "text-blue-600",
+                "dark:text-blue-400",
                 "font-semibold",
                 "px-2",
                 "py-1",
                 "rounded-md",
                 /* hover */
-                "hover:bg-gray-100"
+                "hover:bg-gray-100",
+                "dark:hover:bg-neutral-800"
               )}
             >
               {round}회
