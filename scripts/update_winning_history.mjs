@@ -14,7 +14,7 @@ import stringify from "json-stringify-pretty-compact";
 
 const GIST_ID = "a7237c0717400512855c890d5b0e1ba3";
 const FILE_NAME = "lotto-winning-history.json";
-const BASE_URL = "http://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=";
+const BASE_URL = "http://www.dhlottery.co.kr/lt645/selectPstLt645Info.do?srchLtEpsd=";
 
 async function getGistData(octokit) {
   const gist = await octokit.gists.get({ gist_id: GIST_ID });
@@ -29,30 +29,36 @@ async function fetchWinningNumbers(round) {
   try {
     const response = await page.goto(`${BASE_URL}${round}`, {
       waitUntil: "domcontentloaded",
+      timeout: 60000,
     });
 
-    const text = await response.text();
+    // 기존 방식: <pre> 태그 내의 JSON 파싱
+    const preText = await page.locator("pre").textContent();
+    const parsedData = JSON.parse(preText);
+    const item = parsedData.data?.list?.[0];
 
-    // API는 JSON을 직접 반환
-    const data = JSON.parse(text);
-
-    if (data.returnValue !== "success") {
+    // 데이터가 없거나(아직 추첨 전) 회차가 다르면 null 반환
+    if (!item || item.ltEpsd !== round) {
       console.log(`회차 ${round}: 아직 추첨 전이거나 데이터 없음`);
       return null;
     }
 
+    // 날짜 포맷 변환 "20260718" -> "2026-07-18" (date-fns 대체)
+    const dateStr = item.ltRflYmd;
+    const formattedDate = `${dateStr.slice(0, 4)}-${dateStr.slice(4, 6)}-${dateStr.slice(6, 8)}`;
+
     return {
-      round: data.drwNo,
+      round: item.ltEpsd,
       numbers: [
-        data.drwtNo1,
-        data.drwtNo2,
-        data.drwtNo3,
-        data.drwtNo4,
-        data.drwtNo5,
-        data.drwtNo6,
+        item.tm1WnNo,
+        item.tm2WnNo,
+        item.tm3WnNo,
+        item.tm4WnNo,
+        item.tm5WnNo,
+        item.tm6WnNo,
       ],
-      bonus: data.bnusNo,
-      createdAt: data.drwNoDate,
+      bonus: item.bnsWnNo,
+      createdAt: formattedDate,
     };
   } finally {
     await browser.close();
