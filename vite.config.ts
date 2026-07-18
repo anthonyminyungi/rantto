@@ -59,12 +59,4 @@ export default defineConfig({
     }),
   ],
   cacheDir: "./.vite",
-  build: {
-    rollupOptions: {
-      external: [
-        "/_vercel/speed-insights/script.js",
-        "/_vercel/insights/script.js",
-      ],
-    },
-  },
 });
