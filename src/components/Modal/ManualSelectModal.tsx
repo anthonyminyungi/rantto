@@ -32,8 +32,8 @@ export default function ManualSelectModal({
   const handleSelectNumber = useCallback(
     (num: number) => () => {
       if (zeroFiltered.length === 6 && !zeroFiltered.includes(num)) {
-        overlay.open(({ close }) => (
-          <AlertModal content="최대 6개까지만 선택 가능" close={close} />
+        overlay.open(({ unmount }) => (
+          <AlertModal content="최대 6개까지만 선택 가능" close={unmount} />
         ));
         return;
       }

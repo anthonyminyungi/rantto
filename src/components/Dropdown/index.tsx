@@ -72,8 +72,7 @@ export default function Dropdown({ items }: DropdownProps) {
                 "cursor-pointer",
                 "m-1.5",
                 "text-white",
-                { "cursor-default": disabled },
-                { "text-opacity-50": disabled }
+                { "cursor-default opacity-50 pointer-events-none": disabled }
               )}
               onClick={() => {
                 if (disabled) {

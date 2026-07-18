@@ -40,10 +40,10 @@ export default function SavedActions({ data }: SavedActionsProps) {
 
   const handleDelete = () => {
     if (id) {
-      overlay.open(({ close }) => (
+      overlay.open(({ unmount }) => (
         <ConfirmModal
           content="정말 삭제하시겠습니까?"
-          close={close}
+          close={unmount}
           onConfirm={() => {
             db.savedDraws.delete(id);
             showToast({

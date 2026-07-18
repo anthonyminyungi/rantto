@@ -10,19 +10,18 @@ export default function ModalItemWrapper({
     <>
       {backdrop !== "none" && (
         <div
-          className={cx("absolute", "z-0", "w-full", "h-full", {
+          className={cx("fixed", "inset-0", "z-40", {
             "backdrop-blur-xs": backdrop === "blur-sm",
+            "bg-black/30": backdrop === "dimmed",
           })}
         />
       )}
       <div
         className={cx(
-          { "modal-center": center },
-          "absolute",
-          "z-20",
-          "w-full",
-          "h-full",
-          "max-sm:h-screen"
+          "fixed",
+          "inset-0",
+          "z-50",
+          { "modal-center": center }
         )}
       >
         {children}

@@ -53,8 +53,8 @@ export default function DrawActions({ index }: DrawActionsProps) {
   };
 
   const handleClickSelect = () => {
-    overlay.open(({ close }) => {
-      return <ManualSelectModal drawIdx={index} close={close} />;
+    overlay.open(({ unmount }) => {
+      return <ManualSelectModal drawIdx={index} close={unmount} />;
     });
   };
 
