@@ -1,3 +1,5 @@
+import { last } from "es-toolkit";
+
 import { WinningHistory } from "@/types";
 import { useEffect, useMemo, useState } from "react";
 
@@ -26,7 +28,7 @@ export const useWinningHistory = (targetRound?: number): WinningHistory => {
     bonus = 0,
     createdAt = "",
   } = useMemo<WinningHistory>(() => {
-    const lastHistory = winningHistory?.at(-1) || {};
+    const lastHistory = last(winningHistory ?? []) || {};
     const recentHistory =
       winningHistory?.find((item) => item.round === targetRound) || {};
     // 아직 존재하지 않는 회차에 대해 조회할 경우 최근 회차의 데이터 반환

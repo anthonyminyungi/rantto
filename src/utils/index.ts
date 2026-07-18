@@ -1,14 +1,7 @@
+import { sampleSize, intersection } from "es-toolkit";
+
 import { DrawList, DrawListItem, ObjectEntries } from "@/types";
 import { allNumbers } from "@/constants";
-
-function sampleSize<T>(arr: readonly T[], n: number): T[] {
-  const copy = [...arr];
-  for (let i = copy.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [copy[i], copy[j]] = [copy[j], copy[i]];
-  }
-  return copy.slice(0, n);
-}
 
 export function getBallBgColor(num: number) {
   /* https://tailwindcss.com/docs/content-configuration#dynamic-class-names */
@@ -79,7 +72,7 @@ export function getIntersectedNumbers(
   won: DrawListItem,
   bonus: number
 ): number[] {
-  const intersected = draw.filter((x) => won.includes(x));
+  const intersected = intersection(draw, won);
   if (intersected.length === 6) {
     return draw;
   } else if (intersected.length === 5 && draw.includes(bonus)) {

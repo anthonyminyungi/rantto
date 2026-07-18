@@ -40,6 +40,7 @@ const RAW_RUNTIME_STATE =
           ["classnames", "npm:2.3.2"],\
           ["dexie", "npm:3.2.4"],\
           ["dexie-react-hooks", "virtual:e9044eb4b22dc4d91b1391da976d430c56c2541bb11944f80e0ce39e201a7d939d9ac9a25093c2503a1d79eb1003ae1ba922a9d202bd108394b28226e4c344f6#npm:1.1.6"],\
+          ["es-toolkit", "npm:1.49.0"],\
           ["eslint", "npm:8.50.0"],\
           ["eslint-plugin-react-hooks", "virtual:e9044eb4b22dc4d91b1391da976d430c56c2541bb11944f80e0ce39e201a7d939d9ac9a25093c2503a1d79eb1003ae1ba922a9d202bd108394b28226e4c344f6#npm:4.6.0"],\
           ["eslint-plugin-react-refresh", "virtual:e9044eb4b22dc4d91b1391da976d430c56c2541bb11944f80e0ce39e201a7d939d9ac9a25093c2503a1d79eb1003ae1ba922a9d202bd108394b28226e4c344f6#npm:0.4.3"],\
@@ -3574,6 +3575,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["es-toolkit", [\
+      ["npm:1.49.0", {\
+        "packageLocation": "./.yarn/cache/es-toolkit-npm-1.49.0-7aa36d31fe-ff0377f1fa.zip/node_modules/es-toolkit/",\
+        "packageDependencies": [\
+          ["es-toolkit", "npm:1.49.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["esbuild", [\
       ["npm:0.19.11", {\
         "packageLocation": "./.yarn/unplugged/esbuild-npm-0.19.11-b091158d92/node_modules/esbuild/",\
@@ -6182,6 +6192,7 @@ const RAW_RUNTIME_STATE =
           ["classnames", "npm:2.3.2"],\
           ["dexie", "npm:3.2.4"],\
           ["dexie-react-hooks", "virtual:e9044eb4b22dc4d91b1391da976d430c56c2541bb11944f80e0ce39e201a7d939d9ac9a25093c2503a1d79eb1003ae1ba922a9d202bd108394b28226e4c344f6#npm:1.1.6"],\
+          ["es-toolkit", "npm:1.49.0"],\
           ["eslint", "npm:8.50.0"],\
           ["eslint-plugin-react-hooks", "virtual:e9044eb4b22dc4d91b1391da976d430c56c2541bb11944f80e0ce39e201a7d939d9ac9a25093c2503a1d79eb1003ae1ba922a9d202bd108394b28226e4c344f6#npm:4.6.0"],\
           ["eslint-plugin-react-refresh", "virtual:e9044eb4b22dc4d91b1391da976d430c56c2541bb11944f80e0ce39e201a7d939d9ac9a25093c2503a1d79eb1003ae1ba922a9d202bd108394b28226e4c344f6#npm:0.4.3"],\
