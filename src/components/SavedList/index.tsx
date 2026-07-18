@@ -1,9 +1,8 @@
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import cx from "classnames";
 import { useLiveQuery } from "dexie-react-hooks";
 
 import SavedItem from "@/components/SavedItem";
-import Spacer from "@/components/Spacer";
 import { db } from "@/db/savedDraw";
 import { useSavedPageStore } from "@/store";
 import { SAVE_ITEM_COUNT_PER_PAGE } from "@/constants";
@@ -39,41 +38,38 @@ export default function SavedList() {
   }
 
   return (
-    <div className={cx("w-full", "flex", "flex-col", "items-center")}>
-      {list.map((item, index) => (
-        <Fragment key={item.id}>
-          <SavedItem data={item} />
-          {index < list.length - 1 && (
-            <Spacer direction="vertical" space={"2"} />
-          )}
-        </Fragment>
+    <div className={cx("w-full", "flex", "flex-col", "items-center", "gap-2")}>
+      {list.map((item) => (
+        <SavedItem key={item.id} data={item} />
       ))}
       {list.length < total && (
-        <>
-          <Spacer direction="vertical" space="4" />
-          <button
-            className={cx(
-              "border",
-              "bg-gray-100",
-              "text-gray-500",
-              "px-6",
-              "py-4",
-              "my-4",
-              "rounded-full",
-              /* hover */
-              "hover:bg-gray-200",
-              /* sm */
-              "max-sm:px-4",
-              "max-sm:py-3",
-              "max-sm:font-normal",
-              "max-sm:text-sm",
-              "max-sm:my-2"
-            )}
-            onClick={loadMore}
-          >
-            더 보기
-          </button>
-        </>
+        <button
+          className={cx(
+            "border",
+            "border-gray-200",
+            "dark:border-neutral-700",
+            "bg-gray-100",
+            "dark:bg-neutral-900",
+            "text-gray-500",
+            "dark:text-neutral-400",
+            "px-6",
+            "py-4",
+            "my-4",
+            "rounded-full",
+            /* hover */
+            "hover:bg-gray-200",
+            "dark:hover:bg-neutral-800",
+            /* sm */
+            "max-sm:px-4",
+            "max-sm:py-3",
+            "max-sm:font-normal",
+            "max-sm:text-sm",
+            "max-sm:my-2"
+          )}
+          onClick={loadMore}
+        >
+          더 보기
+        </button>
       )}
     </div>
   );

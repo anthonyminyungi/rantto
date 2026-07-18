@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="ko">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -7,11 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="apple-mobile-web-app-title"
-      content="Rantto | 로또 번호 랜덤 뽑기"
+      content="Rantto | 로또 번호 생성기 (랜덤 뽑기)"
     />
-    <meta name="title" content="Rantto | 로또 번호 랜덤 뽑기" />
-    <meta name="description" content="나만의 로또 번호를 마음껏 뽑아보세요" />
-    <title>Rantto | 로또 번호 랜덤 뽑기</title>
+    <meta name="title" content="Rantto | 로또 번호 생성기 (랜덤 뽑기)" />
+    <meta name="description" content="나만의 행운의 로또 번호를 간편하게 뽑아보세요. 당첨 번호 통계 기반의 번호 추천부터 수동 선택까지, Rantto에서 이번 주 로또 번호를 생성하고 안전하게 저장할 수 있습니다." />
+    <link rel="canonical" href="https://rantto.app/" />
+    <title>Rantto | 로또 번호 생성기 (랜덤 뽑기)</title>
     <!-- favicon -->
     <meta name="msapplication-TileColor" content="#ffffff" />
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
@@ -57,46 +58,26 @@
     <!-- Open Graph -->
     <meta property="og:url" content="https://rantto.app" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Rantto | 로또 번호 랜덤 뽑기" />
+    <meta property="og:title" content="Rantto | 로또 번호 생성기 (랜덤 뽑기)" />
     <meta
       property="og:description"
-      content="나만의 로또 번호를 마음껏 뽑아보세요"
+      content="나만의 행운의 로또 번호를 간편하게 뽑아보세요. 당첨 번호 통계 기반의 번호 추천부터 수동 선택까지, Rantto에서 이번 주 로또 번호를 생성하고 안전하게 저장할 수 있습니다."
     />
     <meta property="og:image" content="/thumbnail.png" />
     <!-- Twitter Og -->
     <meta property="twitter:url" content="https://rantto.app" />
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Rantto | 로또 번호 랜덤 뽑기" />
+    <meta name="twitter:title" content="Rantto | 로또 번호 생성기 (랜덤 뽑기)" />
     <meta
       name="twitter:description"
-      content="나만의 로또 번호를 마음껏 뽑아보세요"
+      content="나만의 행운의 로또 번호를 간편하게 뽑아보세요. 당첨 번호 통계 기반의 번호 추천부터 수동 선택까지, Rantto에서 이번 주 로또 번호를 생성하고 안전하게 저장할 수 있습니다."
     />
     <meta name="twitter:image" content="/thumbnail.png" />
     <!-- AdSense -->
     <meta name="google-adsense-account" content="ca-pub-8634316481995713" />
-    <!-- vercel analytics -->
-    <script>
-      window.va =
-        window.va ||
-        function () {
-          (window.vaq = window.vaq || []).push(arguments);
-        };
-    </script>
-    <script type="module" defer src="/_vercel/insights/script.js"></script>
-    <!-- vercel speed insights -->
-    <script>
-      window.si =
-        window.si ||
-        function () {
-          (window.siq = window.siq || []).push(arguments);
-        };
-    </script>
-    <script
-      type="module"
-      defer
-      src="/_vercel/speed-insights/script.js"
-    ></script>
+
     <!-- Google tag (gtag.js) -->
+    <link rel="preconnect" href="https://www.googletagmanager.com" />
     <script
       async
       src="https://www.googletagmanager.com/gtag/js?id=G-YG2FWQ1RXR"
@@ -109,11 +90,40 @@
       gtag("js", new Date());
       gtag("config", "G-YG2FWQ1RXR");
     </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Rantto",
+      "url": "https://rantto.app",
+      "description": "로또 번호 랜덤 생성 및 저장 서비스",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All"
+    }
+    </script>
+    <script>
+      (function () {
+        try {
+          var storageValue = localStorage.getItem("theme-storage");
+          if (storageValue) {
+            var parsed = JSON.parse(storageValue);
+            if (parsed.state && parsed.state.theme === "dark") {
+              document.documentElement.classList.add("dark");
+              return;
+            } else if (parsed.state && parsed.state.theme === "light") {
+              document.documentElement.classList.remove("dark");
+              return;
+            }
+          }
+          if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+            document.documentElement.classList.add("dark");
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
-    <div id="global-toast-container"></div>
-    <div id="global-modal-container"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

@@ -1,38 +1,22 @@
-import { createPortal } from "react-dom";
+import cx from "classnames";
 
 import ToastItem from "@/components/ToastItem";
 import { useToastStore } from "@/store";
-import { useLayoutEffect } from "react";
 
 export default function ToastList() {
   const { toastList } = useToastStore();
-  const container = document.getElementById(
-    "global-toast-container"
-  ) as Element;
-
-  useLayoutEffect(() => {
-    if (toastList.length === 0) {
-      container.classList.remove("active");
-    } else {
-      if (!container.classList.contains("active")) {
-        container.classList.add("active");
-      }
-    }
-    return () => {
-      container.classList.remove("active");
-    };
-  }, [container.classList, toastList.length]);
 
   return (
-    toastList.length > 0 && (
-      <>
-        {toastList.map((toastItem) =>
-          createPortal(
-            <ToastItem key={toastItem.id} {...toastItem} />,
-            container
-          )
-        )}
-      </>
-    )
+    <div
+      id="global-toast-container"
+      className={cx(
+        "fixed inset-x-0 bottom-0 z-50 mx-auto flex max-w-full flex-col items-center",
+        { "p-4 px-3": toastList.length > 0 }
+      )}
+    >
+      {toastList.map((toastItem) => (
+        <ToastItem key={toastItem.id} {...toastItem} />
+      ))}
+    </div>
   );
 }

@@ -1,6 +1,5 @@
 import cx from "classnames";
 
-import Spacer from "@/components/Spacer";
 import { ToastItem } from "@/types";
 import { useToast } from "@/hooks";
 
@@ -12,32 +11,32 @@ export default function ToastListItem({ id, icon, content }: ToastItem) {
     <div
       className={cx(
         "bg-white",
+        "dark:bg-neutral-900",
+        "text-neutral-900",
+        "dark:text-neutral-100",
         "font-semibold",
         "transition-all",
         "mt-2",
         "px-3",
         "py-3",
         "border",
+        "border-gray-400",
+        "dark:border-neutral-700",
         "rounded-lg",
         "max-w-full",
-        "border-gray-400",
         "shadow-lg",
+        "dark:shadow-neutral-900/50",
         "flex",
         "justify-center",
         "items-center",
+        "gap-2",
         /* sm */
         "max-sm:text-sm"
       )}
     >
-      {icon && (
-        <>
-          {icon}
-          <Spacer direction="horizontal" space="2" />
-        </>
-      )}
+      {icon}
       {content}
-      <Spacer direction="horizontal" space="2" />
-      <button onClick={() => closeToast(id)}>
+      <button aria-label="닫기" onClick={() => closeToast(id)}>
         <CloseIcon className={cx("w-5", "h-5")} />
       </button>
     </div>

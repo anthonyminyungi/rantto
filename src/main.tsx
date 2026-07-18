@@ -1,10 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { inject } from "@vercel/analytics";
+import { injectSpeedInsights } from "@vercel/speed-insights";
 import App from "./App.tsx";
-import "tailwindcss/tailwind.css";
+import { migrateOldDatabase } from "./db/savedDraw";
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+inject();
+injectSpeedInsights();
+
+migrateOldDatabase().finally(() => {
+  ReactDOM.createRoot(document.getElementById("root")!).render(
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  );
+});

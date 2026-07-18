@@ -1,17 +1,17 @@
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import cx from "classnames";
 
-import Spacer from "@/components/Spacer";
 import DrawItem from "@/components/DrawItem";
 import Button from "@/components/Button";
 import { db } from "@/db/savedDraw";
 import { useWinningHistory } from "@/hooks/winningHistory";
 import { useToast } from "@/hooks";
-import { copyDrawList, drawAllNumbers, isDrawEmpty } from "@/utils";
+import { shareDrawList, drawAllNumbers, isDrawEmpty, isWebShareSupported } from "@/utils";
 import { useDrawStore } from "@/store";
 import { DrawList, DrawListItem } from "@/types";
 
 import TicketIcon from "@/assets/ticket.svg?react";
+import ShareIcon from "@/assets/share.svg?react";
 import ClipboardIcon from "@/assets/clipboard-document.svg?react";
 import ClipboardCheckIcon from "@/assets/clipboard-document-check.svg?react";
 import InboxIcon from "@/assets/inbox-arrow-down.svg?react";
@@ -24,14 +24,14 @@ export default function DrawSection() {
   const { round: recentRound } = useWinningHistory();
   const { showToast } = useToast();
 
-  const handleCopy = () => {
-    copyDrawList(drawList, () => {
+  const handleShare = () => {
+    shareDrawList(drawList, (type) => {
       setCopied(true);
       setTimeout(() => {
         setCopied(false);
       }, 2000);
       showToast({
-        content: "클립보드에 복사되었습니다.",
+        content: type === "share" ? "공유 화면이 열립니다." : "클립보드에 복사되었습니다.",
         icon: (
           <CheckCircleIcon className={cx("text-green-500", "w-6", "h-6")} />
         ),
@@ -63,9 +63,11 @@ export default function DrawSection() {
         "flex",
         "flex-col",
         "items-center",
+        "gap-4",
         "w-full",
         "border",
         "border-gray-400",
+        "dark:border-neutral-800",
         "rounded-lg",
         "py-6",
         /* sm */
@@ -83,22 +85,19 @@ export default function DrawSection() {
       >
         5회 뽑기
       </Button>
-      <Spacer direction="vertical" space={"4"} />
-      <div className={cx("max-w-xl", "w-full")}>
-        {Array.from(Array(drawList.length)).map((_, index) => (
-          <Fragment key={index}>
-            <DrawItem numbers={drawList[index] as DrawListItem} index={index} />
-            {index < drawList.length - 1 && (
-              <Spacer direction="vertical" space="2" />
-            )}
-          </Fragment>
+      <div className={cx("max-w-xl", "w-full", "space-y-2")}>
+        {drawList.map((item, index) => (
+          <DrawItem key={index} numbers={item as DrawListItem} index={index} />
         ))}
       </div>
-      <Spacer direction="vertical" space={"4"} />
-      <div className={cx("flex")}>
+      <div className={cx("flex", "gap-2")}>
         <Button
           icon={
-            copied ? (
+            isWebShareSupported ? (
+              <ShareIcon
+                className={cx("w-6", "h-6", "max-sm:w-5", "max-sm:h-5")}
+              />
+            ) : copied ? (
               <ClipboardCheckIcon
                 className={cx("w-6", "h-6", "max-sm:w-5", "max-sm:h-5")}
               />
@@ -108,12 +107,11 @@ export default function DrawSection() {
               />
             )
           }
-          onClick={handleCopy}
-          disabled={isDrawEmpty(drawList) || copied}
+          onClick={handleShare}
+          disabled={isDrawEmpty(drawList) || (!isWebShareSupported && copied)}
         >
-          {copied ? "복사됨" : "전체복사"}
+          {isWebShareSupported ? "전체 공유" : copied ? "복사됨" : "전체복사"}
         </Button>
-        <Spacer direction="horizontal" space={"2"} />
         <Button
           icon={
             <InboxIcon
@@ -125,7 +123,6 @@ export default function DrawSection() {
         >
           보관하기
         </Button>
-        <Spacer direction="horizontal" space={"2"} />
         <Button
           icon={
             <ResetIcon

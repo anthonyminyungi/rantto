@@ -1,7 +1,6 @@
 import cx from "classnames";
 
 import NumberBallSet from "@/components/NumberBallSet";
-import Spacer from "@/components/Spacer";
 import { FixedSizeArray } from "@/types";
 import { useWinningHistory } from "@/hooks/winningHistory";
 
@@ -15,10 +14,12 @@ export default function LastWeek() {
           "flex-col",
           "justify-center",
           "items-center",
+          "gap-4",
           "w-full",
           "py-6",
           "border",
           "border-gray-400",
+          "dark:border-neutral-800",
           "rounded-lg",
           /* sm */
           "max-sm:py-4"
@@ -33,13 +34,15 @@ export default function LastWeek() {
               href="https://dhlottery.co.kr/lt645/result"
               target="_blank"
               className={cx(
-                "text-blue-500",
+                "text-blue-600",
+                "dark:text-blue-400",
                 "font-semibold",
                 "px-2",
                 "py-1",
                 "rounded-md",
                 /* hover */
-                "hover:bg-gray-100"
+                "hover:bg-gray-100",
+                "dark:hover:bg-neutral-800"
               )}
             >
               {round}회
@@ -47,7 +50,6 @@ export default function LastWeek() {
             ({createdAt} 추첨)
           </p>
         </div>
-        <Spacer direction="vertical" space={"4"} />
         <NumberBallSet
           numbers={numbers as FixedSizeArray<6, number>}
           bonus={bonus}

@@ -1,52 +1,51 @@
 import cx from "classnames";
+import { Link, useLocation } from "react-router";
 
-import { MenuKey, Tab } from "@/types";
-import { useMenuStore, useToastStore } from "@/store";
+import { MENU_TABS } from "@/constants";
+import { useToastStore } from "@/store";
+import { entriesFromObject } from "@/utils";
 
-interface TabsProps {
-  tabs: Tab[];
-  onChange?: (tab?: Tab) => void;
-}
-
-export default function NavMenu({ tabs }: TabsProps) {
-  const { menu: selected, setMenu } = useMenuStore();
+export default function NavMenu() {
+  const location = useLocation();
   const { initToast } = useToastStore();
 
-  const select = (menu: MenuKey) => () => {
-    if (menu !== selected) {
-      setMenu(menu);
-      initToast();
-    }
+  const handleTabClick = () => {
+    initToast();
   };
 
+  const tabs = entriesFromObject(MENU_TABS);
+
   return (
-    <div className={cx("flex", "justify-center", "items-center", "my-6")}>
-      {tabs.map(([key, text]) => (
-        <div
-          key={key}
-          className={cx(
-            "mx-1",
-            "py-2",
-            "px-2",
-            "cursor-pointer",
-            "border-b-2",
-            /* active */
-            {
-              "border-b-blue-500": key === selected,
-              "font-bold": key === selected,
-            },
-            /* not active */
-            {
-              "border-b-transparent": key !== selected,
-              "hover:border-b-blue-300": key !== selected,
-              "hover:transition": key !== selected,
-            }
-          )}
-          onClick={select(key)}
-        >
-          {text}
-        </div>
-      ))}
+    <div className={cx("flex", "items-center", "bg-gray-200/50", "dark:bg-neutral-800", "rounded-full", "p-1")}>
+      {tabs.map(([key, tab]) => {
+        const isActive = location.pathname === tab.path;
+        return (
+          <Link
+            key={key}
+            to={tab.path}
+            onClick={handleTabClick}
+            className={cx(
+              "px-4",
+              "py-1.5",
+              "text-sm",
+              "font-medium",
+              "rounded-full",
+              "transition-all",
+              "duration-200",
+              /* active */
+              {
+                "bg-white text-neutral-900 shadow-sm dark:bg-neutral-700 dark:text-white": isActive,
+              },
+              /* not active */
+              {
+                "text-gray-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100": !isActive,
+              }
+            )}
+          >
+            {tab.label}
+          </Link>
+        );
+      })}
     </div>
   );
 }

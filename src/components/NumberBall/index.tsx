@@ -27,7 +27,7 @@ export default function NumberBall({
         "text-white",
         "font-semibold",
         getBallBgColor(noBg ? 0 : number),
-        { "bg-opacity-35": blurred },
+        { "opacity-35": blurred },
         { "cursor-pointer": Boolean(onClick) },
         /* sm */
         "max-sm:w-10",

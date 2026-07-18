@@ -1,7 +1,4 @@
-import _sampleSize from "lodash/sampleSize";
-import _sortBy from "lodash/sortBy";
-import _isEmpty from "lodash/isEmpty";
-import _intersection from "lodash/intersection";
+import { sampleSize, intersection } from "es-toolkit";
 
 import { DrawList, DrawListItem, ObjectEntries } from "@/types";
 import { allNumbers } from "@/constants";
@@ -9,17 +6,17 @@ import { allNumbers } from "@/constants";
 export function getBallBgColor(num: number) {
   /* https://tailwindcss.com/docs/content-configuration#dynamic-class-names */
   return {
-    "bg-gray-300": num === 0,
+    "bg-gray-300 dark:bg-neutral-700": num === 0,
     "bg-yellow-500": num > 0 && num <= 10,
-    "bg-sky-500": num > 10 && num <= 20,
-    "bg-rose-500": num > 20 && num <= 30,
+    "bg-sky-600": num > 10 && num <= 20,
+    "bg-rose-600": num > 20 && num <= 30,
     "bg-zinc-500": num > 30 && num <= 40,
     "bg-lime-500": num > 40,
   };
 }
 
 export function drawNumbers(): DrawListItem {
-  return _sortBy(_sampleSize(allNumbers, 6)) as DrawListItem;
+  return sampleSize(allNumbers, 6).toSorted((a, b) => a - b) as DrawListItem;
 }
 
 export function drawAllNumbers(): DrawList {
@@ -32,10 +29,10 @@ export function drawAllNumbers(): DrawList {
 
 export function isDrawEmpty(numbers: DrawList | DrawListItem) {
   const list = Array.isArray(numbers[0]) ? (numbers as DrawList) : [numbers];
-  return _isEmpty(
+  return (
     list.filter(
       (numbers) => numbers?.filter((number) => number === 0).length === 0
-    )
+    ).length === 0
   );
 }
 
@@ -52,17 +49,31 @@ export function generateDrawClipboardMsg(numbers: DrawList | DrawListItem) {
   return numbersToText;
 }
 
-export async function copyDrawList(
+export const isWebShareSupported = typeof navigator !== "undefined" && !!navigator.share;
+
+export async function shareDrawList(
   numbers: DrawList | DrawListItem,
-  onCopy?: () => void
+  onSuccess?: (type: "share" | "copy") => void
 ) {
-  const clipboardMessage = generateDrawClipboardMsg(numbers);
-  try {
-    await navigator.clipboard.writeText(clipboardMessage);
-  } catch (e) {
-    console.error(e);
-  } finally {
-    onCopy?.();
+  const textMessage = generateDrawClipboardMsg(numbers);
+  if (isWebShareSupported) {
+    try {
+      await navigator.share({
+        text: textMessage,
+      });
+      onSuccess?.("share");
+    } catch (e) {
+      if ((e as Error).name !== "AbortError") {
+        console.error("Error sharing:", e);
+      }
+    }
+  } else {
+    try {
+      await navigator.clipboard.writeText(textMessage);
+      onSuccess?.("copy");
+    } catch (e) {
+      console.error(e);
+    }
   }
 }
 
@@ -75,7 +86,7 @@ export function getIntersectedNumbers(
   won: DrawListItem,
   bonus: number
 ): number[] {
-  const intersected = _intersection(draw, won);
+  const intersected = intersection(draw, won);
   if (intersected.length === 6) {
     return draw;
   } else if (intersected.length === 5 && draw.includes(bonus)) {

@@ -1,23 +1,6 @@
 import { create } from "zustand";
 
-import {
-  DrawList,
-  DrawListItem,
-  MenuKey,
-  SavedListSortKey,
-  ToastItem,
-} from "@/types";
-import { ModalItem } from "@/types/modal";
-
-interface MenuState {
-  menu: MenuKey;
-  setMenu: (menu: MenuKey) => void;
-}
-
-export const useMenuStore = create<MenuState>((set) => ({
-  menu: "main",
-  setMenu: (selected) => set(() => ({ menu: selected })),
-}));
+import { DrawList, DrawListItem, SavedListSortKey, ToastItem } from "@/types";
 
 interface DrawState {
   drawList: DrawList;
@@ -87,46 +70,6 @@ export const useToastStore = create<ToastState>((set) => ({
       toastList: prevState.toastList.filter(
         (toastItem) => toastItem?.id !== removeId
       ),
-    }));
-  },
-}));
-
-interface ModalState {
-  modals: ModalItem[];
-  peek: () => ModalItem | null;
-  clear: () => void;
-  push: (modal: ModalItem) => Promise<void>;
-  pop: () => void;
-}
-
-export const useModalStore = create<ModalState>((set, get) => ({
-  modals: [],
-  peek: () => get().modals.at(-1) || null,
-  clear: () => set({ modals: [] }),
-  push: ({ component, props, options }) =>
-    new Promise((resolve) => {
-      const id = `${component.name}::${new Date().getTime()}`;
-      const close = (value: void | PromiseLike<void>) => {
-        get().pop();
-        options?.onClose?.();
-        resolve(value);
-      };
-
-      set((prevState) => ({
-        modals: [
-          ...prevState.modals,
-          {
-            id,
-            component,
-            props: { ...props, close },
-            options,
-          },
-        ],
-      }));
-    }),
-  pop: () => {
-    set((prevState) => ({
-      modals: [...prevState.modals.slice(0, -1)],
     }));
   },
 }));

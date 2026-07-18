@@ -1,12 +1,10 @@
 import cx from "classnames";
 import { ButtonHTMLAttributes, PropsWithChildren, ReactNode } from "react";
-import Spacer from "@/components/Spacer";
 
 type ButtonColorVariant = "primary" | "secondary";
 
 interface ButtonProps
-  extends PropsWithChildren,
-    ButtonHTMLAttributes<HTMLButtonElement> {
+  extends PropsWithChildren, ButtonHTMLAttributes<HTMLButtonElement> {
   icon?: ReactNode | undefined;
   disabled?: boolean;
   variant?: ButtonColorVariant;
@@ -15,7 +13,7 @@ interface ButtonProps
 const getButtonBgColorByVariant = (variant: ButtonColorVariant) => {
   const obj = {
     primary: {
-      normal: "bg-blue-500",
+      normal: "bg-blue-600",
       hover: "hover:bg-blue-600",
     },
     secondary: {
@@ -47,8 +45,8 @@ export default function Button({
         "align-middle",
         "flex",
         "items-center",
-        { "cursor-not-allowed": disabled },
-        { "bg-opacity-50": disabled },
+        "gap-2",
+        { "cursor-not-allowed opacity-50": disabled },
         /* hover */
         {
           [getButtonBgColorByVariant(variant).hover]: !disabled,
@@ -63,12 +61,7 @@ export default function Button({
       disabled={disabled}
       {...rest}
     >
-      {icon && (
-        <>
-          {icon}
-          <Spacer direction="horizontal" space="2" />
-        </>
-      )}
+      {icon}
       {children}
     </button>
   );

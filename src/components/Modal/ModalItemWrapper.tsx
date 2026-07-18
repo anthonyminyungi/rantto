@@ -3,27 +3,21 @@ import { ModalItemWrapperProps } from "@/types/modal";
 
 export default function ModalItemWrapper({
   children,
-  backdrop = "blur",
+  backdrop = "blur-sm",
   center = true,
 }: ModalItemWrapperProps) {
   return (
     <>
       {backdrop !== "none" && (
         <div
-          className={cx("absolute", "z-0", "w-full", "h-full", {
-            "backdrop-blur-sm": backdrop === "blur",
+          className={cx("fixed", "inset-0", "z-40", {
+            "backdrop-blur-xs": backdrop === "blur-sm",
+            "bg-black/30": backdrop === "dimmed",
           })}
         />
       )}
       <div
-        className={cx(
-          { "modal-center": center },
-          "absolute",
-          "z-20",
-          "w-full",
-          "h-full",
-          "max-sm:h-screen"
-        )}
+        className={cx("fixed", "inset-0", "z-50", { "modal-center": center })}
       >
         {children}
       </div>
