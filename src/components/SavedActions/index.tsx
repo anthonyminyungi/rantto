@@ -7,6 +7,8 @@ import Dropdown from "@/components/Dropdown";
 import ButtonGroup from "@/components/ButtonGroup";
 import { SavedDraw, db } from "@/db/savedDraw";
 import { copyDrawList } from "@/utils";
+import ConfirmModal from "@/components/Modal/ConfirmModal";
+import { overlay } from "overlay-kit";
 
 import ClipboardIcon from "@/assets/clipboard-document.svg?react";
 import ClipboardCheckIcon from "@/assets/clipboard-document-check.svg?react";
@@ -40,14 +42,22 @@ export default function SavedActions({ data }: SavedActionsProps) {
   };
 
   const handleDelete = () => {
-    if (id && confirm("정말 삭제하시겠습니까?")) {
-      db.savedDraws.delete(id);
-      showToast({
-        content: "보관함에서 삭제되었습니다.",
-        icon: (
-          <CheckCircleIcon className={cx("text-green-500", "w-6", "h-6")} />
-        ),
-      });
+    if (id) {
+      overlay.open(({ close }) => (
+        <ConfirmModal
+          content="정말 삭제하시겠습니까?"
+          close={close}
+          onConfirm={() => {
+            db.savedDraws.delete(id);
+            showToast({
+              content: "보관함에서 삭제되었습니다.",
+              icon: (
+                <CheckCircleIcon className={cx("text-green-500", "w-6", "h-6")} />
+              ),
+            });
+          }}
+        />
+      ));
     }
   };
 

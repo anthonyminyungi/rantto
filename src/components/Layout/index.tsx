@@ -3,7 +3,6 @@ import cx from "classnames";
 
 import NavMenu from "@/components/NavMenu";
 import ToastList from "@/components/ToastList";
-import ModalRenderer from "@/components/Modal/ModalRenderer";
 
 export default function Layout({ children }: PropsWithChildren) {
   return (
@@ -13,7 +12,6 @@ export default function Layout({ children }: PropsWithChildren) {
         {children}
       </main>
       <ToastList />
-      <ModalRenderer />
     </>
   );
 }

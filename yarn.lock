@@ -4854,6 +4854,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"overlay-kit@npm:^1.9.0":
+  version: 1.9.0
+  resolution: "overlay-kit@npm:1.9.0"
+  peerDependencies:
+    react: ^16.8 || ^17 || ^18 || ^19
+  checksum: 10/50b99ec383a59133e8a55112b9e70909ba249ccb58a0a204c7d04554b69172217e1c58bdeafea02f5de2320a21678bbf70debc89a1926ad265ca11a9f44f404b
+  languageName: node
+  linkType: hard
+
 "p-limit@npm:^3.0.2":
   version: 3.1.0
   resolution: "p-limit@npm:3.1.0"
@@ -5240,6 +5249,7 @@ __metadata:
     eslint-plugin-react-refresh: "npm:^0.4.3"
     fake-indexeddb: "npm:^5.0.2"
     jsdom: "npm:^23.2.0"
+    overlay-kit: "npm:^1.9.0"
     postcss: "npm:^8.5.10"
     react: "npm:^18.2.0"
     react-dom: "npm:^18.2.0"

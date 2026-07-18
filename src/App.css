@@ -46,13 +46,4 @@ body.scroll-block {
   padding: 1rem 0.75rem;
 }
 
-#global-modal-container.active {
-  position: absolute;
-  z-index: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-}
+

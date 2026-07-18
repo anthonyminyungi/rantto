@@ -46,6 +46,7 @@ const RAW_RUNTIME_STATE =
           ["eslint-plugin-react-refresh", "virtual:e9044eb4b22dc4d91b1391da976d430c56c2541bb11944f80e0ce39e201a7d939d9ac9a25093c2503a1d79eb1003ae1ba922a9d202bd108394b28226e4c344f6#npm:0.4.3"],\
           ["fake-indexeddb", "npm:5.0.2"],\
           ["jsdom", "virtual:e9044eb4b22dc4d91b1391da976d430c56c2541bb11944f80e0ce39e201a7d939d9ac9a25093c2503a1d79eb1003ae1ba922a9d202bd108394b28226e4c344f6#npm:23.2.0"],\
+          ["overlay-kit", "virtual:e9044eb4b22dc4d91b1391da976d430c56c2541bb11944f80e0ce39e201a7d939d9ac9a25093c2503a1d79eb1003ae1ba922a9d202bd108394b28226e4c344f6#npm:1.9.0"],\
           ["postcss", "npm:8.5.13"],\
           ["react", "npm:18.2.0"],\
           ["react-dom", "virtual:e9044eb4b22dc4d91b1391da976d430c56c2541bb11944f80e0ce39e201a7d939d9ac9a25093c2503a1d79eb1003ae1ba922a9d202bd108394b28226e4c344f6#npm:18.2.0"],\
@@ -5733,6 +5734,28 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["overlay-kit", [\
+      ["npm:1.9.0", {\
+        "packageLocation": "./.yarn/cache/overlay-kit-npm-1.9.0-ce081720c3-50b99ec383.zip/node_modules/overlay-kit/",\
+        "packageDependencies": [\
+          ["overlay-kit", "npm:1.9.0"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:e9044eb4b22dc4d91b1391da976d430c56c2541bb11944f80e0ce39e201a7d939d9ac9a25093c2503a1d79eb1003ae1ba922a9d202bd108394b28226e4c344f6#npm:1.9.0", {\
+        "packageLocation": "./.yarn/__virtual__/overlay-kit-virtual-2b8eb6eb72/0/cache/overlay-kit-npm-1.9.0-ce081720c3-50b99ec383.zip/node_modules/overlay-kit/",\
+        "packageDependencies": [\
+          ["overlay-kit", "virtual:e9044eb4b22dc4d91b1391da976d430c56c2541bb11944f80e0ce39e201a7d939d9ac9a25093c2503a1d79eb1003ae1ba922a9d202bd108394b28226e4c344f6#npm:1.9.0"],\
+          ["@types/react", "npm:18.2.24"],\
+          ["react", "npm:18.2.0"]\
+        ],\
+        "packagePeers": [\
+          "@types/react",\
+          "react"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["p-limit", [\
       ["npm:3.1.0", {\
         "packageLocation": "./.yarn/cache/p-limit-npm-3.1.0-05d2ede37f-7c3690c4db.zip/node_modules/p-limit/",\
@@ -6208,6 +6231,7 @@ const RAW_RUNTIME_STATE =
           ["eslint-plugin-react-refresh", "virtual:e9044eb4b22dc4d91b1391da976d430c56c2541bb11944f80e0ce39e201a7d939d9ac9a25093c2503a1d79eb1003ae1ba922a9d202bd108394b28226e4c344f6#npm:0.4.3"],\
           ["fake-indexeddb", "npm:5.0.2"],\
           ["jsdom", "virtual:e9044eb4b22dc4d91b1391da976d430c56c2541bb11944f80e0ce39e201a7d939d9ac9a25093c2503a1d79eb1003ae1ba922a9d202bd108394b28226e4c344f6#npm:23.2.0"],\
+          ["overlay-kit", "virtual:e9044eb4b22dc4d91b1391da976d430c56c2541bb11944f80e0ce39e201a7d939d9ac9a25093c2503a1d79eb1003ae1ba922a9d202bd108394b28226e4c344f6#npm:1.9.0"],\
           ["postcss", "npm:8.5.13"],\
           ["react", "npm:18.2.0"],\
           ["react-dom", "virtual:e9044eb4b22dc4d91b1391da976d430c56c2541bb11944f80e0ce39e201a7d939d9ac9a25093c2503a1d79eb1003ae1ba922a9d202bd108394b28226e4c344f6#npm:18.2.0"],\

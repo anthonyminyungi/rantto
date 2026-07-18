@@ -7,7 +7,8 @@ import Dropdown from "@/components/Dropdown";
 import ManualSelectModal from "@/components/Modal/ManualSelectModal";
 import { useToast, useWindowSize } from "@/hooks";
 import { copyDrawList, drawNumbers, isDrawEmpty } from "@/utils";
-import { useDrawStore, useModalStore } from "@/store";
+import { useDrawStore } from "@/store";
+import { overlay } from "overlay-kit";
 import { DrawListItem } from "@/types";
 
 import TicketIcon from "@/assets/ticket.svg?react";
@@ -28,7 +29,7 @@ export default function DrawActions({ index }: DrawActionsProps) {
   const isMobile = useMemo(() => width < MOBILE_WIDTH, [width]);
   const [copied, setCopied] = useState(false);
   const { showToast } = useToast();
-  const { push } = useModalStore();
+
 
   const handleCopy = () => {
     copyDrawList(currentItem, () => {
@@ -54,12 +55,9 @@ export default function DrawActions({ index }: DrawActionsProps) {
     clearItem(index);
   };
 
-  const handleClickSelect = async () => {
-    await push({
-      component: ManualSelectModal,
-      props: {
-        drawIdx: index,
-      },
+  const handleClickSelect = () => {
+    overlay.open(({ close }) => {
+      return <ManualSelectModal drawIdx={index} close={close} />;
     });
   };
 
