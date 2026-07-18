@@ -5,7 +5,7 @@ import { ToastItem } from "@/types";
 
 
 export const useOutsideClick = (
-  ref: RefObject<HTMLElement>,
+  ref: RefObject<HTMLElement | null>,
   handler: (e: MouseEvent) => void
 ) => {
   useEffect(() => {
