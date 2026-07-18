@@ -32,7 +32,7 @@ export default function NavMenu() {
               "border-b-2",
               /* active */
               {
-                "border-b-blue-500": isActive,
+                "border-b-blue-600": isActive,
                 "font-bold": isActive,
               },
               /* not active */

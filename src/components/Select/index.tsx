@@ -51,22 +51,23 @@ export default function Select<TKey extends string>({
           "justify-between",
           "items-center",
           "border",
-          "w-32",
+          "w-40",
           "py-2",
           "px-3",
-          "border-blue-500",
+          "border-blue-600",
           "rounded-md",
           "cursor-pointer",
           "transition-all",
-          /* active/inactive */
+          /* isOpen */
           {
-            "bg-blue-500": isOpen,
+            "bg-blue-600": isOpen,
             "text-white": isOpen,
-            "bg-white": !isOpen,
-            "text-blue-500": !isOpen,
           },
-          /* hover */
-          "hover:bg-blue-500",
+          {
+            "text-blue-600": !isOpen,
+            "bg-white": !isOpen,
+          },
+          "hover:bg-blue-600",
           "hover:text-white",
 
           /* max-sm */
@@ -110,8 +111,8 @@ export default function Select<TKey extends string>({
             "cursor-pointer",
             "border",
             "bg-white",
-            "border-blue-500",
-            "text-blue-500",
+            "border-blue-600",
+            "text-blue-600",
             /* max-sm */
             "max-sm:top-10"
           )}
@@ -130,7 +131,7 @@ export default function Select<TKey extends string>({
                 "text-ellipsis",
                 "whitespace-nowrap",
                 {
-                  "bg-blue-500": selected === key,
+                  "bg-blue-600": selected === key,
                   "text-white": selected === key,
                 },
                 /* hover */

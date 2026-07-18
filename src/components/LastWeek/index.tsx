@@ -33,7 +33,7 @@ export default function LastWeek() {
               href="https://dhlottery.co.kr/lt645/result"
               target="_blank"
               className={cx(
-                "text-blue-500",
+                "text-blue-600",
                 "font-semibold",
                 "px-2",
                 "py-1",
