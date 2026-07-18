@@ -15,19 +15,17 @@ export interface WinningHistoryRecord {
   createdAt: string;
 }
 
+const NEW_DB_NAME = "rantto";
+const OLD_DB_NAME = "savedDraws";
+
 class AppDB extends Dexie {
   savedDraws!: Table<SavedDraw>;
   winningHistory!: Table<WinningHistoryRecord>;
 
   constructor() {
-    // DB 이름을 "savedDraws"로 유지하여 기존 사용자 데이터 보존
-    super("savedDraws");
+    super(NEW_DB_NAME);
 
     this.version(1).stores({
-      savedDraws: "++id, draws, round, createdAt",
-    });
-
-    this.version(2).stores({
       savedDraws: "++id, draws, round, createdAt",
       winningHistory: "round",
     });
@@ -35,3 +33,38 @@ class AppDB extends Dexie {
 }
 
 export const db = new AppDB();
+
+export async function migrateOldDatabase() {
+  const oldDbExists = await Dexie.exists(OLD_DB_NAME);
+  if (!oldDbExists) return;
+
+  const oldDb = new Dexie(OLD_DB_NAME);
+  // 기존 DB의 버전 스키마 (1, 2)
+  oldDb.version(1).stores({
+    savedDraws: "++id, draws, round, createdAt",
+  });
+  oldDb.version(2).stores({
+    savedDraws: "++id, draws, round, createdAt",
+    winningHistory: "round",
+  });
+
+  try {
+    await oldDb.open();
+    const savedDrawsData = await oldDb.table("savedDraws").toArray();
+    // v2 사용자의 경우 winningHistory 데이터가 있을 수 있음
+    const winningHistoryData = await oldDb.table("winningHistory").toArray();
+
+    if (savedDrawsData.length > 0) {
+      await db.savedDraws.bulkAdd(savedDrawsData);
+    }
+    if (winningHistoryData.length > 0) {
+      await db.winningHistory.bulkAdd(winningHistoryData);
+    }
+
+    // 마이그레이션 성공 후 기존 DB 삭제
+    await oldDb.delete();
+    console.log("[IndexedDB] Successfully migrated from 'savedDraws' to 'rantto'");
+  } catch (error) {
+    console.error("[IndexedDB] Failed to migrate old database:", error);
+  }
+}
