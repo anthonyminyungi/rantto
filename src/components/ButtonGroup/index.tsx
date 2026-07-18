@@ -18,13 +18,7 @@ const GRID_COLS: Record<number, string> = {
 
 export default function ButtonGroup({ items }: ButtonGroupProps) {
   return (
-    <div
-      className={cx(
-        "grid",
-        GRID_COLS[items.length],
-        "text-xs"
-      )}
-    >
+    <div className={cx("grid", GRID_COLS[items.length], "text-xs")}>
       {items.map(({ text, icon, className, disabled, ...rest }) => (
         <button
           key={text}

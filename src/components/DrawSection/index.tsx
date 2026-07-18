@@ -85,11 +85,7 @@ export default function DrawSection() {
       </Button>
       <div className={cx("max-w-xl", "w-full", "space-y-2")}>
         {drawList.map((item, index) => (
-          <DrawItem
-            key={index}
-            numbers={item as DrawListItem}
-            index={index}
-          />
+          <DrawItem key={index} numbers={item as DrawListItem} index={index} />
         ))}
       </div>
       <div className={cx("flex", "gap-2")}>

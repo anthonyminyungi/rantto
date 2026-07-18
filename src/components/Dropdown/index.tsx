@@ -1,7 +1,6 @@
 import cx from "classnames";
 import { ReactNode, useRef, useState } from "react";
 
-
 import { useOutsideClick } from "@/hooks";
 
 import KebabIcon from "@/assets/ellipsis-vertical.svg?react";
@@ -72,7 +71,7 @@ export default function Dropdown({ items }: DropdownProps) {
                 "cursor-pointer",
                 "m-1.5",
                 "text-white",
-                { "cursor-default opacity-50 pointer-events-none": disabled }
+                { "pointer-events-none cursor-default opacity-50": disabled }
               )}
               onClick={() => {
                 if (disabled) {

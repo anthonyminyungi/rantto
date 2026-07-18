@@ -4,8 +4,7 @@ import { ButtonHTMLAttributes, PropsWithChildren, ReactNode } from "react";
 type ButtonColorVariant = "primary" | "secondary";
 
 interface ButtonProps
-  extends PropsWithChildren,
-    ButtonHTMLAttributes<HTMLButtonElement> {
+  extends PropsWithChildren, ButtonHTMLAttributes<HTMLButtonElement> {
   icon?: ReactNode | undefined;
   disabled?: boolean;
   variant?: ButtonColorVariant;

@@ -84,7 +84,12 @@ export default function ManualSelectModal({
         )}
       >
         <header
-          className={cx("text-2xl", "font-bold", "text-black", "max-sm:text-xl")}
+          className={cx(
+            "text-2xl",
+            "font-bold",
+            "text-black",
+            "max-sm:text-xl"
+          )}
         >
           {drawIdx + 1}게임 번호 선택
         </header>

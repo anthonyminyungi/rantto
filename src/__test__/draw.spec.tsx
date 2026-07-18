@@ -31,8 +31,7 @@ describe("번호 뽑기 테스트", () => {
 
     const { drawList: afterDraw } = useDrawStore.getState();
 
-    const isDrawn =
-      intersection(beforeDraw[0], afterDraw[0]).length === 0;
+    const isDrawn = intersection(beforeDraw[0], afterDraw[0]).length === 0;
 
     await waitFor(() => expect(isDrawn).toBe(true));
   });
