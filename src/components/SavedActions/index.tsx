@@ -1,8 +1,7 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import cx from "classnames";
 
-import { MOBILE_WIDTH } from "@/constants";
-import { useToast, useWindowSize } from "@/hooks";
+import { useToast } from "@/hooks";
 import Dropdown from "@/components/Dropdown";
 import ButtonGroup from "@/components/ButtonGroup";
 import { SavedDraw, db } from "@/db/savedDraw";
@@ -21,8 +20,6 @@ interface SavedActionsProps {
 
 export default function SavedActions({ data }: SavedActionsProps) {
   const { id, draws } = data;
-  const { width } = useWindowSize();
-  const isMobile = useMemo(() => width < MOBILE_WIDTH, [width]);
   const [copied, setCopied] = useState(false);
   const { showToast } = useToast();
 
@@ -62,8 +59,8 @@ export default function SavedActions({ data }: SavedActionsProps) {
   };
 
   return (
-    <div className={cx("h-fit", { "pt-2": isMobile })}>
-      {isMobile ? (
+    <div className={cx("h-fit", "max-sm:pt-2")}>
+      <div className="sm:hidden">
         <Dropdown
           items={[
             {
@@ -79,7 +76,8 @@ export default function SavedActions({ data }: SavedActionsProps) {
             },
           ]}
         />
-      ) : (
+      </div>
+      <div className="max-sm:hidden">
         <ButtonGroup
           items={[
             {
@@ -95,7 +93,7 @@ export default function SavedActions({ data }: SavedActionsProps) {
             },
           ]}
         />
-      )}
+      </div>
     </div>
   );
 }

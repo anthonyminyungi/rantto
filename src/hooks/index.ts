@@ -1,25 +1,8 @@
-import { RefObject, useEffect, useState } from "react";
+import { RefObject, useEffect } from "react";
 
 import { useToastStore } from "@/store";
 import { ToastItem } from "@/types";
 
-export const useWindowSize = () => {
-  const [width, setWidth] = useState<number>(window.innerWidth);
-  const [height, setHeight] = useState<number>(window.innerHeight);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setWidth(window.innerWidth);
-      setHeight(window.innerHeight);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  return { width, height };
-};
 
 export const useOutsideClick = (
   ref: RefObject<HTMLElement>,
