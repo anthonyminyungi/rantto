@@ -40,12 +40,15 @@ describe("getIntersectedNumbers 테스트", () => {
 describe("getHighestRankByDrawsDiff 테스트", () => {
   const won: DrawListItem = [1, 2, 3, 4, 5, 6];
   const bonus = 7;
+  const filler: DrawListItem = [0, 0, 0, 0, 0, 0];
 
   it("복수 게임 중 최고 등수가 1등일 때", () => {
     const draws: DrawList = [
       [1, 2, 3, 8, 9, 10], // 5등
       [1, 2, 3, 4, 5, 6], // 1등
       [1, 2, 8, 9, 10, 11], // 낙첨
+      filler,
+      filler,
     ];
     expect(getHighestRankByDrawsDiff(draws, won, bonus)).toBe(1);
   });
@@ -54,6 +57,9 @@ describe("getHighestRankByDrawsDiff 테스트", () => {
     const draws: DrawList = [
       [1, 2, 3, 4, 5, 8], // 3등
       [1, 2, 3, 4, 5, 7], // 2등
+      filler,
+      filler,
+      filler,
     ];
     expect(getHighestRankByDrawsDiff(draws, won, bonus)).toBe(2);
   });
@@ -62,6 +68,9 @@ describe("getHighestRankByDrawsDiff 테스트", () => {
     const draws: DrawList = [
       [1, 2, 3, 8, 9, 10], // 5등
       [1, 2, 8, 9, 10, 11], // 낙첨
+      filler,
+      filler,
+      filler,
     ];
     expect(getHighestRankByDrawsDiff(draws, won, bonus)).toBe(5);
   });
@@ -70,6 +79,9 @@ describe("getHighestRankByDrawsDiff 테스트", () => {
     const draws: DrawList = [
       [1, 2, 8, 9, 10, 11], // 낙첨
       [8, 9, 10, 11, 12, 13], // 낙첨
+      filler,
+      filler,
+      filler,
     ];
     expect(getHighestRankByDrawsDiff(draws, won, bonus)).toBe(-1);
   });
