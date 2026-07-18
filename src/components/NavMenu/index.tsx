@@ -1,5 +1,5 @@
 import cx from "classnames";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router";
 
 import { MENU_TABS } from "@/constants";
 import { useToastStore } from "@/store";

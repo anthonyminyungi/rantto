@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router";
 import { OverlayProvider } from "overlay-kit";
 
 import Layout from "@/components/Layout";

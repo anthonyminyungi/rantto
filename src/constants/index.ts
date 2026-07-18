@@ -1,5 +1,3 @@
-
-
 export const allNumbers = Array.from(Array(45), (_, index) => index + 1);
 
 export const MENU_TABS = {

@@ -3,7 +3,6 @@ import { RefObject, useEffect } from "react";
 import { useToastStore } from "@/store";
 import { ToastItem } from "@/types";
 
-
 export const useOutsideClick = (
   ref: RefObject<HTMLElement | null>,
   handler: (e: MouseEvent) => void
