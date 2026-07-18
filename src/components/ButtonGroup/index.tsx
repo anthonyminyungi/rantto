@@ -10,14 +10,19 @@ interface ButtonGroupProps {
   items: ButtonGroupItem[];
 }
 
+const GRID_COLS: Record<number, string> = {
+  2: "grid-cols-2",
+  3: "grid-cols-3",
+  4: "grid-cols-4",
+};
+
 export default function ButtonGroup({ items }: ButtonGroupProps) {
   return (
     <div
       className={cx(
         "grid",
-        `grid-cols-${items.length}`,
-        "text-xs",
-        "grid-cols-"
+        GRID_COLS[items.length],
+        "text-xs"
       )}
     >
       {items.map(({ text, icon, className, disabled, ...rest }) => (
@@ -36,8 +41,7 @@ export default function ButtonGroup({ items }: ButtonGroupProps) {
             "justify-center",
             "items-center",
             "transition-all",
-            { "cursor-not-allowed": disabled },
-            { "bg-opacity-50": disabled },
+            { "cursor-not-allowed opacity-50": disabled },
             /* hover */
             { "hover:bg-gray-500": !disabled },
             className
