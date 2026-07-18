@@ -1,0 +1,27 @@
+name: Update Winning History
+
+on:
+  schedule:
+    - cron: '0 13 * * 6' # 매주 토요일 22:00 KST (UTC 13:00)
+  workflow_dispatch: # 수동 실행
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Install dependencies
+        run: npm install playwright @octokit/rest json-stringify-pretty-compact
+
+      - name: Install Playwright browsers
+        run: npx playwright install chromium --with-deps
+
+      - name: Fetch & Update
+        env:
+          GITHUB_ACCESS_TOKEN: ${{ secrets.GIST_TOKEN }}
+        run: node scripts/update_winning_history.mjs

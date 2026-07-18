@@ -50,20 +50,4 @@ body.scroll-block {
   }
 }
 
-#global-toast-container {
-  position: absolute;
-  z-index: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-width: 100%;
-}
-#global-toast-container.active {
-  padding: 1rem 0.75rem;
-}
-
 
