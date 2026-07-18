@@ -49,7 +49,9 @@ export default function SavedActions({ data }: SavedActionsProps) {
             showToast({
               content: "보관함에서 삭제되었습니다.",
               icon: (
-                <CheckCircleIcon className={cx("text-green-500", "w-6", "h-6")} />
+                <CheckCircleIcon
+                  className={cx("text-green-500", "w-6", "h-6")}
+                />
               ),
             });
           }}

@@ -1,11 +1,6 @@
 import { create } from "zustand";
 
-import {
-  DrawList,
-  DrawListItem,
-  SavedListSortKey,
-  ToastItem,
-} from "@/types";
+import { DrawList, DrawListItem, SavedListSortKey, ToastItem } from "@/types";
 
 interface DrawState {
   drawList: DrawList;

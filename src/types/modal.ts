@@ -9,4 +9,3 @@ export interface ModalItemWrapperProps extends PropsWithChildren {
   backdrop?: "blur-sm" | "dimmed" | "none";
   center?: boolean;
 }
-

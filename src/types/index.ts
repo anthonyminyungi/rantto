@@ -12,7 +12,6 @@ export type ObjectEntry<T extends object> = {
 
 export type ObjectEntries<T extends object> = ObjectEntry<T>[];
 
-
 export type DrawListItem = FixedSizeArray<6, number>;
 
 export type DrawList = [
@@ -20,7 +19,7 @@ export type DrawList = [
   DrawListItem,
   DrawListItem,
   DrawListItem,
-  DrawListItem
+  DrawListItem,
 ];
 
 export type SavedListSortKey = keyof typeof SAVED_LIST_SORT_OPTIONS;

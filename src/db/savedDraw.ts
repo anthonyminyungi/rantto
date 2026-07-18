@@ -63,7 +63,9 @@ export async function migrateOldDatabase() {
 
     // 마이그레이션 성공 후 기존 DB 삭제
     await oldDb.delete();
-    console.log("[IndexedDB] Successfully migrated from 'savedDraws' to 'rantto'");
+    console.log(
+      "[IndexedDB] Successfully migrated from 'savedDraws' to 'rantto'"
+    );
   } catch (error) {
     console.error("[IndexedDB] Failed to migrate old database:", error);
   }

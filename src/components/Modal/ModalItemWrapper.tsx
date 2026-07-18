@@ -17,12 +17,7 @@ export default function ModalItemWrapper({
         />
       )}
       <div
-        className={cx(
-          "fixed",
-          "inset-0",
-          "z-50",
-          { "modal-center": center }
-        )}
+        className={cx("fixed", "inset-0", "z-50", { "modal-center": center })}
       >
         {children}
       </div>

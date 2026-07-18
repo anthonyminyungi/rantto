@@ -27,7 +27,6 @@ export default function DrawActions({ index }: DrawActionsProps) {
   const [copied, setCopied] = useState(false);
   const { showToast } = useToast();
 
-
   const handleCopy = () => {
     copyDrawList(currentItem, () => {
       setCopied(true);

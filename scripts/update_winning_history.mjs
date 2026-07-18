@@ -14,7 +14,8 @@ import stringify from "json-stringify-pretty-compact";
 
 const GIST_ID = "a7237c0717400512855c890d5b0e1ba3";
 const FILE_NAME = "lotto-winning-history.json";
-const BASE_URL = "http://www.dhlottery.co.kr/lt645/selectPstLt645Info.do?srchLtEpsd=";
+const BASE_URL =
+  "http://www.dhlottery.co.kr/lt645/selectPstLt645Info.do?srchLtEpsd=";
 
 async function getGistData(octokit) {
   const gist = await octokit.gists.get({ gist_id: GIST_ID });

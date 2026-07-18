@@ -54,7 +54,9 @@ export const useWinningHistory = (targetRound?: number): WinningHistory => {
 
   return {
     round: result?.round ?? 0,
-    numbers: (result?.numbers ?? [0, 0, 0, 0, 0, 0]) as WinningHistory["numbers"],
+    numbers: (result?.numbers ?? [
+      0, 0, 0, 0, 0, 0,
+    ]) as WinningHistory["numbers"],
     bonus: result?.bonus ?? 0,
     createdAt: result?.createdAt ?? "",
   };

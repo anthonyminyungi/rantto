@@ -10,7 +10,7 @@ export default function ToastList() {
     <div
       id="global-toast-container"
       className={cx(
-        "fixed z-50 inset-x-0 bottom-0 mx-auto flex flex-col items-center max-w-full",
+        "fixed inset-x-0 bottom-0 z-50 mx-auto flex max-w-full flex-col items-center",
         { "p-4 px-3": toastList.length > 0 }
       )}
     >
