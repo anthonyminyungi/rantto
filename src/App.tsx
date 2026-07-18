@@ -1,15 +1,19 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
 import Layout from "@/components/Layout";
-import { useMenuStore } from "@/store";
 import MainPage from "@/pages/main";
 import SavedPage from "@/pages/saved";
 import "./App.css";
 
 export default function App() {
-  const { menu } = useMenuStore();
   return (
-    <Layout>
-      {menu === "main" && <MainPage />}
-      {menu === "saved" && <SavedPage />}
-    </Layout>
+    <BrowserRouter>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/saved" element={<SavedPage />} />
+        </Routes>
+      </Layout>
+    </BrowserRouter>
   );
 }

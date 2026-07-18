@@ -3,8 +3,8 @@ export const MOBILE_WIDTH = 576;
 export const allNumbers = Array.from(Array(45), (_, index) => index + 1);
 
 export const MENU_TABS = {
-  main: "메인",
-  saved: "보관함",
+  main: { label: "메인", path: "/" },
+  saved: { label: "보관함", path: "/saved" },
 } as const;
 
 export const SAVED_LIST_SORT_OPTIONS = {

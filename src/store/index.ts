@@ -3,21 +3,10 @@ import { create } from "zustand";
 import {
   DrawList,
   DrawListItem,
-  MenuKey,
   SavedListSortKey,
   ToastItem,
 } from "@/types";
 import { ModalItem } from "@/types/modal";
-
-interface MenuState {
-  menu: MenuKey;
-  setMenu: (menu: MenuKey) => void;
-}
-
-export const useMenuStore = create<MenuState>((set) => ({
-  menu: "main",
-  setMenu: (selected) => set(() => ({ menu: selected })),
-}));
 
 interface DrawState {
   drawList: DrawList;
