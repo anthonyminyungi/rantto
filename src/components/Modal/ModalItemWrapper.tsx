@@ -3,7 +3,7 @@ import { ModalItemWrapperProps } from "@/types/modal";
 
 export default function ModalItemWrapper({
   children,
-  backdrop = "blur",
+  backdrop = "blur-sm",
   center = true,
 }: ModalItemWrapperProps) {
   return (
@@ -11,7 +11,7 @@ export default function ModalItemWrapper({
       {backdrop !== "none" && (
         <div
           className={cx("absolute", "z-0", "w-full", "h-full", {
-            "backdrop-blur-sm": backdrop === "blur",
+            "backdrop-blur-xs": backdrop === "blur-sm",
           })}
         />
       )}
