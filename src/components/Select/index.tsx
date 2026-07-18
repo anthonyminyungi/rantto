@@ -64,8 +64,8 @@ export default function Select<TKey extends string>({
             "text-white": isOpen,
           },
           {
-            "text-blue-600": !isOpen,
-            "bg-white": !isOpen,
+            "text-blue-600 dark:text-blue-400": !isOpen,
+            "bg-white dark:bg-neutral-900": !isOpen,
           },
           "hover:bg-blue-600",
           "hover:text-white",
@@ -111,8 +111,11 @@ export default function Select<TKey extends string>({
             "cursor-pointer",
             "border",
             "bg-white",
+            "dark:bg-neutral-900",
             "border-blue-600",
+            "dark:border-blue-400",
             "text-blue-600",
+            "dark:text-blue-400",
             /* max-sm */
             "max-sm:top-10"
           )}

@@ -49,9 +49,12 @@ export default function SavedItem({ data }: SavedItemProps) {
         "max-w-xl",
         "w-full",
         "transition-all",
-        "bg-gray-100",
+        "bg-white",
+        "shadow-sm",
+        "dark:bg-neutral-900",
         "border",
         "border-gray-200",
+        "dark:border-neutral-800",
         "rounded-lg",
         "px-3",
         "py-4",
@@ -65,6 +68,7 @@ export default function SavedItem({ data }: SavedItemProps) {
           "flex",
           "mb-1",
           "text-gray-400",
+          "dark:text-neutral-500",
           "pl-2",
           /* sm */
           "max-sm:text-sm",
@@ -117,7 +121,7 @@ export default function SavedItem({ data }: SavedItemProps) {
         </div>
         <SavedActions data={data} />
       </div>
-      <hr className="my-1" />
+      <hr className="my-1 border-gray-200 dark:border-neutral-800" />
       {draws.length - 1 > 0 && (
         <div
           className={cx(
@@ -127,6 +131,7 @@ export default function SavedItem({ data }: SavedItemProps) {
             "py-1",
             "text-center",
             "text-gray-500",
+            "dark:text-neutral-400",
             "cursor-pointer",
             "flex",
             "justify-center",

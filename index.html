@@ -101,6 +101,26 @@
       "operatingSystem": "All"
     }
     </script>
+    <script>
+      (function () {
+        try {
+          var storageValue = localStorage.getItem("theme-storage");
+          if (storageValue) {
+            var parsed = JSON.parse(storageValue);
+            if (parsed.state && parsed.state.theme === "dark") {
+              document.documentElement.classList.add("dark");
+              return;
+            } else if (parsed.state && parsed.state.theme === "light") {
+              document.documentElement.classList.remove("dark");
+              return;
+            }
+          }
+          if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+            document.documentElement.classList.add("dark");
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

@@ -31,12 +31,14 @@ export default function Dropdown({ items }: DropdownProps) {
         className={cx(
           "p-1",
           "text-gray-300",
+          "dark:text-neutral-500",
           "rounded-full",
           "flex",
           "justify-center",
           "items-center",
           /* hover */
           "hover:bg-gray-200",
+          "dark:hover:bg-neutral-800",
           "hover:transition"
         )}
         onClick={() => setIsOpen((prev) => !prev)}
@@ -52,13 +54,20 @@ export default function Dropdown({ items }: DropdownProps) {
             "top-full",
             "overflow-hidden",
             "min-w-max",
-            "bg-gray-400",
-            "text-white",
+            "bg-white",
+            "dark:bg-neutral-800",
+            "text-neutral-900",
+            "dark:text-white",
             "mt-2",
             "z-50",
             "rounded-lg",
             "py-1",
-            "px-2"
+            "px-2",
+            "shadow-lg",
+            "border",
+            "border-gray-200",
+            "dark:border-neutral-700",
+            "dark:shadow-neutral-900/50"
           )}
         >
           {items.map(({ icon, text, onClick, disabled }) => (
@@ -71,7 +80,11 @@ export default function Dropdown({ items }: DropdownProps) {
                 "gap-2",
                 "cursor-pointer",
                 "m-1.5",
-                "text-white",
+                "text-neutral-900",
+                "dark:text-white",
+                "hover:text-blue-600",
+                "dark:hover:text-blue-400",
+                "transition-colors",
                 { "pointer-events-none cursor-default opacity-50": disabled }
               )}
               onClick={() => {

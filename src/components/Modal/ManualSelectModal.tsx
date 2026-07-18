@@ -64,8 +64,12 @@ export default function ManualSelectModal({
       <div
         className={cx(
           "bg-white",
+          "dark:bg-neutral-900",
           "border",
-          "border-gray-400",
+          "border-gray-200",
+          "dark:border-neutral-700",
+          "shadow-lg",
+          "dark:shadow-neutral-900/50",
           "rounded-xl",
           "px-6",
           "py-8",
@@ -75,6 +79,8 @@ export default function ManualSelectModal({
           "justify-center",
           "items-center",
           "gap-4",
+          "text-neutral-900",
+          "dark:text-neutral-100",
           /* sm */
           "max-w-3xl",
           "max-sm:h-full",
@@ -87,7 +93,8 @@ export default function ManualSelectModal({
           className={cx(
             "text-2xl",
             "font-bold",
-            "text-black",
+            "text-neutral-900",
+            "dark:text-neutral-100",
             "max-sm:text-xl"
           )}
         >
@@ -103,6 +110,7 @@ export default function ManualSelectModal({
             "flex-wrap",
             "justify-center",
             "bg-gray-100",
+            "dark:bg-neutral-800",
             "rounded-xl",
             "gap-x-2",
             "gap-y-4",
