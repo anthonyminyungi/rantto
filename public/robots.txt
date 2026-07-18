@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.rantto.com/sitemap.xml
+Sitemap: https://rantto.app/sitemap.xml
