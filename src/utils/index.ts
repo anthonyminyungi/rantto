@@ -121,3 +121,50 @@ export function getHighestRankByDrawsDiff(
     .filter((rank) => rank > 0);
   return ranks.length > 0 ? Math.min(...ranks) : -1;
 }
+
+export function getRanksByDraw(
+  draws: DrawListItem[],
+  won: DrawListItem,
+  bonus: number
+): number[] {
+  return draws.map((draw) => {
+    const intersected = getIntersectedNumbers(draw, won, bonus);
+    const hasBonus = intersected.includes(bonus);
+    switch (intersected.length) {
+      case 6:
+        return hasBonus ? 2 : 1;
+      case 5:
+        return 3;
+      case 4:
+        return 4;
+      case 3:
+        return 5;
+      default:
+        return -1;
+    }
+  });
+}
+
+export function formatRankText(gameRanks: number[]): string {
+  const wins = gameRanks.filter((r) => r > 0);
+  if (wins.length === 0) return "낙첨";
+
+  const counts = new Map<number, number>();
+  for (const rank of wins) {
+    counts.set(rank, (counts.get(rank) ?? 0) + 1);
+  }
+
+  const sorted = [...counts.entries()].sort(([a], [b]) => a - b);
+  const parts = sorted.map(([rank, count]) => `${rank}등 ${count}회`);
+  return `${parts.join(", ")} 당첨`;
+}
+
+export function getRankBgColor(rank: number): Record<string, boolean> {
+  return {
+    "bg-amber-50 dark:bg-amber-950/30": rank === 1,
+    "bg-slate-100 dark:bg-slate-800/30": rank === 2,
+    "bg-orange-50 dark:bg-orange-950/30": rank === 3,
+    "bg-sky-50 dark:bg-sky-950/30": rank === 4,
+    "bg-emerald-50 dark:bg-emerald-950/30": rank === 5,
+  };
+}
