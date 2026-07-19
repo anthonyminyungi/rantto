@@ -9,21 +9,37 @@ import { SAVE_ITEM_COUNT_PER_PAGE } from "@/constants";
 
 export default function SavedList() {
   const [page, setPage] = useState(1);
-  const { sortKey } = useSavedPageStore();
+  const { sortKey, filterRank } = useSavedPageStore();
   const list = useLiveQuery(
     async () => {
-      const collection = db.savedDraws
-        .toCollection()
-        .limit(page * SAVE_ITEM_COUNT_PER_PAGE);
-      if (sortKey === "CREATED_DESC") {
-        return collection.reverse().sortBy("createdAt");
+      const collection = db.savedDraws.toCollection();
+
+      let items =
+        sortKey === "CREATED_DESC"
+          ? await collection.reverse().sortBy("createdAt")
+          : await collection.sortBy("createdAt");
+
+      if (filterRank != null) {
+        items = items.filter((item) => item.gameRanks?.includes(filterRank));
       }
-      return collection.sortBy("createdAt");
+
+      return items.slice(0, page * SAVE_ITEM_COUNT_PER_PAGE);
     },
-    [sortKey, page],
+    [sortKey, filterRank, page],
     []
   );
-  const total = useLiveQuery(() => db.savedDraws.count(), [], 0);
+  const total = useLiveQuery(
+    async () => {
+      if (filterRank != null) {
+        const all = await db.savedDraws.toArray();
+        return all.filter((item) => item.gameRanks?.includes(filterRank))
+          .length;
+      }
+      return db.savedDraws.count();
+    },
+    [filterRank],
+    0
+  );
 
   const loadMore = () => {
     setPage((prev) => prev + 1);
@@ -32,7 +48,9 @@ export default function SavedList() {
   if (!list || list?.length === 0) {
     return (
       <div className={cx("h-auto", "text-center", "font-semibold")}>
-        보관함이 비었습니다.
+        {filterRank != null
+          ? "해당 등수의 당첨 기록이 없습니다."
+          : "보관함이 비었습니다."}
       </div>
     );
   }

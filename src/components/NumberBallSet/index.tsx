@@ -2,6 +2,7 @@ import cx from "classnames";
 
 import NumberBall from "@/components/NumberBall";
 import { FixedSizeArray } from "@/types";
+import { getRankBgColor } from "@/utils";
 
 import PlusIcon from "@/assets/plus.svg?react";
 
@@ -9,12 +10,14 @@ interface NumberBallSetProps {
   numbers: FixedSizeArray<6, number>;
   bonus?: number;
   intersectedNumbers?: number[];
+  rank?: number;
 }
 
 export default function NumberBallSet({
   numbers,
   bonus,
   intersectedNumbers,
+  rank,
 }: NumberBallSetProps) {
   return (
     <div
@@ -29,7 +32,8 @@ export default function NumberBallSet({
           "grid-cols-8": !!bonus,
           "max-sm:gap-x-0.5": !!bonus,
         },
-        "max-sm:px-1"
+        "max-sm:px-1",
+        rank != null && rank > 0 && getRankBgColor(rank)
       )}
     >
       {numbers.map((num, idx) => (

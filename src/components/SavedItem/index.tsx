@@ -6,7 +6,11 @@ import SavedActions from "@/components/SavedActions";
 
 import { SavedDraw } from "@/db/savedDraw";
 import { useWinningHistory } from "@/hooks/winningHistory";
-import { getHighestRankByDrawsDiff, getIntersectedNumbers } from "@/utils";
+import {
+  formatRankText,
+  getHighestRankByDrawsDiff,
+  getIntersectedNumbers,
+} from "@/utils";
 
 import ArrowDownIcon from "@/assets/chevron-down.svg?react";
 import ArrowUpIcon from "@/assets/chevron-up.svg?react";
@@ -27,7 +31,7 @@ interface SavedItemProps {
 }
 
 export default function SavedItem({ data }: SavedItemProps) {
-  const { id, draws, round, createdAt } = data;
+  const { id, draws, round, createdAt, gameRanks } = data;
   const [isExtended, setExtended] = useState(false);
   const {
     round: wonRound,
@@ -85,8 +89,9 @@ export default function SavedItem({ data }: SavedItemProps) {
           })}
         >
           {!isAfterAnnounce && "추첨전"}
-          {isAfterAnnounce && hasWonDraw && `${rank}등당첨!`}
-          {isAfterAnnounce && !hasWonDraw && "낙첨"}
+          {isAfterAnnounce && gameRanks && formatRankText(gameRanks)}
+          {isAfterAnnounce && !gameRanks && hasWonDraw && `${rank}등당첨!`}
+          {isAfterAnnounce && !gameRanks && !hasWonDraw && "낙첨"}
         </span>
         {"・"}
         <span className={cx("px-1.5")}>
@@ -102,6 +107,7 @@ export default function SavedItem({ data }: SavedItemProps) {
                 ? getIntersectedNumbers(draws[0], wonNumbers, wonBonus)
                 : []
             }
+            rank={isAfterAnnounce ? gameRanks?.[0] : undefined}
           />
           {isExtended && (
             <>
@@ -114,6 +120,7 @@ export default function SavedItem({ data }: SavedItemProps) {
                       ? getIntersectedNumbers(draw, wonNumbers, wonBonus)
                       : []
                   }
+                  rank={isAfterAnnounce ? gameRanks?.[index + 1] : undefined}
                 />
               ))}
             </>

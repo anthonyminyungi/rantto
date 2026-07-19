@@ -3,6 +3,7 @@ import { useLiveQuery } from "dexie-react-hooks";
 
 import SavedList from "@/components/SavedList";
 import Select from "@/components/Select";
+import WinningStats from "@/components/WinningStats";
 import { SAVED_LIST_SORT_OPTIONS } from "@/constants";
 import { useSavedPageStore } from "@/store";
 import { entriesFromObject } from "@/utils";
@@ -24,6 +25,7 @@ export default function SavedPage() {
         "gap-4"
       )}
     >
+      {total > 0 && <WinningStats />}
       {total > 0 && (
         <div className={cx("w-full", "flex", "justify-end", "max-w-xl")}>
           <Select
