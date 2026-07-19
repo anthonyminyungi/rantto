@@ -1,4 +1,4 @@
-import cx from "classnames";
+import cx from "clsx";
 
 import { ModalComponentProps } from "@/types/modal";
 import { useDrawStore } from "@/store";
@@ -11,6 +11,7 @@ import Button from "../Button";
 import ModalItemWrapper from "./ModalItemWrapper";
 import AlertModal from "./AlertModal";
 import { overlay } from "overlay-kit";
+import { MODAL_PANEL_STYLES } from "@/constants/styles";
 
 interface NumberSelectModalProps extends ModalComponentProps {
   drawIdx: number;
@@ -50,10 +51,7 @@ export default function ManualSelectModal({
     [zeroFiltered]
   );
 
-  const handleClose = () => {
-    close();
-  };
-
+  const handleClose = () => close();
   const handleApply = () => {
     drawItem(drawIdx, currentNumbers);
     close();
@@ -63,60 +61,20 @@ export default function ManualSelectModal({
     <ModalItemWrapper>
       <div
         className={cx(
-          "bg-white",
-          "dark:bg-neutral-900",
-          "border",
-          "border-gray-200",
-          "dark:border-neutral-700",
-          "shadow-lg",
-          "dark:shadow-neutral-900/50",
-          "rounded-xl",
-          "px-6",
-          "py-8",
-          "w-full",
-          "flex",
-          "flex-col",
-          "justify-center",
-          "items-center",
-          "gap-4",
-          "text-neutral-900",
-          "dark:text-neutral-100",
-          /* sm */
-          "max-w-3xl",
-          "max-sm:h-full",
-          "max-sm:px-4",
-          "max-sm:rounded-none",
-          "max-sm:border-none"
+          MODAL_PANEL_STYLES,
+          "flex w-full flex-col items-center justify-center gap-4 px-6 py-8",
+          "max-w-3xl max-sm:h-full max-sm:rounded-none max-sm:border-none max-sm:px-4"
         )}
       >
-        <header
-          className={cx(
-            "text-2xl",
-            "font-bold",
-            "text-neutral-900",
-            "dark:text-neutral-100",
-            "max-sm:text-xl"
-          )}
-        >
+        <header className="text-2xl font-bold text-neutral-900 max-sm:text-xl dark:text-neutral-100">
           {drawIdx + 1}게임 번호 선택
         </header>
         <NumberBallSet numbers={currentNumbers} />
         <div
           className={cx(
-            "py-6",
-            // "my-4",
-            "w-full",
-            "flex",
-            "flex-wrap",
-            "justify-center",
-            "bg-gray-100",
-            "dark:bg-neutral-800",
-            "rounded-xl",
-            "gap-x-2",
-            "gap-y-4",
-            /* sm */
-            "max-sm:gap-y-3",
-            "max-sm:py-4"
+            "flex w-full flex-wrap justify-center gap-x-2 gap-y-4 py-6",
+            "rounded-xl bg-gray-100 dark:bg-neutral-800",
+            "max-sm:gap-y-3 max-sm:py-4"
           )}
         >
           {allNumbers.map((num) => (
@@ -128,7 +86,7 @@ export default function ManualSelectModal({
             />
           ))}
         </div>
-        <div className={cx("flex", "gap-2")}>
+        <div className="flex gap-2">
           <Button variant="secondary" onClick={handleClose}>
             닫기
           </Button>

@@ -1,4 +1,4 @@
-import cx from "classnames";
+import cx from "clsx";
 
 import NumberBallSet from "@/components/NumberBallSet";
 import { FixedSizeArray } from "@/types";
@@ -7,43 +7,23 @@ import { useWinningHistory } from "@/hooks/winningHistory";
 export default function LastWeek() {
   const { bonus, numbers, round, createdAt } = useWinningHistory();
   return (
-    <div className={cx("flex", "justify-center", "w-full")}>
+    <div className="flex w-full justify-center">
       <div
         className={cx(
-          "flex",
-          "flex-col",
-          "justify-center",
-          "items-center",
-          "gap-4",
-          "w-full",
-          "py-6",
-          "border",
-          "border-gray-400",
-          "dark:border-neutral-800",
-          "rounded-lg",
-          /* sm */
+          "flex w-full flex-col items-center justify-center gap-4 py-6",
+          "rounded-lg border border-gray-400 dark:border-neutral-800",
           "max-sm:py-4"
         )}
       >
-        <div className={cx("text-center")}>
-          <p className={cx("font-bold", "text-2xl", "max-sm:text-xl")}>
+        <div className="text-center">
+          <p className="text-2xl font-bold max-sm:text-xl">
             지난 회차 당첨번호
           </p>
           <p>
             <a
               href="https://dhlottery.co.kr/lt645/result"
               target="_blank"
-              className={cx(
-                "text-blue-600",
-                "dark:text-blue-400",
-                "font-semibold",
-                "px-2",
-                "py-1",
-                "rounded-md",
-                /* hover */
-                "hover:bg-gray-100",
-                "dark:hover:bg-neutral-800"
-              )}
+              className="rounded-md px-2 py-1 font-semibold text-blue-600 hover:bg-gray-100 dark:text-blue-400 dark:hover:bg-neutral-800"
             >
               {round}회
             </a>{" "}

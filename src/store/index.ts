@@ -43,11 +43,15 @@ export const useDrawStore = create<DrawState>((set) => ({
 interface SavedPageState {
   sortKey: SavedListSortKey;
   setSort: (key: SavedListSortKey) => void;
+  filterRank: number | null;
+  setFilterRank: (rank: number | null) => void;
 }
 
 export const useSavedPageStore = create<SavedPageState>((set) => ({
   sortKey: "CREATED_DESC",
   setSort: (key) => set(() => ({ sortKey: key })),
+  filterRank: null,
+  setFilterRank: (rank) => set(() => ({ filterRank: rank })),
 }));
 
 interface ToastState {

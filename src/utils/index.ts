@@ -1,7 +1,18 @@
-import { sampleSize, intersection } from "es-toolkit";
+import { ObjectEntries } from "@/types";
 
-import { DrawList, DrawListItem, ObjectEntries } from "@/types";
-import { allNumbers } from "@/constants";
+export { drawNumbers, drawAllNumbers, isDrawEmpty } from "./draw";
+export {
+  getIntersectedNumbers,
+  getHighestRankByDrawsDiff,
+  getRanksByDraw,
+  formatRankText,
+  getRankBadge,
+} from "./rank";
+export {
+  generateDrawClipboardMsg,
+  isWebShareSupported,
+  shareDrawList,
+} from "./share";
 
 export function getBallBgColor(num: number) {
   /* https://tailwindcss.com/docs/content-configuration#dynamic-class-names */
@@ -15,109 +26,17 @@ export function getBallBgColor(num: number) {
   };
 }
 
-export function drawNumbers(): DrawListItem {
-  return sampleSize(allNumbers, 6).toSorted((a, b) => a - b) as DrawListItem;
-}
-
-export function drawAllNumbers(): DrawList {
-  const res = [];
-  for (let i = 0; i < 5; i++) {
-    res[i] = drawNumbers();
-  }
-  return res as DrawList;
-}
-
-export function isDrawEmpty(numbers: DrawList | DrawListItem) {
-  const list = Array.isArray(numbers[0]) ? (numbers as DrawList) : [numbers];
-  return (
-    list.filter(
-      (numbers) => numbers?.filter((number) => number === 0).length === 0
-    ).length === 0
-  );
-}
-
-export function generateDrawClipboardMsg(numbers: DrawList | DrawListItem) {
-  const list = Array.isArray(numbers[0]) ? (numbers as DrawList) : [numbers];
-  const numbersToText = list
-    .filter((numbers) => !isDrawEmpty(numbers))
-    .map(
-      (numbers, index) =>
-        `${list.length > 1 ? `${index + 1}게임: ` : ""}${numbers.join(", ")}`
-    )
-    .join("\n\n")
-    .concat("\n\n나만의 당첨 번호를 뽑아보세요!\nhttps://rantto.app");
-  return numbersToText;
-}
-
-export const isWebShareSupported = typeof navigator !== "undefined" && !!navigator.share;
-
-export async function shareDrawList(
-  numbers: DrawList | DrawListItem,
-  onSuccess?: (type: "share" | "copy") => void
-) {
-  const textMessage = generateDrawClipboardMsg(numbers);
-  if (isWebShareSupported) {
-    try {
-      await navigator.share({
-        text: textMessage,
-      });
-      onSuccess?.("share");
-    } catch (e) {
-      if ((e as Error).name !== "AbortError") {
-        console.error("Error sharing:", e);
-      }
-    }
-  } else {
-    try {
-      await navigator.clipboard.writeText(textMessage);
-      onSuccess?.("copy");
-    } catch (e) {
-      console.error(e);
-    }
-  }
-}
-
 export function entriesFromObject<T extends object>(obj: T): ObjectEntries<T> {
   return Object.entries(obj) as ObjectEntries<T>;
 }
 
-export function getIntersectedNumbers(
-  draw: DrawListItem,
-  won: DrawListItem,
-  bonus: number
-): number[] {
-  const intersected = intersection(draw, won);
-  if (intersected.length === 6) {
-    return draw;
-  } else if (intersected.length === 5 && draw.includes(bonus)) {
-    return [...intersected, bonus];
-  } else {
-    return intersected;
-  }
-}
-
-export function getHighestRankByDrawsDiff(
-  draws: DrawList,
-  won: DrawListItem,
-  bonus: number
-): number {
-  const ranks = draws
-    .map((draw) => {
-      const intersected = getIntersectedNumbers(draw, won, bonus);
-      const hasBonus = intersected.includes(bonus);
-      switch (intersected.length) {
-        case 6:
-          return hasBonus ? 2 : 1;
-        case 5:
-          return 3;
-        case 4:
-          return 4;
-        case 3:
-          return 5;
-        default:
-          return -1;
-      }
-    })
-    .filter((rank) => rank > 0);
-  return ranks.length > 0 ? Math.min(...ranks) : -1;
+export function formatDate(date: Date, extended: boolean): string {
+  const y = String(date.getFullYear()).slice(2);
+  const m = String(date.getMonth() + 1).padStart(2, "0");
+  const d = String(date.getDate()).padStart(2, "0");
+  if (!extended) return `${y}.${m}.${d}`;
+  const h = String(date.getHours()).padStart(2, "0");
+  const min = String(date.getMinutes()).padStart(2, "0");
+  const s = String(date.getSeconds()).padStart(2, "0");
+  return `${y}.${m}.${d} ${h}:${min}:${s}`;
 }

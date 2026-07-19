@@ -1,14 +1,15 @@
-import { useState } from "react";
-import cx from "classnames";
+import cx from "clsx";
 
 import DrawItem from "@/components/DrawItem";
 import Button from "@/components/Button";
 import { db } from "@/db/savedDraw";
 import { useWinningHistory } from "@/hooks/winningHistory";
+import { useShareDraw } from "@/hooks/useShareDraw";
 import { useToast } from "@/hooks";
-import { shareDrawList, drawAllNumbers, isDrawEmpty, isWebShareSupported } from "@/utils";
+import { drawAllNumbers, isDrawEmpty, isWebShareSupported } from "@/utils";
 import { useDrawStore } from "@/store";
-import { DrawList, DrawListItem } from "@/types";
+import { ICON_SIZE } from "@/constants/styles";
+import { DrawList } from "@/types";
 
 import TicketIcon from "@/assets/ticket.svg?react";
 import ShareIcon from "@/assets/share.svg?react";
@@ -20,24 +21,11 @@ import ResetIcon from "@/assets/arrow-uturn-left.svg?react";
 
 export default function DrawSection() {
   const { drawList, drawAll, clearDraw } = useDrawStore();
-  const [copied, setCopied] = useState(false);
+  const { copied, handleShare } = useShareDraw();
   const { round: recentRound } = useWinningHistory();
   const { showToast } = useToast();
 
-  const handleShare = () => {
-    shareDrawList(drawList, (type) => {
-      setCopied(true);
-      setTimeout(() => {
-        setCopied(false);
-      }, 2000);
-      showToast({
-        content: type === "share" ? "공유 화면이 열립니다." : "클립보드에 복사되었습니다.",
-        icon: (
-          <CheckCircleIcon className={cx("text-green-500", "w-6", "h-6")} />
-        ),
-      });
-    });
-  };
+  const handleShareClick = () => handleShare(drawList);
 
   const handleDrawAll = () => {
     const drawnList = drawAllNumbers();
@@ -52,83 +40,61 @@ export default function DrawSection() {
     });
     showToast({
       content: "보관함에 추가되었습니다.",
-      icon: <CheckCircleIcon className={cx("text-green-500", "w-6", "h-6")} />,
+      icon: <CheckCircleIcon className="h-6 w-6 text-green-500" />,
     });
     clearDraw();
   };
 
+  const shareIcon = isWebShareSupported ? (
+    <ShareIcon className={ICON_SIZE} />
+  ) : copied ? (
+    <ClipboardCheckIcon className={ICON_SIZE} />
+  ) : (
+    <ClipboardIcon className={ICON_SIZE} />
+  );
+
+  const shareLabel = isWebShareSupported
+    ? "전체 공유"
+    : copied
+      ? "복사됨"
+      : "전체복사";
+
   return (
     <div
       className={cx(
-        "flex",
-        "flex-col",
-        "items-center",
-        "gap-4",
-        "w-full",
-        "border",
-        "border-gray-400",
-        "dark:border-neutral-800",
-        "rounded-lg",
-        "py-6",
-        /* sm */
-        "max-sm:px-2",
-        "max-sm:py-4"
+        "flex w-full flex-col items-center gap-4 py-6",
+        "rounded-lg border border-gray-400 dark:border-neutral-800",
+        "max-sm:px-2 max-sm:py-4"
       )}
     >
       <Button
-        icon={
-          <TicketIcon
-            className={cx("w-6", "h-6", "max-sm:w-5", "max-sm:h-5")}
-          />
-        }
+        icon={<TicketIcon className={ICON_SIZE} />}
         onClick={handleDrawAll}
       >
         5회 뽑기
       </Button>
-      <div className={cx("max-w-xl", "w-full", "space-y-2")}>
+      <div className="w-full max-w-xl space-y-2">
         {drawList.map((item, index) => (
-          <DrawItem key={index} numbers={item as DrawListItem} index={index} />
+          <DrawItem key={index} numbers={item} index={index} />
         ))}
       </div>
-      <div className={cx("flex", "gap-2")}>
+      <div className="flex gap-2">
         <Button
-          icon={
-            isWebShareSupported ? (
-              <ShareIcon
-                className={cx("w-6", "h-6", "max-sm:w-5", "max-sm:h-5")}
-              />
-            ) : copied ? (
-              <ClipboardCheckIcon
-                className={cx("w-6", "h-6", "max-sm:w-5", "max-sm:h-5")}
-              />
-            ) : (
-              <ClipboardIcon
-                className={cx("w-6", "h-6", "max-sm:w-5", "max-sm:h-5")}
-              />
-            )
-          }
-          onClick={handleShare}
+          icon={shareIcon}
+          onClick={handleShareClick}
           disabled={isDrawEmpty(drawList) || (!isWebShareSupported && copied)}
         >
-          {isWebShareSupported ? "전체 공유" : copied ? "복사됨" : "전체복사"}
+          {shareLabel}
         </Button>
         <Button
-          icon={
-            <InboxIcon
-              className={cx("w-6", "h-6", "max-sm:w-5", "max-sm:h-5")}
-            />
-          }
+          icon={<InboxIcon className={ICON_SIZE} />}
           disabled={isDrawEmpty(drawList)}
           onClick={handleSave}
         >
           보관하기
         </Button>
         <Button
-          icon={
-            <ResetIcon
-              className={cx("w-6", "h-6", "max-sm:w-5", "max-sm:h-5")}
-            />
-          }
+          icon={<ResetIcon className={ICON_SIZE} />}
           disabled={isDrawEmpty(drawList)}
           onClick={clearDraw}
         >
