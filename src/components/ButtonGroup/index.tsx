@@ -1,5 +1,5 @@
 import { ButtonHTMLAttributes, ReactNode } from "react";
-import cx from "classnames";
+import cx from "clsx";
 
 interface ButtonGroupItem extends ButtonHTMLAttributes<HTMLButtonElement> {
   text?: string;
@@ -18,27 +18,19 @@ const GRID_COLS: Record<number, string> = {
 
 export default function ButtonGroup({ items }: ButtonGroupProps) {
   return (
-    <div className={cx("grid", GRID_COLS[items.length], "text-xs")}>
+    <div className={cx("grid text-xs", GRID_COLS[items.length])}>
       {items.map(({ text, icon, className, disabled, ...rest }) => (
         <button
           key={text}
           className={cx(
-            "first:rounded-s-md",
-            "last:rounded-e-md",
-            "bg-gray-400",
-            "dark:bg-neutral-700",
-            "p-3",
-            "text-white",
-            "font-semibold",
-            "align-middle",
-            "flex",
-            "flex-col",
-            "justify-center",
-            "items-center",
-            "transition-all",
+            "first:rounded-s-md last:rounded-e-md",
+            "bg-gray-400 p-3 align-middle font-semibold text-white dark:bg-neutral-700",
+            "flex flex-col items-center justify-center transition-colors",
             { "cursor-not-allowed opacity-50": disabled },
-            /* hover */
-            { "hover:bg-gray-500 dark:hover:bg-neutral-600": !disabled },
+            {
+              "cursor-pointer hover:bg-gray-500 dark:hover:bg-neutral-600":
+                !disabled,
+            },
             className
           )}
           disabled={disabled}

@@ -1,4 +1,4 @@
-import cx from "classnames";
+import cx from "clsx";
 
 import ToastItem from "@/components/ToastItem";
 import { useToastStore } from "@/store";

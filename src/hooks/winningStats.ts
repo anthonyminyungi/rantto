@@ -22,11 +22,7 @@ const INITIAL_RANK_COUNTS: Record<number, number> = {
 };
 
 export function useWinningStats(): WinningStatsResult {
-  const allDraws = useLiveQuery(
-    () => db.savedDraws.toArray(),
-    [],
-    []
-  );
+  const allDraws = useLiveQuery(() => db.savedDraws.toArray(), [], []);
 
   return useMemo(() => {
     const rankCounts: Record<number, number> = { ...INITIAL_RANK_COUNTS };

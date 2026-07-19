@@ -41,20 +41,18 @@ describe("formatRankText 테스트", () => {
   });
 
   it("단일 등수 당첨", () => {
-    expect(formatRankText([-1, 5, -1])).toBe("5등 1회 당첨");
+    expect(formatRankText([-1, 5, -1])).toBe("5등 당첨!");
   });
 
-  it("복수 등수 당첨 — 높은 등수부터 나열", () => {
-    expect(formatRankText([5, -1, 3, 5, -1])).toBe("3등 1회, 5등 2회 당첨");
+  it("복수 등수 당첨 — 최고 등수 + 나머지 횟수", () => {
+    expect(formatRankText([5, -1, 3, 5, -1])).toBe("3등 외 2회 당첨!");
   });
 
   it("모든 등수 당첨", () => {
-    expect(formatRankText([1, 2, 3, 4, 5])).toBe(
-      "1등 1회, 2등 1회, 3등 1회, 4등 1회, 5등 1회 당첨"
-    );
+    expect(formatRankText([1, 2, 3, 4, 5])).toBe("1등 외 4회 당첨!");
   });
 
   it("같은 등수 여러개", () => {
-    expect(formatRankText([5, 5, 5])).toBe("5등 3회 당첨");
+    expect(formatRankText([5, 5, 5])).toBe("5등 외 2회 당첨!");
   });
 });

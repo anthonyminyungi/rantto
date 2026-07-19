@@ -1,5 +1,5 @@
 import { MouseEvent, useRef, useState } from "react";
-import cx from "classnames";
+import cx from "clsx";
 import { useOutsideClick } from "@/hooks";
 
 import ArrowDownIcon from "@/assets/chevron-down.svg?react";
@@ -24,9 +24,7 @@ export default function Select<TKey extends string>({
 
   const selectedValue = options.find(([key]) => key === selected)?.[1];
 
-  useOutsideClick(ref, () => {
-    setIsOpen(false);
-  });
+  useOutsideClick(ref, () => setIsOpen(false));
 
   const handleSelect = (key: TKey) => () => {
     if (selected !== key) {
@@ -42,59 +40,34 @@ export default function Select<TKey extends string>({
   };
 
   return (
-    <div className={cx("relative", "w-fit")}>
+    <div className="relative w-fit">
       <div
         ref={ref}
         onClick={handleToggle}
         className={cx(
-          "flex",
-          "justify-between",
-          "items-center",
-          "border",
-          "w-40",
-          "py-2",
-          "px-3",
-          "border-blue-600",
-          "rounded-md",
-          "cursor-pointer",
-          "transition-all",
-          /* isOpen */
+          "flex w-40 items-center justify-between border px-3 py-2",
+          "cursor-pointer rounded-md border-blue-600 transition-colors",
+          "hover:bg-blue-600 hover:text-white",
+          "max-sm:w-28 max-sm:p-2",
           {
-            "bg-blue-600": isOpen,
-            "text-white": isOpen,
-          },
-          {
-            "text-blue-600 dark:text-blue-400": !isOpen,
-            "bg-white dark:bg-neutral-900": !isOpen,
-          },
-          "hover:bg-blue-600",
-          "hover:text-white",
-
-          /* max-sm */
-          "max-sm:w-28",
-          "max-sm:p-2"
+            "bg-blue-600 text-white": isOpen,
+            "bg-white text-blue-600 dark:bg-neutral-900 dark:text-blue-400":
+              !isOpen,
+          }
         )}
       >
-        <span
-          className={cx(
-            // "font-semibold",
-            "overflow-hidden",
-            "leading-4",
-            "text-ellipsis",
-            "whitespace-nowrap"
-          )}
-        >
+        <span className="overflow-hidden leading-4 text-ellipsis whitespace-nowrap">
           {selectedValue}
         </span>
         {isOpen ? (
           <ArrowUpIcon
             viewBox="0 0 24 24"
-            className={cx("w-6", "h-6", "max-sm:w-4", "max-sm:h-4")}
+            className="h-6 w-6 max-sm:h-4 max-sm:w-4"
           />
         ) : (
           <ArrowDownIcon
             viewBox="0 0 24 24"
-            className={cx("w-6", "h-6", "max-sm:w-4", "max-sm:h-4")}
+            className="h-6 w-6 max-sm:h-4 max-sm:w-4"
           />
         )}
       </div>
@@ -102,21 +75,9 @@ export default function Select<TKey extends string>({
         <ul
           role="listbox"
           className={cx(
-            "absolute",
-            "z-50",
-            "top-12",
-            "w-full",
-            "p-1",
-            "rounded-md",
-            "cursor-pointer",
-            "border",
-            "bg-white",
-            "dark:bg-neutral-900",
-            "border-blue-600",
-            "dark:border-blue-400",
-            "text-blue-600",
-            "dark:text-blue-400",
-            /* max-sm */
+            "absolute top-12 z-50 w-full cursor-pointer rounded-md p-1",
+            "border border-blue-600 dark:border-blue-400",
+            "bg-white text-blue-600 dark:bg-neutral-900 dark:text-blue-400",
             "max-sm:top-10"
           )}
         >
@@ -126,25 +87,14 @@ export default function Select<TKey extends string>({
               role="listitem"
               onClick={handleSelect(key)}
               className={cx(
-                "rounded-sm",
-                "p-2",
-                "m-1",
-                "overflow-hidden",
-                "leading-4",
-                "text-ellipsis",
-                "whitespace-nowrap",
+                "m-1 overflow-hidden rounded-sm p-2 leading-4 text-ellipsis whitespace-nowrap",
+                "max-sm:m-0.5 max-sm:p-1",
                 {
-                  "bg-blue-600": selected === key,
-                  "text-white": selected === key,
+                  "bg-blue-600 text-white": selected === key,
                 },
-                /* hover */
                 {
-                  "hover:bg-blue-300": selected !== key,
-                  "hover:text-white": selected !== key,
-                },
-                /* max-sm */
-                "max-sm:p-1",
-                "max-sm:m-0.5"
+                  "hover:bg-blue-300 hover:text-white": selected !== key,
+                }
               )}
             >
               {text}

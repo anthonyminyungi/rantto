@@ -1,30 +1,17 @@
 import { useMemo, useState } from "react";
-import cx from "classnames";
+import cx from "clsx";
 
 import NumberBallSet from "@/components/NumberBallSet";
 import SavedActions from "@/components/SavedActions";
+import SavedItemHeader from "./SavedItemHeader";
 
 import { SavedDraw } from "@/db/savedDraw";
 import { useWinningHistory } from "@/hooks/winningHistory";
-import {
-  formatRankText,
-  getHighestRankByDrawsDiff,
-  getIntersectedNumbers,
-} from "@/utils";
+import { getHighestRankByDrawsDiff, getIntersectedNumbers } from "@/utils";
+import { CARD_STYLES } from "@/constants/styles";
 
 import ArrowDownIcon from "@/assets/chevron-down.svg?react";
 import ArrowUpIcon from "@/assets/chevron-up.svg?react";
-
-function formatDate(date: Date, extended: boolean): string {
-  const y = String(date.getFullYear()).slice(2);
-  const m = String(date.getMonth() + 1).padStart(2, "0");
-  const d = String(date.getDate()).padStart(2, "0");
-  if (!extended) return `${y}.${m}.${d}`;
-  const h = String(date.getHours()).padStart(2, "0");
-  const min = String(date.getMinutes()).padStart(2, "0");
-  const s = String(date.getSeconds()).padStart(2, "0");
-  return `${y}.${m}.${d} ${h}:${min}:${s}`;
-}
 
 interface SavedItemProps {
   data: SavedDraw;
@@ -50,56 +37,23 @@ export default function SavedItem({ data }: SavedItemProps) {
   return (
     <div
       className={cx(
-        "max-w-xl",
-        "w-full",
-        "transition-all",
-        "bg-white",
-        "shadow-sm",
-        "dark:bg-neutral-900",
-        "border",
-        "border-gray-200",
-        "dark:border-neutral-800",
-        "rounded-lg",
-        "px-3",
-        "py-4",
-        /* sm */
-        "max-sm:px-2",
-        "max-sm:py-3"
+        CARD_STYLES,
+        "w-full max-w-xl px-3 py-4 transition-colors",
+        "max-sm:px-2 max-sm:py-3"
       )}
     >
-      <p
-        className={cx(
-          "flex",
-          "mb-1",
-          "text-gray-400",
-          "dark:text-neutral-500",
-          "pl-2",
-          /* sm */
-          "max-sm:text-sm",
-          "max-sm:pl-0"
-        )}
-      >
-        <span className={cx("px-1.5")}>#{id}</span>
-        {"・"}
-        <span className={cx("px-1.5")}>{round}회</span>
-        {"・"}
-        <span
-          className={cx("px-1.5", {
-            "font-bold": isAfterAnnounce && hasWonDraw,
-          })}
-        >
-          {!isAfterAnnounce && "추첨전"}
-          {isAfterAnnounce && gameRanks && formatRankText(gameRanks)}
-          {isAfterAnnounce && !gameRanks && hasWonDraw && `${rank}등당첨!`}
-          {isAfterAnnounce && !gameRanks && !hasWonDraw && "낙첨"}
-        </span>
-        {"・"}
-        <span className={cx("px-1.5")}>
-          {formatDate(createdAt, isExtended)}
-        </span>
-      </p>
-      <div className={cx("flex", "my-2", "justify-around")}>
-        <div className={cx("flex", "flex-col")}>
+      <SavedItemHeader
+        id={id}
+        round={round}
+        createdAt={createdAt}
+        gameRanks={gameRanks}
+        isAfterAnnounce={isAfterAnnounce}
+        hasWonDraw={hasWonDraw}
+        rank={rank}
+        isExtended={isExtended}
+      />
+      <div className="my-2 flex justify-around">
+        <div className="flex flex-col">
           <NumberBallSet
             numbers={draws[0]}
             intersectedNumbers={
@@ -132,36 +86,22 @@ export default function SavedItem({ data }: SavedItemProps) {
       {draws.length - 1 > 0 && (
         <div
           className={cx(
-            "-mx-3",
-            "-mb-3",
-            "mt-1",
-            "py-1",
-            "text-center",
-            "text-gray-500",
-            "dark:text-neutral-400",
-            "cursor-pointer",
-            "flex",
-            "justify-center",
-            "items-center",
-            "gap-1",
-            /* sm */
-            "max-sm:-mx-2",
-            "max-sm:-mb-2.5",
-            "max-sm:text-sm"
+            "-mx-3 mt-1 -mb-3 cursor-pointer py-1 text-center",
+            "text-gray-500 dark:text-neutral-400",
+            "flex items-center justify-center gap-1",
+            "max-sm:-mx-2 max-sm:-mb-2.5 max-sm:text-sm"
           )}
-          onClick={() => {
-            setExtended((prev) => !prev);
-          }}
+          onClick={() => setExtended((prev) => !prev)}
         >
           {isExtended ? (
             <>
               <span>접기</span>
-              <ArrowUpIcon className={cx("w-4", "h-4")} viewBox="0 0 24 24" />
+              <ArrowUpIcon className="h-4 w-4" viewBox="0 0 24 24" />
             </>
           ) : (
             <>
               <span>{`외 ${draws.length - 1}개 더 보기`}</span>
-              <ArrowDownIcon className={cx("w-4", "h-4")} viewBox="0 0 24 24" />
+              <ArrowDownIcon className="h-4 w-4" viewBox="0 0 24 24" />
             </>
           )}
         </div>

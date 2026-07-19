@@ -1,6 +1,7 @@
-import cx from "classnames";
+import cx from "clsx";
 import ModalItemWrapper from "./ModalItemWrapper";
 import Button from "../Button";
+import { MODAL_PANEL_STYLES } from "@/constants/styles";
 
 interface ConfirmModalProps {
   content: string;
@@ -22,31 +23,12 @@ export default function ConfirmModal({
     <ModalItemWrapper>
       <div
         className={cx(
-          "bg-white",
-          "dark:bg-neutral-900",
-          "border",
-          "border-gray-200",
-          "dark:border-neutral-700",
-          "shadow-lg",
-          "dark:shadow-neutral-900/50",
-          "rounded-xl",
-          "px-6",
-          "py-8",
-          "flex",
-          "flex-col",
-          "justify-center",
-          "items-center",
-          "gap-4",
-          "w-80",
-          "max-w-full",
-          "text-neutral-900",
-          "dark:text-neutral-100"
+          MODAL_PANEL_STYLES,
+          "flex w-80 max-w-full flex-col items-center justify-center gap-4 px-6 py-8"
         )}
       >
-        <div className={cx("text-center", "font-medium", "text-lg")}>
-          {content}
-        </div>
-        <div className={cx("flex", "gap-2", "mt-4")}>
+        <div className="text-center text-lg font-medium">{content}</div>
+        <div className="mt-4 flex gap-2">
           <Button variant="secondary" onClick={close}>
             취소
           </Button>
