@@ -1,8 +1,8 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import App from "../App";
-import { db } from "../db/savedDraw";
+import App from "./App";
+import { db } from "./db/savedDraw";
 
 describe("보관함 테스트", () => {
   test("보관함 추가 테스트", async () => {

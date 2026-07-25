@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getIntersectedNumbers, getHighestRankByDrawsDiff } from "../utils";
+import { getIntersectedNumbers, getHighestRankByDrawsDiff } from "./index";
 import { DrawList, DrawListItem } from "../types";
 
 describe("getIntersectedNumbers 테스트", () => {
