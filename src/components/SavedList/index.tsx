@@ -61,7 +61,7 @@ export default function SavedList() {
       {list.length < total && (
         <button
           className={cx(
-            "cursor-pointer my-4 rounded-full px-6 py-4",
+            "my-4 cursor-pointer rounded-full px-6 py-4",
             "border border-gray-200 dark:border-neutral-700",
             "bg-gray-100 text-gray-500 dark:bg-neutral-900 dark:text-neutral-400",
             "hover:bg-gray-200 dark:hover:bg-neutral-800",

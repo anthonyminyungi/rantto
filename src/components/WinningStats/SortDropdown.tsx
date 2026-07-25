@@ -27,7 +27,7 @@ export default function SortDropdown() {
     <div ref={ref} className="relative">
       <button
         className={cx(
-          "cursor-pointer flex items-center gap-1 rounded-md px-2.5 py-1 transition-colors",
+          "flex cursor-pointer items-center gap-1 rounded-md px-2.5 py-1 transition-colors",
           "text-gray-500 dark:text-neutral-400",
           "hover:bg-gray-100 dark:hover:bg-neutral-800",
           "max-sm:px-2 max-sm:text-sm",

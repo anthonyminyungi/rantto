@@ -25,20 +25,20 @@ export default function WinningStats() {
       className={cx(
         "w-full max-w-xl rounded-lg",
         "bg-white dark:bg-neutral-900",
-        "border border-gray-200 dark:border-neutral-800",
+        "border border-gray-200 dark:border-neutral-800"
       )}
     >
       <div
         className={cx(
           "flex flex-wrap items-center gap-2 px-4 py-3",
-          "max-sm:gap-1.5 max-sm:px-3 max-sm:py-2.5",
+          "max-sm:gap-1.5 max-sm:px-3 max-sm:py-2.5"
         )}
       >
         <span
           className={cx(
             "mr-1 font-semibold",
             "text-gray-700 dark:text-neutral-300",
-            "max-sm:text-sm",
+            "max-sm:text-sm"
           )}
         >
           당첨 필터
@@ -62,7 +62,7 @@ export default function WinningStats() {
                     !isActive && !isDisabled,
                   "cursor-not-allowed border-gray-100 bg-gray-50 text-gray-300 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-600":
                     isDisabled,
-                },
+                }
               )}
               onClick={() => handleChipClick(rank)}
             >

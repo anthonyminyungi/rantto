@@ -29,7 +29,7 @@ export default function Dropdown({ items }: DropdownProps) {
         className={cx(
           "flex items-center justify-center rounded-full p-1",
           "text-gray-300 dark:text-neutral-500",
-          "cursor-pointer hover:bg-gray-200 transition-colors dark:hover:bg-neutral-800"
+          "cursor-pointer transition-colors hover:bg-gray-200 dark:hover:bg-neutral-800"
         )}
         onClick={() => setIsOpen((prev) => !prev)}
       >

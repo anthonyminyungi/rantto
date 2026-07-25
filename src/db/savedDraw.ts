@@ -35,8 +35,6 @@ class AppDB extends Dexie {
 
 export const db = new AppDB();
 
-
-
 export async function migrateOldDatabase() {
   const oldDbExists = await Dexie.exists(OLD_DB_NAME);
   if (!oldDbExists) return;
