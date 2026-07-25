@@ -6,12 +6,11 @@ on:
       - main
       - develop
     paths:
-      - 'src/**'
-      - 'package.json'
-      - 'pnpm-lock.yaml'
-      - '*.config.ts'
-      - 'tsconfig*.json'
-
+      - "src/**"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - "*.config.ts"
+      - "tsconfig*.json"
 
 jobs:
   test:

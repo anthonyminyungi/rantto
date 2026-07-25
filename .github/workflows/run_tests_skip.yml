@@ -6,11 +6,11 @@ on:
       - main
       - develop
     paths-ignore:
-      - 'src/**'
-      - 'package.json'
-      - 'pnpm-lock.yaml'
-      - '*.config.ts'
-      - 'tsconfig*.json'
+      - "src/**"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - "*.config.ts"
+      - "tsconfig*.json"
 
 jobs:
   test:
