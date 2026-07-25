@@ -1,4 +1,4 @@
-import cx from "classnames";
+import cx from "clsx";
 import { getBallBgColor } from "@/utils";
 
 interface NumberBallProps {
@@ -17,23 +17,11 @@ export default function NumberBall({
   return (
     <div
       className={cx(
-        "leading-10",
-        "py-1",
-        "w-12",
-        "h-12",
-        "rounded-full",
-        "text-center",
-        "align-middle",
-        "text-white",
-        "font-semibold",
+        "h-12 w-12 rounded-full py-1 text-center align-middle leading-10 font-semibold text-white",
+        "max-sm:h-10 max-sm:w-10 max-sm:text-sm max-sm:leading-8",
         getBallBgColor(noBg ? 0 : number),
         { "opacity-35": blurred },
-        { "cursor-pointer": Boolean(onClick) },
-        /* sm */
-        "max-sm:w-10",
-        "max-sm:h-10",
-        "max-sm:leading-8",
-        "max-sm:text-sm"
+        { "cursor-pointer": Boolean(onClick) }
       )}
       onClick={onClick}
     >

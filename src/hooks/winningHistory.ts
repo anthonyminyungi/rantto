@@ -1,11 +1,47 @@
 import { useLiveQuery } from "dexie-react-hooks";
 import { useEffect } from "react";
 
-import { WinningHistory } from "@/types";
+import { DrawListItem, WinningHistory } from "@/types";
 import { db, WinningHistoryRecord } from "@/db/savedDraw";
+import { getRanksByDraw } from "@/utils";
 
 const WINNING_HISTORY_GIST_URL =
   "https://gist.githubusercontent.com/anthonyminyungi/a7237c0717400512855c890d5b0e1ba3/raw/lotto-winning-history.json";
+
+async function backfillGameRanks() {
+  const pending = await db.savedDraws
+    .filter((item) => !item.gameRanks)
+    .toArray();
+
+  if (pending.length === 0) return;
+
+  const rounds = [...new Set(pending.map((item) => item.round))];
+  const historyRecords = await db.winningHistory
+    .where("round")
+    .anyOf(rounds)
+    .toArray();
+
+  const historyMap = new Map(historyRecords.map((h) => [h.round, h]));
+
+  const updates: { key: number; changes: { gameRanks: number[] } }[] = [];
+
+  for (const item of pending) {
+    const history = historyMap.get(item.round);
+    if (!history) continue;
+
+    const won = history.numbers as DrawListItem;
+    const gameRanks = getRanksByDraw(item.draws, won, history.bonus);
+    if (item.id != null) {
+      updates.push({ key: item.id, changes: { gameRanks } });
+    }
+  }
+
+  if (updates.length > 0) {
+    await Promise.all(
+      updates.map(({ key, changes }) => db.savedDraws.update(key, changes))
+    );
+  }
+}
 
 /**
  * Gist에서 당첨번호를 가져와 IndexedDB에 캐싱하고,
@@ -32,6 +68,7 @@ export const useWinningHistory = (targetRound?: number): WinningHistory => {
         if (active && history.length > 0) {
           // bulkPut은 round(PK) 기준으로 upsert하므로 중복 걱정 없음
           await db.winningHistory.bulkPut(history);
+          await backfillGameRanks();
         }
       } catch (e) {
         // 네트워크 실패 시 IndexedDB 캐시로 동작

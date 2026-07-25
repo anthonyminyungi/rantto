@@ -13,7 +13,13 @@ export default function App() {
     <OverlayProvider>
       <BrowserRouter>
         <Layout>
-          <Suspense fallback={<div className="h-screen flex justify-center items-center">로딩 중...</div>}>
+          <Suspense
+            fallback={
+              <div className="flex h-screen items-center justify-center">
+                로딩 중...
+              </div>
+            }
+          >
             <Routes>
               <Route path="/" element={<MainPage />} />
               <Route path="/saved" element={<SavedPage />} />
