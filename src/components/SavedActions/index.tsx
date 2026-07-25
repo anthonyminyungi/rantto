@@ -1,13 +1,14 @@
-import { useState } from "react";
-import cx from "classnames";
+import cx from "clsx";
 
-import { useToast } from "@/hooks";
 import Dropdown from "@/components/Dropdown";
 import ButtonGroup from "@/components/ButtonGroup";
-import { SavedDraw, db } from "@/db/savedDraw";
-import { shareDrawList, isWebShareSupported } from "@/utils";
 import ConfirmModal from "@/components/Modal/ConfirmModal";
+import { SavedDraw, db } from "@/db/savedDraw";
+import { useShareDraw } from "@/hooks/useShareDraw";
+import { useToast } from "@/hooks";
+import { isWebShareSupported } from "@/utils";
 import { overlay } from "overlay-kit";
+import { ICON_SIZE_SM } from "@/constants/styles";
 
 import ShareIcon from "@/assets/share.svg?react";
 import ClipboardIcon from "@/assets/clipboard-document.svg?react";
@@ -21,23 +22,10 @@ interface SavedActionsProps {
 
 export default function SavedActions({ data }: SavedActionsProps) {
   const { id, draws } = data;
-  const [copied, setCopied] = useState(false);
+  const { copied, handleShare } = useShareDraw();
   const { showToast } = useToast();
 
-  const handleShare = () => {
-    shareDrawList(draws, (type) => {
-      setCopied(true);
-      setTimeout(() => {
-        setCopied(false);
-      }, 2000);
-      showToast({
-        content: type === "share" ? "공유 화면이 열립니다." : "클립보드에 복사되었습니다.",
-        icon: (
-          <CheckCircleIcon className={cx("text-green-500", "w-6", "h-6")} />
-        ),
-      });
-    });
-  };
+  const handleShareClick = () => handleShare(draws);
 
   const handleDelete = () => {
     if (id) {
@@ -49,11 +37,7 @@ export default function SavedActions({ data }: SavedActionsProps) {
             db.savedDraws.delete(id);
             showToast({
               content: "보관함에서 삭제되었습니다.",
-              icon: (
-                <CheckCircleIcon
-                  className={cx("text-green-500", "w-6", "h-6")}
-                />
-              ),
+              icon: <CheckCircleIcon className="h-6 w-6 text-green-500" />,
             });
           }}
         />
@@ -61,23 +45,25 @@ export default function SavedActions({ data }: SavedActionsProps) {
     }
   };
 
+  const shareIcon = isWebShareSupported ? (
+    <ShareIcon className={ICON_SIZE_SM} />
+  ) : (
+    <ClipboardIcon className={ICON_SIZE_SM} />
+  );
+
   return (
-    <div className={cx("h-fit", "max-sm:pt-2")}>
+    <div className={cx("h-fit max-sm:pt-2")}>
       <div className="sm:hidden">
         <Dropdown
           items={[
             {
-              icon: isWebShareSupported ? (
-                <ShareIcon className={cx("w-5", "h-5")} />
-              ) : (
-                <ClipboardIcon className={cx("w-5", "h-5")} />
-              ),
+              icon: shareIcon,
               text: isWebShareSupported ? "공유" : "복사",
-              onClick: handleShare,
+              onClick: handleShareClick,
               disabled: !isWebShareSupported && copied,
             },
             {
-              icon: <TrashIcon className={cx("w-5", "h-5")} />,
+              icon: <TrashIcon className={ICON_SIZE_SM} />,
               text: "삭제",
               onClick: handleDelete,
             },
@@ -96,7 +82,7 @@ export default function SavedActions({ data }: SavedActionsProps) {
                 <ClipboardIcon />
               ),
               text: isWebShareSupported ? "공유" : `복사${copied ? "됨" : ""} `,
-              onClick: handleShare,
+              onClick: handleShareClick,
               disabled: !isWebShareSupported && copied,
             },
             {

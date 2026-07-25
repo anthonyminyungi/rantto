@@ -6,6 +6,7 @@ export interface SavedDraw {
   draws: DrawList;
   round: number;
   createdAt: Date;
+  gameRanks?: number[];
 }
 
 export interface WinningHistoryRecord {
