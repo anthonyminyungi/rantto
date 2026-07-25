@@ -12,8 +12,37 @@ permissions:
 jobs:
   release-please:
     runs-on: ubuntu-latest
+    environment: production
     steps:
       - uses: googleapis/release-please-action@v4
+        id: release
         with:
           release-type: node
           target-branch: main
+
+      - name: Checkout code
+        if: ${{ steps.release.outputs.release_created }}
+        uses: actions/checkout@v4
+
+      - name: Setup Node & pnpm
+        if: ${{ steps.release.outputs.release_created }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Install Vercel CLI & pnpm
+        if: ${{ steps.release.outputs.release_created }}
+        run: npm i -g vercel pnpm
+
+      - name: Deploy to Vercel Production
+        if: ${{ steps.release.outputs.release_created }}
+        run: |
+          vercel pull --yes --environment=production --token=$VERCEL_TOKEN
+          vercel build --prod --token=$VERCEL_TOKEN
+          vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_ACCESS_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          VERCEL_GIT_COMMIT_REF: ${{ github.ref_name }}
+          VERCEL_GIT_COMMIT_SHA: ${{ github.sha }}
