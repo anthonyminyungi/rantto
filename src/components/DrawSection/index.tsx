@@ -71,7 +71,7 @@ export default function DrawSection() {
         icon={<TicketIcon className={ICON_SIZE} />}
         onClick={handleDrawAll}
       >
-        5회 뽑기
+        5게임 뽑기
       </Button>
       <div className="w-full max-w-xl space-y-2">
         {drawList.map((item, index) => (

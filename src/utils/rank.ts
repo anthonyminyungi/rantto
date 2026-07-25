@@ -72,7 +72,7 @@ export function formatRankText(gameRanks: number[]): string {
 
   const highest = Math.min(...wins);
   if (wins.length === 1) return `${highest}등 당첨!`;
-  return `${highest}등 외 ${wins.length - 1}회 당첨!`;
+  return `${highest}등 외 ${wins.length - 1}게임 당첨!`;
 }
 
 export function getRankBadge(rank: number): string | null {

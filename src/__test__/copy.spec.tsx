@@ -11,7 +11,7 @@ describe("클립보드 복사 테스트", () => {
 
     const user = userEvent.setup({ writeToClipboard: true });
 
-    await user.click(await screen.findByText("5회 뽑기"));
+    await user.click(await screen.findByText("5게임 뽑기"));
     await user.click(await screen.findByText("전체복사"));
     const { drawList } = useDrawStore.getState();
 
