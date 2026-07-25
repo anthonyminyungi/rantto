@@ -4,18 +4,17 @@
  * 동행복권 API에서 최신 로또 당첨번호를 가져와 Gist를 업데이트하는 스크립트.
  * 기존 AWS Lambda 핸들러를 GitHub Actions용으로 이관한 버전.
  *
- * 의존성: playwright, @octokit/rest, json-stringify-pretty-compact
+ * 의존성: @octokit/rest, json-stringify-pretty-compact
  * (워크플로우에서 npm install로 설치됨 — 클라이언트 package.json과 분리)
  */
 
-import { chromium } from "playwright";
 import { Octokit } from "@octokit/rest";
 import stringify from "json-stringify-pretty-compact";
 
 const GIST_ID = "a7237c0717400512855c890d5b0e1ba3";
 const FILE_NAME = "lotto-winning-history.json";
 const BASE_URL =
-  "http://www.dhlottery.co.kr/lt645/selectPstLt645Info.do?srchLtEpsd=";
+  "https://www.dhlottery.co.kr/lt645/selectPstLt645Info.do?srchLtEpsd=";
 
 async function getGistData(octokit) {
   const gist = await octokit.gists.get({ gist_id: GIST_ID });
@@ -24,46 +23,37 @@ async function getGistData(octokit) {
 }
 
 async function fetchWinningNumbers(round) {
-  const browser = await chromium.launch();
-  const page = await browser.newPage();
-
-  try {
-    const response = await page.goto(`${BASE_URL}${round}`, {
-      waitUntil: "domcontentloaded",
-      timeout: 60000,
-    });
-
-    // 기존 방식: <pre> 태그 내의 JSON 파싱
-    const preText = await page.locator("pre").textContent();
-    const parsedData = JSON.parse(preText);
-    const item = parsedData.data?.list?.[0];
-
-    // 데이터가 없거나(아직 추첨 전) 회차가 다르면 null 반환
-    if (!item || item.ltEpsd !== round) {
-      console.log(`회차 ${round}: 아직 추첨 전이거나 데이터 없음`);
-      return null;
-    }
-
-    // 날짜 포맷 변환 "20260718" -> "2026-07-18" (date-fns 대체)
-    const dateStr = item.ltRflYmd;
-    const formattedDate = `${dateStr.slice(0, 4)}-${dateStr.slice(4, 6)}-${dateStr.slice(6, 8)}`;
-
-    return {
-      round: item.ltEpsd,
-      numbers: [
-        item.tm1WnNo,
-        item.tm2WnNo,
-        item.tm3WnNo,
-        item.tm4WnNo,
-        item.tm5WnNo,
-        item.tm6WnNo,
-      ],
-      bonus: item.bnsWnNo,
-      createdAt: formattedDate,
-    };
-  } finally {
-    await browser.close();
+  const response = await fetch(`${BASE_URL}${round}`);
+  if (!response.ok) {
+    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
   }
+
+  const parsedData = await response.json();
+  const item = parsedData.data?.list?.[0];
+
+  // 데이터가 없거나(아직 추첨 전) 회차가 다르면 null 반환
+  if (!item || item.ltEpsd !== round) {
+    console.log(`회차 ${round}: 아직 추첨 전이거나 데이터 없음`);
+    return null;
+  }
+
+  // 날짜 포맷 변환 "20260718" -> "2026-07-18"
+  const dateStr = item.ltRflYmd;
+  const formattedDate = `${dateStr.slice(0, 4)}-${dateStr.slice(4, 6)}-${dateStr.slice(6, 8)}`;
+
+  return {
+    round: item.ltEpsd,
+    numbers: [
+      item.tm1WnNo,
+      item.tm2WnNo,
+      item.tm3WnNo,
+      item.tm4WnNo,
+      item.tm5WnNo,
+      item.tm6WnNo,
+    ],
+    bonus: item.bnsWnNo,
+    createdAt: formattedDate,
+  };
 }
 
 async function updateGist(octokit, data) {

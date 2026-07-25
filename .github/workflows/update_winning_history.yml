@@ -16,10 +16,7 @@ jobs:
           node-version: 24
 
       - name: Install dependencies
-        run: npm install playwright @octokit/rest json-stringify-pretty-compact
-
-      - name: Install Playwright browsers
-        run: npx playwright install chromium --with-deps
+        run: npm install @octokit/rest json-stringify-pretty-compact
 
       - name: Fetch & Update
         env:
