@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getRanksByDraw, formatRankText } from "../utils";
+import { getRanksByDraw, formatRankText } from "./index";
 import { DrawListItem } from "../types";
 
 describe("getRanksByDraw 테스트", () => {

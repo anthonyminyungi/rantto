@@ -2,7 +2,7 @@ import { getByText, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { intersection } from "es-toolkit";
 
-import App from "../App";
+import App from "./App";
 import { useDrawStore } from "@/store";
 
 describe("번호 뽑기 테스트", () => {

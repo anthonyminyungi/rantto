@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { drawNumbers } from "../utils";
+import { drawNumbers } from "./index";
 
 describe("drawNumbers 테스트", () => {
   it("6개의 숫자를 반환해야 한다", () => {
