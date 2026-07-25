@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.4.1](https://github.com/anthonyminyungi/rantto/compare/v1.4.0...v1.4.1) (2026-07-25)
+
+
+### Bug Fixes
+
+* release please가 deploy를 트리거하지 못하는 현상 해결을 위해 하나의 워크플로우로 통합 ([d49f3cf](https://github.com/anthonyminyungi/rantto/commit/d49f3cf8cd1cdb314887ebf14f19d886142b219e))
+* release please가 deploy를 트리거하지 못하는 현상 해결을 위해 하나의 워크플로우로 통합 ([714d1b8](https://github.com/anthonyminyungi/rantto/commit/714d1b8f5ca7bed3aa722b34e2b4b62166fb5082))
+
 ## [1.4.0](https://github.com/anthonyminyungi/rantto/compare/v1.3.0...v1.4.0) (2026-07-25)
 
 
