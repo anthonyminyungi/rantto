@@ -2,14 +2,14 @@ import { getByText, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { intersection } from "es-toolkit";
 
-import App from "../App";
+import App from "./App";
 import { useDrawStore } from "@/store";
 
 describe("번호 뽑기 테스트", () => {
-  test("5회 뽑기 테스트", async () => {
+  test("5게임 뽑기 테스트", async () => {
     render(<App />);
     const { drawList: beforeDraw } = useDrawStore.getState();
-    await userEvent.click(await screen.findByText("5회 뽑기"));
+    await userEvent.click(await screen.findByText("5게임 뽑기"));
     const { drawList: afterDraw } = useDrawStore.getState();
 
     const allSetDrawn = beforeDraw.reduce((acc, beforeDrawnItem, idx) => {
@@ -22,7 +22,7 @@ describe("번호 뽑기 테스트", () => {
     await waitFor(() => expect(allSetDrawn).toBe(true));
   });
 
-  test("1회 뽑기 테스트", async () => {
+  test("1게임 뽑기 테스트", async () => {
     render(<App />);
     const { drawList: beforeDraw } = useDrawStore.getState();
 

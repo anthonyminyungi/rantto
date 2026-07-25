@@ -1,20 +1,16 @@
-import { useState } from "react";
-import cx from "classnames";
-
 import ButtonGroup from "@/components/ButtonGroup";
 import Dropdown from "@/components/Dropdown";
 import ManualSelectModal from "@/components/Modal/ManualSelectModal";
-import { useToast } from "@/hooks";
-import { shareDrawList, drawNumbers, isDrawEmpty, isWebShareSupported } from "@/utils";
+import { useShareDraw } from "@/hooks/useShareDraw";
+import { drawNumbers, isDrawEmpty, isWebShareSupported } from "@/utils";
 import { useDrawStore } from "@/store";
 import { overlay } from "overlay-kit";
-import { DrawListItem } from "@/types";
+import { ICON_SIZE_SM } from "@/constants/styles";
 
 import TicketIcon from "@/assets/ticket.svg?react";
 import ShareIcon from "@/assets/share.svg?react";
 import ClipboardIcon from "@/assets/clipboard-document.svg?react";
 import ClipboardCheckIcon from "@/assets/clipboard-document-check.svg?react";
-import CheckCircleIcon from "@/assets/check-circle.svg?react";
 import ResetIcon from "@/assets/arrow-uturn-left.svg?react";
 import WindowIcon from "@/assets/window.svg?react";
 
@@ -24,39 +20,29 @@ interface DrawActionsProps {
 
 export default function DrawActions({ index }: DrawActionsProps) {
   const { drawList, drawItem, clearItem } = useDrawStore();
-  const currentItem: DrawListItem = drawList[index];
-  const [copied, setCopied] = useState(false);
-  const { showToast } = useToast();
+  const currentItem = drawList[index];
+  const { copied, handleShare } = useShareDraw();
 
-  const handleShare = () => {
-    shareDrawList(currentItem, (type) => {
-      setCopied(true);
-      setTimeout(() => {
-        setCopied(false);
-      }, 2000);
-      showToast({
-        content: type === "share" ? "공유 화면이 열립니다." : "클립보드에 복사되었습니다.",
-        icon: (
-          <CheckCircleIcon className={cx("text-green-500", "w-6", "h-6")} />
-        ),
-      });
-    });
-  };
+  const handleShareClick = () => handleShare(currentItem);
 
   const handleClickDraw = () => {
     const numbers = drawNumbers();
     drawItem(index, numbers);
   };
 
-  const handleClickReset = () => {
-    clearItem(index);
-  };
+  const handleClickReset = () => clearItem(index);
 
   const handleClickSelect = () => {
-    overlay.open(({ unmount }) => {
-      return <ManualSelectModal drawIdx={index} close={unmount} />;
-    });
+    overlay.open(({ unmount }) => (
+      <ManualSelectModal drawIdx={index} close={unmount} />
+    ));
   };
+
+  const shareIcon = isWebShareSupported ? (
+    <ShareIcon className={ICON_SIZE_SM} />
+  ) : (
+    <ClipboardIcon className={ICON_SIZE_SM} />
+  );
 
   return (
     <>
@@ -64,28 +50,24 @@ export default function DrawActions({ index }: DrawActionsProps) {
         <Dropdown
           items={[
             {
-              icon: <TicketIcon className={cx("w-5", "h-5")} />,
+              icon: <TicketIcon className={ICON_SIZE_SM} />,
               text: "뽑기",
               onClick: handleClickDraw,
             },
             {
-              icon: <ResetIcon className={cx("w-5", "h-5")} />,
+              icon: <ResetIcon className={ICON_SIZE_SM} />,
               text: "초기화",
               onClick: handleClickReset,
               disabled: isDrawEmpty(currentItem),
             },
             {
-              icon: isWebShareSupported ? (
-                <ShareIcon className={cx("w-5", "h-5")} />
-              ) : (
-                <ClipboardIcon className={cx("w-5", "h-5")} />
-              ),
+              icon: shareIcon,
               text: isWebShareSupported ? "공유" : "복사",
-              onClick: handleShare,
+              onClick: handleShareClick,
               disabled: isDrawEmpty(currentItem),
             },
             {
-              icon: <WindowIcon className={cx("w-5", "h-5")} />,
+              icon: <WindowIcon className={ICON_SIZE_SM} />,
               text: "선택",
               onClick: handleClickSelect,
             },
@@ -111,8 +93,9 @@ export default function DrawActions({ index }: DrawActionsProps) {
                 <ClipboardIcon />
               ),
               text: isWebShareSupported ? "공유" : `복사${copied ? "됨" : ""} `,
-              onClick: handleShare,
-              disabled: isDrawEmpty(currentItem) || (!isWebShareSupported && copied),
+              onClick: handleShareClick,
+              disabled:
+                isDrawEmpty(currentItem) || (!isWebShareSupported && copied),
             },
             {
               icon: <WindowIcon />,

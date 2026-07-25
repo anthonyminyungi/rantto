@@ -5,6 +5,12 @@ on:
     branches:
       - main
       - develop
+    paths:
+      - "src/**"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - "*.config.ts"
+      - "tsconfig*.json"
 
 jobs:
   test:
