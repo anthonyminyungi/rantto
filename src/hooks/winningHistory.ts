@@ -2,7 +2,7 @@ import { useLiveQuery } from "dexie-react-hooks";
 import { useEffect } from "react";
 
 import { DrawListItem, WinningHistory } from "@/types";
-import { db, WinningHistoryRecord } from "@/db/savedDraw";
+import { db, SavedDraw, WinningHistoryRecord } from "@/db/savedDraw";
 import { getRanksByDraw } from "@/utils";
 
 const WINNING_HISTORY_GIST_URL =
@@ -27,7 +27,7 @@ async function backfillGameRanks() {
 
   const historyMap = new Map(historyRecords.map((h) => [h.round, h]));
 
-  const updates: { key: number; changes: { gameRanks: number[] } }[] = [];
+  const updatedItems: SavedDraw[] = [];
 
   for (const item of pending) {
     const history = historyMap.get(item.round);
@@ -36,14 +36,12 @@ async function backfillGameRanks() {
     const won = history.numbers as DrawListItem;
     const gameRanks = getRanksByDraw(item.draws, won, history.bonus);
     if (item.id != null) {
-      updates.push({ key: item.id, changes: { gameRanks } });
+      updatedItems.push({ ...item, gameRanks });
     }
   }
 
-  if (updates.length > 0) {
-    await Promise.all(
-      updates.map(({ key, changes }) => db.savedDraws.update(key, changes))
-    );
+  if (updatedItems.length > 0) {
+    await db.savedDraws.bulkPut(updatedItems);
   }
 }
 
