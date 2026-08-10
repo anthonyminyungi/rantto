@@ -42,40 +42,36 @@ export default function SavedActions({ data }: SavedActionsProps) {
     }
   };
 
+  const actions = [
+    {
+      icon: shareIcon,
+      text: shareText,
+      onClick: handleShareClick,
+      disabled: !isWebShareSupported && copied,
+    },
+    {
+      icon: (className?: string) => <TrashIcon className={className} />,
+      text: "삭제",
+      onClick: handleDelete,
+    },
+  ];
+
   return (
     <div className={cx("h-fit max-sm:pt-2")}>
       <div className="sm:hidden">
         <Dropdown
-          items={[
-            {
-              icon: shareIcon(ICON_SIZE_SM),
-              text: shareText,
-              onClick: handleShareClick,
-              disabled: !isWebShareSupported && copied,
-            },
-            {
-              icon: <TrashIcon className={ICON_SIZE_SM} />,
-              text: "삭제",
-              onClick: handleDelete,
-            },
-          ]}
+          items={actions.map(({ icon, ...rest }) => ({
+            icon: icon(ICON_SIZE_SM),
+            ...rest,
+          }))}
         />
       </div>
       <div className="max-sm:hidden">
         <ButtonGroup
-          items={[
-            {
-              icon: shareIcon(),
-              text: shareText,
-              onClick: handleShareClick,
-              disabled: !isWebShareSupported && copied,
-            },
-            {
-              icon: <TrashIcon />,
-              text: "삭제",
-              onClick: handleDelete,
-            },
-          ]}
+          items={actions.map(({ icon, ...rest }) => ({
+            icon: icon(),
+            ...rest,
+          }))}
         />
       </div>
     </div>
