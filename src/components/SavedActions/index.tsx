@@ -10,9 +10,6 @@ import { isWebShareSupported } from "@/utils";
 import { overlay } from "overlay-kit";
 import { ICON_SIZE_SM } from "@/constants/styles";
 
-import ShareIcon from "@/assets/share.svg?react";
-import ClipboardIcon from "@/assets/clipboard-document.svg?react";
-import ClipboardCheckIcon from "@/assets/clipboard-document-check.svg?react";
 import TrashIcon from "@/assets/trash.svg?react";
 import CheckCircleIcon from "@/assets/check-circle.svg?react";
 
@@ -22,7 +19,7 @@ interface SavedActionsProps {
 
 export default function SavedActions({ data }: SavedActionsProps) {
   const { id, draws } = data;
-  const { copied, handleShare } = useShareDraw();
+  const { copied, handleShare, shareIcon, shareText } = useShareDraw();
   const { showToast } = useToast();
 
   const handleShareClick = () => handleShare(draws);
@@ -45,52 +42,36 @@ export default function SavedActions({ data }: SavedActionsProps) {
     }
   };
 
-  const shareIcon = isWebShareSupported ? (
-    <ShareIcon className={ICON_SIZE_SM} />
-  ) : (
-    <ClipboardIcon className={ICON_SIZE_SM} />
-  );
+  const actions = [
+    {
+      icon: shareIcon,
+      text: shareText,
+      onClick: handleShareClick,
+      disabled: !isWebShareSupported && copied,
+    },
+    {
+      icon: (className?: string) => <TrashIcon className={className} />,
+      text: "삭제",
+      onClick: handleDelete,
+    },
+  ];
 
   return (
     <div className={cx("h-fit max-sm:pt-2")}>
       <div className="sm:hidden">
         <Dropdown
-          items={[
-            {
-              icon: shareIcon,
-              text: isWebShareSupported ? "공유" : "복사",
-              onClick: handleShareClick,
-              disabled: !isWebShareSupported && copied,
-            },
-            {
-              icon: <TrashIcon className={ICON_SIZE_SM} />,
-              text: "삭제",
-              onClick: handleDelete,
-            },
-          ]}
+          items={actions.map(({ icon, ...rest }) => ({
+            icon: icon(ICON_SIZE_SM),
+            ...rest,
+          }))}
         />
       </div>
       <div className="max-sm:hidden">
         <ButtonGroup
-          items={[
-            {
-              icon: isWebShareSupported ? (
-                <ShareIcon />
-              ) : copied ? (
-                <ClipboardCheckIcon />
-              ) : (
-                <ClipboardIcon />
-              ),
-              text: isWebShareSupported ? "공유" : `복사${copied ? "됨" : ""} `,
-              onClick: handleShareClick,
-              disabled: !isWebShareSupported && copied,
-            },
-            {
-              icon: <TrashIcon />,
-              text: "삭제",
-              onClick: handleDelete,
-            },
-          ]}
+          items={actions.map(({ icon, ...rest }) => ({
+            icon: icon(),
+            ...rest,
+          }))}
         />
       </div>
     </div>

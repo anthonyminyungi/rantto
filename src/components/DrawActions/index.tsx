@@ -8,9 +8,6 @@ import { overlay } from "overlay-kit";
 import { ICON_SIZE_SM } from "@/constants/styles";
 
 import TicketIcon from "@/assets/ticket.svg?react";
-import ShareIcon from "@/assets/share.svg?react";
-import ClipboardIcon from "@/assets/clipboard-document.svg?react";
-import ClipboardCheckIcon from "@/assets/clipboard-document-check.svg?react";
 import ResetIcon from "@/assets/arrow-uturn-left.svg?react";
 import WindowIcon from "@/assets/window.svg?react";
 
@@ -21,7 +18,7 @@ interface DrawActionsProps {
 export default function DrawActions({ index }: DrawActionsProps) {
   const { drawList, drawItem, clearItem } = useDrawStore();
   const currentItem = drawList[index];
-  const { copied, handleShare } = useShareDraw();
+  const { copied, handleShare, shareIcon, shareText } = useShareDraw();
 
   const handleShareClick = () => handleShare(currentItem);
 
@@ -40,28 +37,24 @@ export default function DrawActions({ index }: DrawActionsProps) {
 
   const actionItems = [
     {
-      Icon: TicketIcon,
+      icon: (className?: string) => <TicketIcon className={className} />,
       text: "뽑기",
       onClick: handleClickDraw,
     },
     {
-      Icon: ResetIcon,
+      icon: (className?: string) => <ResetIcon className={className} />,
       text: "초기화",
       onClick: handleClickReset,
       disabled: isDrawEmpty(currentItem),
     },
     {
-      Icon: isWebShareSupported
-        ? ShareIcon
-        : copied
-          ? ClipboardCheckIcon
-          : ClipboardIcon,
-      text: isWebShareSupported ? "공유" : `복사${copied ? "됨" : ""} `,
+      icon: shareIcon,
+      text: shareText,
       onClick: handleShareClick,
       disabled: isDrawEmpty(currentItem) || (!isWebShareSupported && copied),
     },
     {
-      Icon: WindowIcon,
+      icon: (className?: string) => <WindowIcon className={className} />,
       text: "선택",
       onClick: handleClickSelect,
     },
@@ -71,17 +64,16 @@ export default function DrawActions({ index }: DrawActionsProps) {
     <>
       <div className="sm:hidden">
         <Dropdown
-          items={actionItems.map(({ Icon, ...rest }) => ({
-            icon: <Icon className={ICON_SIZE_SM} />,
+          items={actionItems.map(({ icon, ...rest }) => ({
+            icon: icon(ICON_SIZE_SM),
             ...rest,
-            text: rest.text.trim(), // Dropdown does not need the trailing space on "복사됨 "
           }))}
         />
       </div>
       <div className="max-sm:hidden">
         <ButtonGroup
-          items={actionItems.map(({ Icon, ...rest }) => ({
-            icon: <Icon />,
+          items={actionItems.map(({ icon, ...rest }) => ({
+            icon: icon(),
             ...rest,
           }))}
         />
