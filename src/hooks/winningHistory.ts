@@ -15,7 +15,11 @@ async function backfillGameRanks() {
 
   if (pending.length === 0) return;
 
-  const rounds = [...new Set(pending.map((item) => item.round))];
+  const roundsSet = new Set<number>();
+  for (const item of pending) {
+    roundsSet.add(item.round);
+  }
+  const rounds = [...roundsSet];
   const historyRecords = await db.winningHistory
     .where("round")
     .anyOf(rounds)
