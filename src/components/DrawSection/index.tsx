@@ -12,16 +12,15 @@ import { ICON_SIZE } from "@/constants/styles";
 import { DrawList } from "@/types";
 
 import TicketIcon from "@/assets/ticket.svg?react";
-import ShareIcon from "@/assets/share.svg?react";
-import ClipboardIcon from "@/assets/clipboard-document.svg?react";
-import ClipboardCheckIcon from "@/assets/clipboard-document-check.svg?react";
 import InboxIcon from "@/assets/inbox-arrow-down.svg?react";
 import CheckCircleIcon from "@/assets/check-circle.svg?react";
 import ResetIcon from "@/assets/arrow-uturn-left.svg?react";
 
 export default function DrawSection() {
   const { drawList, drawAll, clearDraw } = useDrawStore();
-  const { copied, handleShare } = useShareDraw();
+  const { copied, handleShare, shareIcon, shareText } = useShareDraw({
+    isAll: true,
+  });
   const { round: recentRound } = useWinningHistory();
   const { showToast } = useToast();
 
@@ -45,20 +44,6 @@ export default function DrawSection() {
     clearDraw();
   };
 
-  const shareIcon = isWebShareSupported ? (
-    <ShareIcon className={ICON_SIZE} />
-  ) : copied ? (
-    <ClipboardCheckIcon className={ICON_SIZE} />
-  ) : (
-    <ClipboardIcon className={ICON_SIZE} />
-  );
-
-  const shareLabel = isWebShareSupported
-    ? "전체 공유"
-    : copied
-      ? "복사됨"
-      : "전체복사";
-
   return (
     <div
       className={cx(
@@ -80,11 +65,11 @@ export default function DrawSection() {
       </div>
       <div className="flex gap-2">
         <Button
-          icon={shareIcon}
+          icon={shareIcon(ICON_SIZE)}
           onClick={handleShareClick}
           disabled={isDrawEmpty(drawList) || (!isWebShareSupported && copied)}
         >
-          {shareLabel}
+          {shareText}
         </Button>
         <Button
           icon={<InboxIcon className={ICON_SIZE} />}
