@@ -38,71 +38,52 @@ export default function DrawActions({ index }: DrawActionsProps) {
     ));
   };
 
-  const shareIcon = isWebShareSupported ? (
-    <ShareIcon className={ICON_SIZE_SM} />
-  ) : (
-    <ClipboardIcon className={ICON_SIZE_SM} />
-  );
+  const actionItems = [
+    {
+      Icon: TicketIcon,
+      text: "뽑기",
+      onClick: handleClickDraw,
+    },
+    {
+      Icon: ResetIcon,
+      text: "초기화",
+      onClick: handleClickReset,
+      disabled: isDrawEmpty(currentItem),
+    },
+    {
+      Icon: isWebShareSupported
+        ? ShareIcon
+        : copied
+          ? ClipboardCheckIcon
+          : ClipboardIcon,
+      text: isWebShareSupported ? "공유" : `복사${copied ? "됨" : ""} `,
+      onClick: handleShareClick,
+      disabled: isDrawEmpty(currentItem) || (!isWebShareSupported && copied),
+    },
+    {
+      Icon: WindowIcon,
+      text: "선택",
+      onClick: handleClickSelect,
+    },
+  ];
 
   return (
     <>
       <div className="sm:hidden">
         <Dropdown
-          items={[
-            {
-              icon: <TicketIcon className={ICON_SIZE_SM} />,
-              text: "뽑기",
-              onClick: handleClickDraw,
-            },
-            {
-              icon: <ResetIcon className={ICON_SIZE_SM} />,
-              text: "초기화",
-              onClick: handleClickReset,
-              disabled: isDrawEmpty(currentItem),
-            },
-            {
-              icon: shareIcon,
-              text: isWebShareSupported ? "공유" : "복사",
-              onClick: handleShareClick,
-              disabled: isDrawEmpty(currentItem),
-            },
-            {
-              icon: <WindowIcon className={ICON_SIZE_SM} />,
-              text: "선택",
-              onClick: handleClickSelect,
-            },
-          ]}
+          items={actionItems.map(({ Icon, ...rest }) => ({
+            icon: <Icon className={ICON_SIZE_SM} />,
+            ...rest,
+            text: rest.text.trim(), // Dropdown does not need the trailing space on "복사됨 "
+          }))}
         />
       </div>
       <div className="max-sm:hidden">
         <ButtonGroup
-          items={[
-            { icon: <TicketIcon />, text: "뽑기", onClick: handleClickDraw },
-            {
-              icon: <ResetIcon />,
-              text: "초기화",
-              onClick: handleClickReset,
-              disabled: isDrawEmpty(currentItem),
-            },
-            {
-              icon: isWebShareSupported ? (
-                <ShareIcon />
-              ) : copied ? (
-                <ClipboardCheckIcon />
-              ) : (
-                <ClipboardIcon />
-              ),
-              text: isWebShareSupported ? "공유" : `복사${copied ? "됨" : ""} `,
-              onClick: handleShareClick,
-              disabled:
-                isDrawEmpty(currentItem) || (!isWebShareSupported && copied),
-            },
-            {
-              icon: <WindowIcon />,
-              text: "선택",
-              onClick: handleClickSelect,
-            },
-          ]}
+          items={actionItems.map(({ Icon, ...rest }) => ({
+            icon: <Icon />,
+            ...rest,
+          }))}
         />
       </div>
     </>
