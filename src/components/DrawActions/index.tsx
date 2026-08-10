@@ -35,60 +35,47 @@ export default function DrawActions({ index }: DrawActionsProps) {
     ));
   };
 
+  const actionItems = [
+    {
+      icon: (className?: string) => <TicketIcon className={className} />,
+      text: "뽑기",
+      onClick: handleClickDraw,
+    },
+    {
+      icon: (className?: string) => <ResetIcon className={className} />,
+      text: "초기화",
+      onClick: handleClickReset,
+      disabled: isDrawEmpty(currentItem),
+    },
+    {
+      icon: shareIcon,
+      text: shareText,
+      onClick: handleShareClick,
+      disabled: isDrawEmpty(currentItem) || (!isWebShareSupported && copied),
+    },
+    {
+      icon: (className?: string) => <WindowIcon className={className} />,
+      text: "선택",
+      onClick: handleClickSelect,
+    },
+  ];
+
   return (
     <>
       <div className="sm:hidden">
         <Dropdown
-          items={[
-            {
-              icon: <TicketIcon className={ICON_SIZE_SM} />,
-              text: "뽑기",
-              onClick: handleClickDraw,
-            },
-            {
-              icon: <ResetIcon className={ICON_SIZE_SM} />,
-              text: "초기화",
-              onClick: handleClickReset,
-              disabled: isDrawEmpty(currentItem),
-            },
-            {
-              icon: shareIcon(ICON_SIZE_SM),
-              text: shareText,
-              onClick: handleShareClick,
-              disabled:
-                isDrawEmpty(currentItem) || (!isWebShareSupported && copied),
-            },
-            {
-              icon: <WindowIcon className={ICON_SIZE_SM} />,
-              text: "선택",
-              onClick: handleClickSelect,
-            },
-          ]}
+          items={actionItems.map(({ icon, ...rest }) => ({
+            icon: icon(ICON_SIZE_SM),
+            ...rest,
+          }))}
         />
       </div>
       <div className="max-sm:hidden">
         <ButtonGroup
-          items={[
-            { icon: <TicketIcon />, text: "뽑기", onClick: handleClickDraw },
-            {
-              icon: <ResetIcon />,
-              text: "초기화",
-              onClick: handleClickReset,
-              disabled: isDrawEmpty(currentItem),
-            },
-            {
-              icon: shareIcon(),
-              text: shareText,
-              onClick: handleShareClick,
-              disabled:
-                isDrawEmpty(currentItem) || (!isWebShareSupported && copied),
-            },
-            {
-              icon: <WindowIcon />,
-              text: "선택",
-              onClick: handleClickSelect,
-            },
-          ]}
+          items={actionItems.map(({ icon, ...rest }) => ({
+            icon: icon(),
+            ...rest,
+          }))}
         />
       </div>
     </>
