@@ -8,11 +8,13 @@ export function drawNumbers(): DrawListItem {
 }
 
 export function drawAllNumbers(): DrawList {
-  const res = [];
-  for (let i = 0; i < 5; i++) {
-    res[i] = drawNumbers();
-  }
-  return res as DrawList;
+  return [
+    drawNumbers(),
+    drawNumbers(),
+    drawNumbers(),
+    drawNumbers(),
+    drawNumbers(),
+  ] as DrawList;
 }
 
 export function isDrawEmpty(numbers: DrawList | DrawListItem) {
