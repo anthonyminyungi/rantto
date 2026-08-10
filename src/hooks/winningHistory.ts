@@ -2,7 +2,7 @@ import { useLiveQuery } from "dexie-react-hooks";
 import { useEffect } from "react";
 
 import { DrawListItem, WinningHistory } from "@/types";
-import { db, WinningHistoryRecord } from "@/db/savedDraw";
+import { db, SavedDraw, WinningHistoryRecord } from "@/db/savedDraw";
 import { getRanksByDraw } from "@/utils";
 
 const WINNING_HISTORY_GIST_URL =
