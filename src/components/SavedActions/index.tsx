@@ -45,52 +45,40 @@ export default function SavedActions({ data }: SavedActionsProps) {
     }
   };
 
-  const shareIcon = isWebShareSupported ? (
-    <ShareIcon className={ICON_SIZE_SM} />
-  ) : (
-    <ClipboardIcon className={ICON_SIZE_SM} />
-  );
+  const actions = [
+    {
+      icon: isWebShareSupported
+        ? ShareIcon
+        : copied
+          ? ClipboardCheckIcon
+          : ClipboardIcon,
+      text: isWebShareSupported ? "공유" : `복사${copied ? "됨" : ""}`,
+      onClick: handleShareClick,
+      disabled: !isWebShareSupported && copied,
+    },
+    {
+      icon: TrashIcon,
+      text: "삭제",
+      onClick: handleDelete,
+    },
+  ];
 
   return (
     <div className={cx("h-fit max-sm:pt-2")}>
       <div className="sm:hidden">
         <Dropdown
-          items={[
-            {
-              icon: shareIcon,
-              text: isWebShareSupported ? "공유" : "복사",
-              onClick: handleShareClick,
-              disabled: !isWebShareSupported && copied,
-            },
-            {
-              icon: <TrashIcon className={ICON_SIZE_SM} />,
-              text: "삭제",
-              onClick: handleDelete,
-            },
-          ]}
+          items={actions.map(({ icon: Icon, ...rest }) => ({
+            icon: <Icon className={ICON_SIZE_SM} />,
+            ...rest,
+          }))}
         />
       </div>
       <div className="max-sm:hidden">
         <ButtonGroup
-          items={[
-            {
-              icon: isWebShareSupported ? (
-                <ShareIcon />
-              ) : copied ? (
-                <ClipboardCheckIcon />
-              ) : (
-                <ClipboardIcon />
-              ),
-              text: isWebShareSupported ? "공유" : `복사${copied ? "됨" : ""} `,
-              onClick: handleShareClick,
-              disabled: !isWebShareSupported && copied,
-            },
-            {
-              icon: <TrashIcon />,
-              text: "삭제",
-              onClick: handleDelete,
-            },
-          ]}
+          items={actions.map(({ icon: Icon, ...rest }) => ({
+            icon: <Icon />,
+            ...rest,
+          }))}
         />
       </div>
     </div>
