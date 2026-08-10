@@ -23,7 +23,7 @@ async function backfillGameRanks() {
 
   const historyMap = new Map(historyRecords.map((h) => [h.round, h]));
 
-  const updates: { key: number; changes: { gameRanks: number[] } }[] = [];
+  const updatedItems: SavedDraw[] = [];
 
   for (const item of pending) {
     const history = historyMap.get(item.round);
@@ -32,14 +32,12 @@ async function backfillGameRanks() {
     const won = history.numbers as DrawListItem;
     const gameRanks = getRanksByDraw(item.draws, won, history.bonus);
     if (item.id != null) {
-      updates.push({ key: item.id, changes: { gameRanks } });
+      updatedItems.push({ ...item, gameRanks });
     }
   }
 
-  if (updates.length > 0) {
-    await Promise.all(
-      updates.map(({ key, changes }) => db.savedDraws.update(key, changes))
-    );
+  if (updatedItems.length > 0) {
+    await db.savedDraws.bulkPut(updatedItems);
   }
 }
 
