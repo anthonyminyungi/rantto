@@ -31,9 +31,9 @@ export default function SavedList() {
   const total = useLiveQuery(
     async () => {
       if (filterRank != null) {
-        const all = await db.savedDraws.toArray();
-        return all.filter((item) => item.gameRanks?.includes(filterRank))
-          .length;
+        return db.savedDraws
+          .filter((item) => !!item.gameRanks?.includes(filterRank))
+          .count();
       }
       return db.savedDraws.count();
     },

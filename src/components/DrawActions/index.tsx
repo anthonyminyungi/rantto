@@ -8,9 +8,6 @@ import { overlay } from "overlay-kit";
 import { ICON_SIZE_SM } from "@/constants/styles";
 
 import TicketIcon from "@/assets/ticket.svg?react";
-import ShareIcon from "@/assets/share.svg?react";
-import ClipboardIcon from "@/assets/clipboard-document.svg?react";
-import ClipboardCheckIcon from "@/assets/clipboard-document-check.svg?react";
 import ResetIcon from "@/assets/arrow-uturn-left.svg?react";
 import WindowIcon from "@/assets/window.svg?react";
 
@@ -21,7 +18,7 @@ interface DrawActionsProps {
 export default function DrawActions({ index }: DrawActionsProps) {
   const { drawList, drawItem, clearItem } = useDrawStore();
   const currentItem = drawList[index];
-  const { copied, handleShare } = useShareDraw();
+  const { copied, handleShare, shareIcon, shareText } = useShareDraw();
 
   const handleShareClick = () => handleShare(currentItem);
 
@@ -37,12 +34,6 @@ export default function DrawActions({ index }: DrawActionsProps) {
       <ManualSelectModal drawIdx={index} close={unmount} />
     ));
   };
-
-  const shareIcon = isWebShareSupported ? (
-    <ShareIcon className={ICON_SIZE_SM} />
-  ) : (
-    <ClipboardIcon className={ICON_SIZE_SM} />
-  );
 
   return (
     <>
@@ -61,10 +52,11 @@ export default function DrawActions({ index }: DrawActionsProps) {
               disabled: isDrawEmpty(currentItem),
             },
             {
-              icon: shareIcon,
-              text: isWebShareSupported ? "공유" : "복사",
+              icon: shareIcon(ICON_SIZE_SM),
+              text: shareText,
               onClick: handleShareClick,
-              disabled: isDrawEmpty(currentItem),
+              disabled:
+                isDrawEmpty(currentItem) || (!isWebShareSupported && copied),
             },
             {
               icon: <WindowIcon className={ICON_SIZE_SM} />,
@@ -85,14 +77,8 @@ export default function DrawActions({ index }: DrawActionsProps) {
               disabled: isDrawEmpty(currentItem),
             },
             {
-              icon: isWebShareSupported ? (
-                <ShareIcon />
-              ) : copied ? (
-                <ClipboardCheckIcon />
-              ) : (
-                <ClipboardIcon />
-              ),
-              text: isWebShareSupported ? "공유" : `복사${copied ? "됨" : ""} `,
+              icon: shareIcon(),
+              text: shareText,
               onClick: handleShareClick,
               disabled:
                 isDrawEmpty(currentItem) || (!isWebShareSupported && copied),
