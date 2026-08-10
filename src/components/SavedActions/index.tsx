@@ -10,9 +10,6 @@ import { isWebShareSupported } from "@/utils";
 import { overlay } from "overlay-kit";
 import { ICON_SIZE_SM } from "@/constants/styles";
 
-import ShareIcon from "@/assets/share.svg?react";
-import ClipboardIcon from "@/assets/clipboard-document.svg?react";
-import ClipboardCheckIcon from "@/assets/clipboard-document-check.svg?react";
 import TrashIcon from "@/assets/trash.svg?react";
 import CheckCircleIcon from "@/assets/check-circle.svg?react";
 
@@ -22,7 +19,7 @@ interface SavedActionsProps {
 
 export default function SavedActions({ data }: SavedActionsProps) {
   const { id, draws } = data;
-  const { copied, handleShare } = useShareDraw();
+  const { copied, handleShare, shareIcon, shareText } = useShareDraw();
   const { showToast } = useToast();
 
   const handleShareClick = () => handleShare(draws);
@@ -45,20 +42,14 @@ export default function SavedActions({ data }: SavedActionsProps) {
     }
   };
 
-  const shareIcon = isWebShareSupported ? (
-    <ShareIcon className={ICON_SIZE_SM} />
-  ) : (
-    <ClipboardIcon className={ICON_SIZE_SM} />
-  );
-
   return (
     <div className={cx("h-fit max-sm:pt-2")}>
       <div className="sm:hidden">
         <Dropdown
           items={[
             {
-              icon: shareIcon,
-              text: isWebShareSupported ? "공유" : "복사",
+              icon: shareIcon(ICON_SIZE_SM),
+              text: shareText,
               onClick: handleShareClick,
               disabled: !isWebShareSupported && copied,
             },
@@ -74,14 +65,8 @@ export default function SavedActions({ data }: SavedActionsProps) {
         <ButtonGroup
           items={[
             {
-              icon: isWebShareSupported ? (
-                <ShareIcon />
-              ) : copied ? (
-                <ClipboardCheckIcon />
-              ) : (
-                <ClipboardIcon />
-              ),
-              text: isWebShareSupported ? "공유" : `복사${copied ? "됨" : ""} `,
+              icon: shareIcon(),
+              text: shareText,
               onClick: handleShareClick,
               disabled: !isWebShareSupported && copied,
             },

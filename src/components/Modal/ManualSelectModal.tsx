@@ -17,6 +17,62 @@ interface NumberSelectModalProps extends ModalComponentProps {
   drawIdx: number;
 }
 
+function ManualSelectHeader({ drawIdx }: { drawIdx: number }) {
+  return (
+    <header className="text-2xl font-bold text-neutral-900 max-sm:text-xl dark:text-neutral-100">
+      {drawIdx + 1}게임 번호 선택
+    </header>
+  );
+}
+
+function ManualSelectNumberGrid({
+  currentNumbers,
+  onSelectNumber,
+}: {
+  currentNumbers: DrawListItem;
+  onSelectNumber: (num: number) => () => void;
+}) {
+  return (
+    <div
+      className={cx(
+        "flex w-full flex-wrap justify-center gap-x-2 gap-y-4 py-6",
+        "rounded-xl bg-gray-100 dark:bg-neutral-800",
+        "max-sm:gap-y-3 max-sm:py-4"
+      )}
+    >
+      {allNumbers.map((num) => (
+        <NumberBall
+          key={`select-${num}`}
+          number={num}
+          noBg={!currentNumbers.includes(num)}
+          onClick={onSelectNumber(num)}
+        />
+      ))}
+    </div>
+  );
+}
+
+function ManualSelectActionButtons({
+  onClose,
+  onApply,
+  isApplyDisabled,
+}: {
+  onClose: () => void;
+  onApply: () => void;
+  isApplyDisabled: boolean;
+}) {
+  return (
+    <div className="flex gap-2">
+      <Button variant="secondary" onClick={onClose}>
+        닫기
+      </Button>
+      <Button onClick={onApply} disabled={isApplyDisabled}>
+        적용하기
+      </Button>
+    </div>
+  );
+}
+
 export default function ManualSelectModal({
   drawIdx,
   close,
@@ -66,34 +122,17 @@ export default function ManualSelectModal({
           "max-w-3xl max-sm:h-full max-sm:rounded-none max-sm:border-none max-sm:px-4"
         )}
       >
-        <header className="text-2xl font-bold text-neutral-900 max-sm:text-xl dark:text-neutral-100">
-          {drawIdx + 1}게임 번호 선택
-        </header>
+        <ManualSelectHeader drawIdx={drawIdx} />
         <NumberBallSet numbers={currentNumbers} />
-        <div
-          className={cx(
-            "flex w-full flex-wrap justify-center gap-x-2 gap-y-4 py-6",
-            "rounded-xl bg-gray-100 dark:bg-neutral-800",
-            "max-sm:gap-y-3 max-sm:py-4"
-          )}
-        >
-          {allNumbers.map((num) => (
-            <NumberBall
-              key={`select-${num}`}
-              number={num}
-              noBg={!currentNumbers.includes(num)}
-              onClick={handleSelectNumber(num)}
-            />
-          ))}
-        </div>
-        <div className="flex gap-2">
-          <Button variant="secondary" onClick={handleClose}>
-            닫기
-          </Button>
-          <Button onClick={handleApply} disabled={zeroFiltered.length < 6}>
-            적용하기
-          </Button>
-        </div>
+        <ManualSelectNumberGrid
+          currentNumbers={currentNumbers}
+          onSelectNumber={handleSelectNumber}
+        />
+        <ManualSelectActionButtons
+          onClose={handleClose}
+          onApply={handleApply}
+          isApplyDisabled={zeroFiltered.length < 6}
+        />
       </div>
     </ModalItemWrapper>
   );

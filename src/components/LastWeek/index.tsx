@@ -23,6 +23,7 @@ export default function LastWeek() {
             <a
               href="https://dhlottery.co.kr/lt645/result"
               target="_blank"
+              rel="noopener noreferrer"
               className="rounded-md px-2 py-1 font-semibold text-blue-600 hover:bg-gray-100 dark:text-blue-400 dark:hover:bg-neutral-800"
             >
               {round}회
