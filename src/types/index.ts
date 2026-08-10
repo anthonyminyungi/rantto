@@ -36,5 +36,5 @@ export interface ToastItem {
   content: string;
   duration?: number;
   icon?: ReactNode;
-  // TODO: variant 추가
+  variant?: string;
 }
