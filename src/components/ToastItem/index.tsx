@@ -5,10 +5,11 @@ import { useToast } from "@/hooks";
 
 import CloseIcon from "@/assets/x-mark.svg?react";
 
-export default function ToastListItem({ id, icon, content }: ToastItem) {
+export default function ToastListItem({ id, icon, content, variant = "default" }: ToastItem) {
   const { closeToast } = useToast();
   return (
     <div
+      data-variant={variant}
       className={cx(
         "mt-2 max-w-full rounded-lg px-3 py-3 font-semibold transition-colors",
         "bg-white text-neutral-900 dark:bg-neutral-900 dark:text-neutral-100",
