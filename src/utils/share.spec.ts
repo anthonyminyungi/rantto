@@ -21,6 +21,9 @@ describe("share.ts", () => {
       const numbers: DrawList = [
         [1, 2, 3, 4, 5, 6],
         [7, 8, 9, 10, 11, 12],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
       ];
       const result = generateDrawClipboardMsg(numbers);
       expect(result).toBe(
@@ -34,6 +37,8 @@ describe("share.ts", () => {
         [1, 2, 3, 4, 5, 6],
         [0, 0, 0, 0, 0, 0], // 비어있는 게임
         [13, 14, 15, 16, 17, 18],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
       ];
       const result = generateDrawClipboardMsg(numbers);
       // 빈 게임은 필터링 되어야 함
