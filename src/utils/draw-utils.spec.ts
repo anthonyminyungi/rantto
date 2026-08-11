@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { drawNumbers } from "./index";
+import { drawNumbers, isDrawEmpty } from "./index";
+import { DrawList, DrawListItem } from "@/types";
 
 describe("drawNumbers 테스트", () => {
   it("6개의 숫자를 반환해야 한다", () => {
@@ -25,5 +26,55 @@ describe("drawNumbers 테스트", () => {
     const numbers = drawNumbers();
     const unique = new Set(numbers);
     expect(unique.size).toBe(6);
+  });
+});
+
+describe("isDrawEmpty", () => {
+  it("should return true when a single item has all zeros", () => {
+    const emptyItem: DrawListItem = [0, 0, 0, 0, 0, 0];
+    expect(isDrawEmpty(emptyItem)).toBe(true);
+  });
+
+  it("should return false when a single item has no zeros", () => {
+    const filledItem: DrawListItem = [1, 2, 3, 4, 5, 6];
+    expect(isDrawEmpty(filledItem)).toBe(false);
+  });
+
+  it("should return true when a single item has some zeros", () => {
+    const partialItem: DrawListItem = [1, 2, 0, 4, 0, 6];
+    expect(isDrawEmpty(partialItem)).toBe(true);
+  });
+
+  it("should return true when a list has all empty items", () => {
+    const emptyList: DrawList = [
+      [0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0],
+    ];
+    expect(isDrawEmpty(emptyList)).toBe(true);
+  });
+
+  it("should return true when a list has items with some zeros", () => {
+    const partialList: DrawList = [
+      [1, 2, 0, 4, 0, 6],
+      [0, 0, 0, 0, 0, 0],
+      [1, 0, 3, 0, 5, 0],
+      [0, 0, 0, 0, 0, 0],
+      [0, 2, 0, 4, 0, 6],
+    ];
+    expect(isDrawEmpty(partialList)).toBe(true);
+  });
+
+  it("should return false when a list has at least one valid non-empty item", () => {
+    const validList: DrawList = [
+      [0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0],
+      [1, 2, 3, 4, 5, 6],
+      [0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0],
+    ];
+    expect(isDrawEmpty(validList)).toBe(false);
   });
 });
