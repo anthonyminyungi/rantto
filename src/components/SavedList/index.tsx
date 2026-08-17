@@ -12,18 +12,19 @@ export default function SavedList() {
   const { sortKey, filterRank } = useSavedPageStore();
   const list = useLiveQuery(
     async () => {
-      const collection = db.savedDraws.toCollection();
+      let collection = db.savedDraws.orderBy("createdAt");
 
-      let items =
-        sortKey === "CREATED_DESC"
-          ? await collection.reverse().sortBy("createdAt")
-          : await collection.sortBy("createdAt");
-
-      if (filterRank != null) {
-        items = items.filter((item) => item.gameRanks?.includes(filterRank));
+      if (sortKey === "CREATED_DESC") {
+        collection = collection.reverse();
       }
 
-      return items.slice(0, page * SAVE_ITEM_COUNT_PER_PAGE);
+      if (filterRank != null) {
+        collection = collection.filter(
+          (item) => !!item.gameRanks?.includes(filterRank)
+        );
+      }
+
+      return await collection.limit(page * SAVE_ITEM_COUNT_PER_PAGE).toArray();
     },
     [sortKey, filterRank, page],
     []
