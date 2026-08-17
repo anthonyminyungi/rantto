@@ -10,21 +10,38 @@ import { useWinningHistory } from "@/hooks/winningHistory";
 import { getHighestRankByDrawsDiff, getIntersectedNumbers } from "@/utils";
 import { CARD_STYLES } from "@/constants/styles";
 
+import { DrawListItem } from "@/types";
+
 import ArrowDownIcon from "@/assets/chevron-down.svg?react";
 import ArrowUpIcon from "@/assets/chevron-up.svg?react";
 
 interface SavedItemProps {
   data: SavedDraw;
+  wonRound?: number;
+  wonNumbers?: DrawListItem;
+  wonBonus?: number;
 }
 
-export default function SavedItem({ data }: SavedItemProps) {
+export default function SavedItem({
+  data,
+  wonRound: propsWonRound,
+  wonNumbers: propsWonNumbers,
+  wonBonus: propsWonBonus,
+}: SavedItemProps) {
   const { id, draws, round, createdAt, gameRanks } = data;
   const [isExtended, setExtended] = useState(false);
-  const {
-    round: wonRound,
-    bonus: wonBonus,
-    numbers: wonNumbers,
-  } = useWinningHistory(round);
+
+  // Only call useWinningHistory if history props are not provided
+  const hasHistoryProps = propsWonRound !== undefined;
+  const history = useWinningHistory(
+    hasHistoryProps ? undefined : round,
+    hasHistoryProps
+  );
+
+  const wonRound = propsWonRound ?? history.round;
+  const wonNumbers = propsWonNumbers ?? history.numbers;
+  const wonBonus = propsWonBonus ?? history.bonus;
+
   const rank = useMemo(
     () => getHighestRankByDrawsDiff(draws, wonNumbers, wonBonus),
     [wonBonus, draws, wonNumbers]

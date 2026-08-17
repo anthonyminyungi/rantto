@@ -4,6 +4,7 @@ import { useLiveQuery } from "dexie-react-hooks";
 
 import SavedItem from "@/components/SavedItem";
 import { db } from "@/db/savedDraw";
+import { WinningHistory } from "@/types";
 import { useSavedPageStore } from "@/store";
 import { SAVE_ITEM_COUNT_PER_PAGE } from "@/constants";
 
@@ -41,6 +42,41 @@ export default function SavedList() {
     0
   );
 
+  const historiesMap = useLiveQuery(
+    async () => {
+      if (!list || list.length === 0) return new Map<number, WinningHistory>();
+
+      const roundsSet = new Set<number>();
+      for (const item of list) {
+        roundsSet.add(item.round);
+      }
+      const rounds = [...roundsSet];
+
+      const [historyRecords, lastRecord] = await Promise.all([
+        db.winningHistory.where("round").anyOf(rounds).toArray(),
+        db.winningHistory.orderBy("round").last(),
+      ]);
+
+      const map = new Map<number, WinningHistory>();
+      for (const record of historyRecords) {
+        map.set(record.round, record as WinningHistory);
+      }
+      if (lastRecord && !map.has(lastRecord.round)) {
+        map.set(lastRecord.round, lastRecord as WinningHistory);
+      }
+
+      return map;
+    },
+    [list],
+    new Map<number, WinningHistory>()
+  );
+
+  const lastHistory = useLiveQuery(
+    () => db.winningHistory.orderBy("round").last(),
+    [],
+    null
+  );
+
   const loadMore = () => setPage((prev) => prev + 1);
 
   if (!list || list?.length === 0) {
@@ -55,9 +91,18 @@ export default function SavedList() {
 
   return (
     <div className="flex w-full flex-col items-center gap-2">
-      {list.map((item) => (
-        <SavedItem key={item.id} data={item} />
-      ))}
+      {list.map((item) => {
+        const history = historiesMap.get(item.round) ?? lastHistory;
+        return (
+          <SavedItem
+            key={item.id}
+            data={item}
+            wonRound={history?.round ?? 0}
+            wonNumbers={history?.numbers ?? [0, 0, 0, 0, 0, 0]}
+            wonBonus={history?.bonus ?? 0}
+          />
+        );
+      })}
       {list.length < total && (
         <button
           className={cx(

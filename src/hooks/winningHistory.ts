@@ -52,15 +52,26 @@ async function backfillGameRanks() {
  * - 최초 방문: Gist fetch → IndexedDB에 bulkPut → useLiveQuery가 자동 반영
  * - 재방문: IndexedDB 캐시 즉시 반환 → 백그라운드 Gist fetch로 신규 회차만 추가
  */
-export const useWinningHistory = (targetRound?: number): WinningHistory => {
-  const allHistory = useLiveQuery(
-    () => db.winningHistory.orderBy("round").toArray(),
-    [],
-    [] as WinningHistoryRecord[]
+export const useWinningHistory = (
+  targetRound?: number,
+  skip: boolean = false
+): WinningHistory => {
+  const result = useLiveQuery(
+    async () => {
+      if (skip) return null;
+      const lastHistory = await db.winningHistory.orderBy("round").last();
+      if (!targetRound) return lastHistory;
+
+      const targetHistory = await db.winningHistory.get(targetRound);
+      return targetHistory ?? lastHistory;
+    },
+    [targetRound, skip],
+    null
   );
 
   // 백그라운드에서 Gist fetch → IndexedDB 동기화
   useEffect(() => {
+    if (skip) return;
     let active = true;
     const syncFromGist = async () => {
       try {
@@ -81,15 +92,7 @@ export const useWinningHistory = (targetRound?: number): WinningHistory => {
     return () => {
       active = false;
     };
-  }, []);
-
-  // targetRound에 해당하는 회차 또는 최신 회차 반환
-  const lastHistory = allHistory[allHistory.length - 1];
-  const targetHistory = targetRound
-    ? allHistory.find((item) => item.round === targetRound)
-    : undefined;
-
-  const result = targetHistory ?? lastHistory;
+  }, [skip]);
 
   return {
     round: result?.round ?? 0,

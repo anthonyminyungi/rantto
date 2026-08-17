@@ -29,9 +29,10 @@ export const useToast = () => {
   };
 
   const showToast = (toastItem: ToastItem) => {
-    const id = typeof crypto !== "undefined" && crypto.randomUUID
-      ? crypto.randomUUID()
-      : Math.random().toString(36).substring(2);
+    const id =
+      typeof crypto !== "undefined" && crypto.randomUUID
+        ? crypto.randomUUID()
+        : Math.random().toString(36).substring(2);
     addToast({ ...toastItem, id });
     setTimeout(() => removeToast(id), toastItem.duration ?? 3000);
   };

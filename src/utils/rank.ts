@@ -17,7 +17,10 @@ export function getIntersectedNumbers(
   }
 }
 
-export function calculateRank(intersectedLength: number, hasBonus: boolean): number {
+export function calculateRank(
+  intersectedLength: number,
+  hasBonus: boolean
+): number {
   switch (intersectedLength) {
     case 6:
       return hasBonus ? 2 : 1;
