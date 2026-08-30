@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getRanksByDraw, formatRankText } from "./index";
+import { getRanksByDraw, formatRankText, getRankBadge } from "./index";
 import { DrawListItem } from "../types";
 
 describe("getRanksByDraw 테스트", () => {
@@ -32,6 +32,23 @@ describe("getRanksByDraw 테스트", () => {
       [1, 2, 3, 4, 5, 6], // 1등
     ];
     expect(getRanksByDraw(draws, won, bonus)).toEqual([5, -1, 1]);
+  });
+});
+
+describe("getRankBadge 테스트", () => {
+  it("등수에 맞는 배지를 반환", () => {
+    expect(getRankBadge(1)).toBe("🥇");
+    expect(getRankBadge(2)).toBe("🥈");
+    expect(getRankBadge(3)).toBe("🥉");
+    expect(getRankBadge(4)).toBe("4⃣");
+    expect(getRankBadge(5)).toBe("5⃣");
+  });
+
+  it("범위를 벗어난 등수나 예외 값에 대해 null을 반환", () => {
+    expect(getRankBadge(0)).toBeNull();
+    expect(getRankBadge(6)).toBeNull();
+    expect(getRankBadge(-1)).toBeNull();
+    expect(getRankBadge(100)).toBeNull();
   });
 });
 

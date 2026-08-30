@@ -1,8 +1,8 @@
 name: Update Winning History
 
 on:
-  schedule:
-    - cron: "0 13 * * 6" # 매주 토요일 22:00 KST (UTC 13:00)
+  repository_dispatch:
+    types: [cf-cron-trigger]
   workflow_dispatch: # 수동 실행
 
 jobs:

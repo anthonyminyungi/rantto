@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { drawNumbers, isDrawEmpty } from "./index";
 import { DrawList, DrawListItem } from "@/types";
+import { drawNumbers, drawAllNumbers, isDrawEmpty } from "./index";
 
 describe("drawNumbers 테스트", () => {
   it("6개의 숫자를 반환해야 한다", () => {
@@ -76,5 +76,19 @@ describe("isDrawEmpty", () => {
       [0, 0, 0, 0, 0, 0],
     ];
     expect(isDrawEmpty(validList)).toBe(false);
+  });
+});
+
+describe("drawAllNumbers 테스트", () => {
+  it("5개의 게임을 반환해야 한다", () => {
+    const allNumbers = drawAllNumbers();
+    expect(allNumbers).toHaveLength(5);
+  });
+
+  it("각 게임은 6개의 숫자를 가져야 한다", () => {
+    const allNumbers = drawAllNumbers();
+    allNumbers.forEach((numbers) => {
+      expect(numbers).toHaveLength(6);
+    });
   });
 });
