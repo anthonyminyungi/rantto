@@ -71,19 +71,14 @@ export function formatRankText(gameRanks: number[]): string {
   return `${highest}등 외 ${wins.length - 1}게임 당첨!`;
 }
 
+const RANK_BADGES: Record<number, string> = {
+  1: "🥇",
+  2: "🥈",
+  3: "🥉",
+  4: "4⃣",
+  5: "5⃣",
+};
+
 export function getRankBadge(rank: number): string | null {
-  switch (rank) {
-    case 1:
-      return "🥇";
-    case 2:
-      return "🥈";
-    case 3:
-      return "🥉";
-    case 4:
-      return "4⃣";
-    case 5:
-      return "5⃣";
-    default:
-      return null;
-  }
+  return RANK_BADGES[rank] || null;
 }
