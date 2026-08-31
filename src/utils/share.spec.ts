@@ -94,7 +94,9 @@ describe("share.ts", () => {
     });
 
     it("Web Share API 취소(AbortError) 시 에러 로깅 생략", async () => {
-      const mockConsoleError = vi.spyOn(console, "error").mockImplementation(() => {});
+      const mockConsoleError = vi
+        .spyOn(console, "error")
+        .mockImplementation(() => {});
       const error = new Error("Abort");
       error.name = "AbortError";
       const mockShare = vi.fn().mockRejectedValue(error);
@@ -109,7 +111,9 @@ describe("share.ts", () => {
     });
 
     it("Web Share API 다른 에러 시 에러 로깅", async () => {
-      const mockConsoleError = vi.spyOn(console, "error").mockImplementation(() => {});
+      const mockConsoleError = vi
+        .spyOn(console, "error")
+        .mockImplementation(() => {});
       const error = new Error("Some other error");
       const mockShare = vi.fn().mockRejectedValue(error);
       vi.stubGlobal("navigator", { share: mockShare });
