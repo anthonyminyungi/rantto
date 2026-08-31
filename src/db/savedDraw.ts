@@ -30,11 +30,6 @@ class AppDB extends Dexie {
       savedDraws: "++id, draws, round, createdAt",
       winningHistory: "round",
     });
-
-    this.version(2).stores({
-      savedDraws: "++id, draws, round, createdAt, *gameRanks",
-      winningHistory: "round",
-    });
   }
 }
 
