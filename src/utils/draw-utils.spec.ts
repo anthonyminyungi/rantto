@@ -77,44 +77,35 @@ describe("isDrawEmpty", () => {
     ];
     expect(isDrawEmpty(validList)).toBe(false);
   });
+
+  it("should return true for an empty array", () => {
+    expect(isDrawEmpty([] as unknown as DrawListItem)).toBe(true);
+  });
 });
 
 describe("drawAllNumbers 테스트", () => {
+  const TRIAL_COUNT = 10;
+
   it("5개의 게임을 반환해야 한다", () => {
-    const allNumbers = drawAllNumbers();
-    expect(allNumbers).toHaveLength(5);
+    for (let i = 0; i < TRIAL_COUNT; i++) {
+      const allNums = drawAllNumbers();
+      expect(allNums).toHaveLength(5);
+    }
   });
 
-  it("각 게임은 6개의 숫자를 가져야 한다", () => {
-    const allNumbers = drawAllNumbers();
-    allNumbers.forEach((numbers) => {
-      expect(numbers).toHaveLength(6);
-    });
-  });
-
-  it("모든 게임의 숫자는 1에서 45 사이여야 한다", () => {
-    const allNumbers = drawAllNumbers();
-    allNumbers.forEach((numbers) => {
-      numbers.forEach((num) => {
-        expect(num).toBeGreaterThanOrEqual(1);
-        expect(num).toBeLessThanOrEqual(45);
+  it("각 게임은 1~45 범위의 6개 고유 숫자를 오름차순으로 반환해야 한다", () => {
+    for (let i = 0; i < TRIAL_COUNT; i++) {
+      const allNums = drawAllNumbers();
+      allNums.forEach((numbers) => {
+        expect(numbers).toHaveLength(6);
+        expect(new Set(numbers).size).toBe(6);
+        const sorted = [...numbers].sort((a, b) => a - b);
+        expect(numbers).toEqual(sorted);
+        numbers.forEach((num) => {
+          expect(num).toBeGreaterThanOrEqual(1);
+          expect(num).toBeLessThanOrEqual(45);
+        });
       });
-    });
-  });
-
-  it("모든 게임의 숫자는 오름차순으로 정렬되어 있어야 한다", () => {
-    const allNumbers = drawAllNumbers();
-    allNumbers.forEach((numbers) => {
-      const sorted = [...numbers].sort((a, b) => a - b);
-      expect(numbers).toEqual(sorted);
-    });
-  });
-
-  it("각 게임 내에서 중복된 숫자가 없어야 한다", () => {
-    const allNumbers = drawAllNumbers();
-    allNumbers.forEach((numbers) => {
-      const unique = new Set(numbers);
-      expect(unique.size).toBe(6);
-    });
+    }
   });
 });

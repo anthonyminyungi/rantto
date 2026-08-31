@@ -1,9 +1,14 @@
-import { describe, expect, it, vi, beforeEach } from "vitest";
+import { describe, expect, it, vi, beforeEach, afterEach } from "vitest";
 import { DrawList, DrawListItem } from "@/types";
 
 describe("share.ts", () => {
   beforeEach(() => {
     vi.resetModules();
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
+    vi.resetAllMocks();
   });
 
   describe("generateDrawClipboardMsg", () => {

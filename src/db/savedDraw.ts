@@ -24,30 +24,12 @@ export interface WinningStatsResult {
   /** gameRanks가 undefined인 SavedDraw 수 (미추첨) */
   pendingDraws: number;
 }
-
-const INITIAL_RANK_COUNTS: Record<number, number> = {
-  1: 0,
-  2: 0,
-  3: 0,
-  4: 0,
-  5: 0,
-  [-1]: 0,
-};
-
 const NEW_DB_NAME = "rantto";
 const OLD_DB_NAME = "savedDraws";
 
 class AppDB extends Dexie {
   savedDraws!: Table<SavedDraw>;
   winningHistory!: Table<WinningHistoryRecord>;
-
-  cachedStats: WinningStatsResult = {
-    rankCounts: { ...INITIAL_RANK_COUNTS },
-    totalGames: 0,
-    pendingDraws: 0,
-  };
-  private _isStatsInitialized = false;
-  private _statsInitPromise: Promise<void> | null = null;
 
   constructor() {
     super(NEW_DB_NAME);
@@ -56,77 +38,6 @@ class AppDB extends Dexie {
       savedDraws: "++id, draws, round, createdAt",
       winningHistory: "round",
     });
-
-    this.savedDraws.hook("creating", (_primKey, obj) => {
-      if (this._isStatsInitialized) {
-        this.addDrawToStats(obj);
-      }
-    });
-
-    this.savedDraws.hook("updating", (modifications, _primKey, obj) => {
-      if (this._isStatsInitialized) {
-        this.removeDrawFromStats(obj);
-        const newObj = { ...obj, ...modifications } as SavedDraw;
-        this.addDrawToStats(newObj);
-      }
-    });
-
-    this.savedDraws.hook("deleting", (_primKey, obj) => {
-      if (this._isStatsInitialized) {
-        this.removeDrawFromStats(obj);
-      }
-    });
-  }
-
-  private addDrawToStats(draw: SavedDraw) {
-    if (!draw.gameRanks) {
-      this.cachedStats.pendingDraws++;
-      return;
-    }
-    for (const rank of draw.gameRanks) {
-      this.cachedStats.totalGames++;
-      this.cachedStats.rankCounts[rank] =
-        (this.cachedStats.rankCounts[rank] ?? 0) + 1;
-    }
-  }
-
-  private removeDrawFromStats(draw: SavedDraw) {
-    if (!draw.gameRanks) {
-      this.cachedStats.pendingDraws--;
-      return;
-    }
-    for (const rank of draw.gameRanks) {
-      this.cachedStats.totalGames--;
-      this.cachedStats.rankCounts[rank] =
-        (this.cachedStats.rankCounts[rank] ?? 0) - 1;
-    }
-  }
-
-  public async initializeStatsCache(): Promise<void> {
-    if (this._isStatsInitialized) return;
-    if (this._statsInitPromise) return this._statsInitPromise;
-
-    this._statsInitPromise = (async () => {
-      const rankCounts: Record<number, number> = { ...INITIAL_RANK_COUNTS };
-      let totalGames = 0;
-      let pendingDraws = 0;
-
-      await this.savedDraws.each((draw) => {
-        if (!draw.gameRanks) {
-          pendingDraws++;
-          return;
-        }
-        for (const rank of draw.gameRanks) {
-          totalGames++;
-          rankCounts[rank] = (rankCounts[rank] ?? 0) + 1;
-        }
-      });
-
-      this.cachedStats = { rankCounts, totalGames, pendingDraws };
-      this._isStatsInitialized = true;
-    })();
-
-    return this._statsInitPromise;
   }
 }
 
