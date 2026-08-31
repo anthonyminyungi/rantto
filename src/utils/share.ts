@@ -28,17 +28,15 @@ export async function shareDrawList(
         text: textMessage,
       });
       onSuccess?.("share");
-    } catch (e) {
-      if ((e as Error).name !== "AbortError") {
-        console.error("Error sharing:", e);
-      }
+    } catch {
+      // Ignore share errors
     }
   } else {
     try {
       await navigator.clipboard.writeText(textMessage);
       onSuccess?.("copy");
-    } catch (e) {
-      console.error(e);
+    } catch {
+      // Ignore clipboard errors
     }
   }
 }
