@@ -18,6 +18,7 @@ export function drawAllNumbers(): DrawList {
 }
 
 export function isDrawEmpty(numbers: DrawList | DrawListItem) {
+  if ((numbers as unknown[]).length === 0) return true;
   const list = Array.isArray(numbers[0]) ? (numbers as DrawList) : [numbers];
   return (
     list.filter(

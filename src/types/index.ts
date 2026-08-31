@@ -31,12 +31,9 @@ export interface WinningHistory {
   createdAt: string;
 }
 
-export type ToastVariant = "default" | "success" | "error" | "warning" | "info";
-
 export interface ToastItem {
   id?: string;
   content: string;
   duration?: number;
   icon?: ReactNode;
-  variant?: ToastVariant;
 }

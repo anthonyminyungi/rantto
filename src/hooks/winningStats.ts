@@ -14,18 +14,22 @@ const INITIAL_RANK_COUNTS: Record<number, number> = {
 export function useWinningStats(): WinningStatsResult {
   const stats = useLiveQuery(
     async () => {
-      await db.initializeStatsCache();
+      const rankCounts: Record<number, number> = { ...INITIAL_RANK_COUNTS };
+      let totalGames = 0;
+      let pendingDraws = 0;
 
-      // We read from db.savedDraws to ensure useLiveQuery tracks the table.
-      await db.savedDraws.count();
+      await db.savedDraws.each((draw) => {
+        if (!draw.gameRanks) {
+          pendingDraws++;
+          return;
+        }
+        for (const rank of draw.gameRanks) {
+          totalGames++;
+          rankCounts[rank] = (rankCounts[rank] ?? 0) + 1;
+        }
+      });
 
-      // We must return a new object to ensure React state updates correctly
-      // if cachedStats has been mutated in-place by Dexie hooks.
-      return {
-        rankCounts: { ...db.cachedStats.rankCounts },
-        totalGames: db.cachedStats.totalGames,
-        pendingDraws: db.cachedStats.pendingDraws,
-      };
+      return { rankCounts, totalGames, pendingDraws };
     },
     [],
     { rankCounts: { ...INITIAL_RANK_COUNTS }, totalGames: 0, pendingDraws: 0 }

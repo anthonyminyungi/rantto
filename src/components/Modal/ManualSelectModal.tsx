@@ -32,8 +32,6 @@ function ManualSelectNumberGrid({
   currentNumbers: DrawListItem;
   onSelectNumber: (num: number) => () => void;
 }) {
-  const currentSet = new Set(currentNumbers);
-
   return (
     <div
       className={cx(
@@ -46,7 +44,7 @@ function ManualSelectNumberGrid({
         <NumberBall
           key={`select-${num}`}
           number={num}
-          noBg={!currentSet.has(num)}
+          noBg={!currentNumbers.includes(num)}
           onClick={onSelectNumber(num)}
         />
       ))}
