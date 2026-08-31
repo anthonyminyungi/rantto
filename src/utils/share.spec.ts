@@ -93,8 +93,7 @@ describe("share.ts", () => {
       expect(onSuccess).toHaveBeenCalledWith("copy");
     });
 
-    it("Web Share API 취소(AbortError) 시 에러 로깅 생략", async () => {
-      const mockConsoleError = vi.spyOn(console, "error").mockImplementation(() => {});
+    it("Web Share API 취소(AbortError) 시 예외가 발생하지 않음", async () => {
       const error = new Error("Abort");
       error.name = "AbortError";
       const mockShare = vi.fn().mockRejectedValue(error);
@@ -102,24 +101,23 @@ describe("share.ts", () => {
 
       const { shareDrawList } = await import("./share");
       const numbers: DrawListItem = [1, 2, 3, 4, 5, 6];
+      const onSuccess = vi.fn();
 
-      await shareDrawList(numbers);
-      expect(mockConsoleError).not.toHaveBeenCalled();
-      mockConsoleError.mockRestore();
+      await expect(shareDrawList(numbers, onSuccess)).resolves.toBeUndefined();
+      expect(onSuccess).not.toHaveBeenCalled();
     });
 
-    it("Web Share API 다른 에러 시 에러 로깅", async () => {
-      const mockConsoleError = vi.spyOn(console, "error").mockImplementation(() => {});
+    it("Web Share API 다른 에러 시 예외가 발생하지 않음", async () => {
       const error = new Error("Some other error");
       const mockShare = vi.fn().mockRejectedValue(error);
       vi.stubGlobal("navigator", { share: mockShare });
 
       const { shareDrawList } = await import("./share");
       const numbers: DrawListItem = [1, 2, 3, 4, 5, 6];
+      const onSuccess = vi.fn();
 
-      await shareDrawList(numbers);
-      expect(mockConsoleError).toHaveBeenCalledWith("Error sharing:", error);
-      mockConsoleError.mockRestore();
+      await expect(shareDrawList(numbers, onSuccess)).resolves.toBeUndefined();
+      expect(onSuccess).not.toHaveBeenCalled();
     });
   });
 });
