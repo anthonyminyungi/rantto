@@ -94,7 +94,9 @@ describe("share.ts", () => {
     });
 
     it("Web Share API 취소(AbortError) 시 에러 로깅 생략", async () => {
-      const mockConsoleError = vi.spyOn(console, "error").mockImplementation(() => {});
+      const mockConsoleError = vi
+        .spyOn(console, "error")
+        .mockImplementation(() => {});
       const error = new Error("Abort");
       error.name = "AbortError";
       const mockShare = vi.fn().mockRejectedValue(error);
@@ -109,7 +111,9 @@ describe("share.ts", () => {
     });
 
     it("Web Share API 다른 에러 시 에러 로깅", async () => {
-      const mockConsoleError = vi.spyOn(console, "error").mockImplementation(() => {});
+      const mockConsoleError = vi
+        .spyOn(console, "error")
+        .mockImplementation(() => {});
       const error = new Error("Some other error");
       const mockShare = vi.fn().mockRejectedValue(error);
       vi.stubGlobal("navigator", { share: mockShare });
@@ -119,6 +123,23 @@ describe("share.ts", () => {
 
       await shareDrawList(numbers);
       expect(mockConsoleError).toHaveBeenCalledWith("Error sharing:", error);
+      mockConsoleError.mockRestore();
+    });
+
+    it("Web Share API가 지원되지 않고 clipboard.writeText가 실패할 때 에러 로깅", async () => {
+      const mockConsoleError = vi
+        .spyOn(console, "error")
+        .mockImplementation(() => {});
+      const error = new Error("Clipboard error");
+      const mockWriteText = vi.fn().mockRejectedValue(error);
+      vi.stubGlobal("navigator", { clipboard: { writeText: mockWriteText } });
+
+      const { shareDrawList } = await import("./share");
+      const numbers: DrawListItem = [1, 2, 3, 4, 5, 6];
+
+      await shareDrawList(numbers);
+
+      expect(mockConsoleError).toHaveBeenCalledWith(error);
       mockConsoleError.mockRestore();
     });
   });
