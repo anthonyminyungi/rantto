@@ -110,18 +110,18 @@ describe("formatDate", () => {
     expect(formatDate(date, true)).toBe("24.12.15 14:23:52");
   });
 
-  it('formats exactly midnight (00:00:00) with proper zero-padding', () => {
+  it("formats exactly midnight (00:00:00) with proper zero-padding", () => {
     const date = new Date(2024, 0, 1, 0, 0, 0);
-    expect(formatDate(date, true)).toBe('24.01.01 00:00:00');
+    expect(formatDate(date, true)).toBe("24.01.01 00:00:00");
   });
 
-  it('formats the last second of the day (23:59:59)', () => {
+  it("formats the last second of the day (23:59:59)", () => {
     const date = new Date(2023, 11, 31, 23, 59, 59);
-    expect(formatDate(date, true)).toBe('23.12.31 23:59:59');
+    expect(formatDate(date, true)).toBe("23.12.31 23:59:59");
   });
 
-  it('formats a leap year date (Feb 29)', () => {
+  it("formats a leap year date (Feb 29)", () => {
     const date = new Date(2024, 1, 29, 12, 0, 0);
-    expect(formatDate(date, true)).toBe('24.02.29 12:00:00');
+    expect(formatDate(date, true)).toBe("24.02.29 12:00:00");
   });
 });
