@@ -96,12 +96,18 @@ export default function ManualSelectModal({
       }
       setCurrentNumbers((prev) => {
         const next = [...prev] as DrawListItem;
-        if (next.includes(num)) {
-          next.splice(next.indexOf(num), 1, 0);
+        const isSelected = next.includes(num);
+
+        if (isSelected) {
+          next[next.indexOf(num)] = 0;
         } else {
-          next.splice(next.indexOf(0), 1, num);
+          const emptyIndex = next.indexOf(0);
+          if (emptyIndex !== -1) {
+            next[emptyIndex] = num;
+          }
         }
-        return next.sort((a, b) => a - b);
+
+        return next.sort((a, b) => a - b) as DrawListItem;
       });
     },
     [zeroFiltered]
