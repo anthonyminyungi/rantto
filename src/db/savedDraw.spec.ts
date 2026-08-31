@@ -47,20 +47,20 @@ describe("migrateOldDatabase", () => {
     const mockSavedDrawsData = [{ id: 1, round: 1, draws: [] }];
     const mockWinningHistoryData = [{ round: 1, numbers: [] }];
 
-    vi.spyOn(Dexie.prototype, "open").mockResolvedValue(undefined as any);
+    vi.spyOn(Dexie.prototype, "open").mockResolvedValue(undefined as never);
 
     vi.spyOn(Dexie.prototype, "table").mockImplementation((tableName: string) => {
       return {
         toArray: vi.fn().mockResolvedValue(
           tableName === "savedDraws" ? mockSavedDrawsData : mockWinningHistoryData
         )
-      } as any;
+      } as never;
     });
 
-    const bulkAddSavedDrawsSpy = vi.spyOn(db.savedDraws, "bulkAdd").mockResolvedValue(undefined as any);
-    const bulkAddWinningHistorySpy = vi.spyOn(db.winningHistory, "bulkAdd").mockResolvedValue(undefined as any);
+    const bulkAddSavedDrawsSpy = vi.spyOn(db.savedDraws, "bulkAdd").mockResolvedValue(undefined as never);
+    const bulkAddWinningHistorySpy = vi.spyOn(db.winningHistory, "bulkAdd").mockResolvedValue(undefined as never);
 
-    const deleteSpy = vi.spyOn(Dexie.prototype, "delete").mockResolvedValue(undefined as any);
+    const deleteSpy = vi.spyOn(Dexie.prototype, "delete").mockResolvedValue(undefined as never);
 
     await migrateOldDatabase();
 
