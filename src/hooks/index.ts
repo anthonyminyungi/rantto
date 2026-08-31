@@ -21,6 +21,8 @@ export const useOutsideClick = (
   }, [handler, ref]);
 };
 
+let fallbackIdCounter = 0;
+
 export const useToast = () => {
   const { addToast, removeToast } = useToastStore();
 
@@ -29,7 +31,11 @@ export const useToast = () => {
   };
 
   const showToast = (toastItem: ToastItem) => {
-    const id = String(new Date().getTime());
+    const id =
+      typeof crypto !== "undefined" && crypto.randomUUID
+        ? crypto.randomUUID()
+        : `toast-${Date.now()}-${++fallbackIdCounter}`;
+
     addToast({ ...toastItem, id });
     setTimeout(() => removeToast(id), toastItem.duration ?? 3000);
   };

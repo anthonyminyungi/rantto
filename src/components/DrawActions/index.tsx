@@ -8,9 +8,6 @@ import { overlay } from "overlay-kit";
 import { ICON_SIZE_SM } from "@/constants/styles";
 
 import TicketIcon from "@/assets/ticket.svg?react";
-import ShareIcon from "@/assets/share.svg?react";
-import ClipboardIcon from "@/assets/clipboard-document.svg?react";
-import ClipboardCheckIcon from "@/assets/clipboard-document-check.svg?react";
 import ResetIcon from "@/assets/arrow-uturn-left.svg?react";
 import WindowIcon from "@/assets/window.svg?react";
 
@@ -21,7 +18,7 @@ interface DrawActionsProps {
 export default function DrawActions({ index }: DrawActionsProps) {
   const { drawList, drawItem, clearItem } = useDrawStore();
   const currentItem = drawList[index];
-  const { copied, handleShare } = useShareDraw();
+  const { copied, handleShare, shareIcon, shareText } = useShareDraw();
 
   const handleShareClick = () => handleShare(currentItem);
 
@@ -38,71 +35,47 @@ export default function DrawActions({ index }: DrawActionsProps) {
     ));
   };
 
-  const shareIcon = isWebShareSupported ? (
-    <ShareIcon className={ICON_SIZE_SM} />
-  ) : (
-    <ClipboardIcon className={ICON_SIZE_SM} />
-  );
+  const actionItems = [
+    {
+      icon: (className?: string) => <TicketIcon className={className} />,
+      text: "뽑기",
+      onClick: handleClickDraw,
+    },
+    {
+      icon: (className?: string) => <ResetIcon className={className} />,
+      text: "초기화",
+      onClick: handleClickReset,
+      disabled: isDrawEmpty(currentItem),
+    },
+    {
+      icon: shareIcon,
+      text: shareText,
+      onClick: handleShareClick,
+      disabled: isDrawEmpty(currentItem) || (!isWebShareSupported && copied),
+    },
+    {
+      icon: (className?: string) => <WindowIcon className={className} />,
+      text: "선택",
+      onClick: handleClickSelect,
+    },
+  ];
 
   return (
     <>
       <div className="sm:hidden">
         <Dropdown
-          items={[
-            {
-              icon: <TicketIcon className={ICON_SIZE_SM} />,
-              text: "뽑기",
-              onClick: handleClickDraw,
-            },
-            {
-              icon: <ResetIcon className={ICON_SIZE_SM} />,
-              text: "초기화",
-              onClick: handleClickReset,
-              disabled: isDrawEmpty(currentItem),
-            },
-            {
-              icon: shareIcon,
-              text: isWebShareSupported ? "공유" : "복사",
-              onClick: handleShareClick,
-              disabled: isDrawEmpty(currentItem),
-            },
-            {
-              icon: <WindowIcon className={ICON_SIZE_SM} />,
-              text: "선택",
-              onClick: handleClickSelect,
-            },
-          ]}
+          items={actionItems.map(({ icon, ...rest }) => ({
+            icon: icon(ICON_SIZE_SM),
+            ...rest,
+          }))}
         />
       </div>
       <div className="max-sm:hidden">
         <ButtonGroup
-          items={[
-            { icon: <TicketIcon />, text: "뽑기", onClick: handleClickDraw },
-            {
-              icon: <ResetIcon />,
-              text: "초기화",
-              onClick: handleClickReset,
-              disabled: isDrawEmpty(currentItem),
-            },
-            {
-              icon: isWebShareSupported ? (
-                <ShareIcon />
-              ) : copied ? (
-                <ClipboardCheckIcon />
-              ) : (
-                <ClipboardIcon />
-              ),
-              text: isWebShareSupported ? "공유" : `복사${copied ? "됨" : ""} `,
-              onClick: handleShareClick,
-              disabled:
-                isDrawEmpty(currentItem) || (!isWebShareSupported && copied),
-            },
-            {
-              icon: <WindowIcon />,
-              text: "선택",
-              onClick: handleClickSelect,
-            },
-          ]}
+          items={actionItems.map(({ icon, ...rest }) => ({
+            icon: icon(),
+            ...rest,
+          }))}
         />
       </div>
     </>

@@ -5,7 +5,11 @@ import { useToast } from "@/hooks";
 
 import CloseIcon from "@/assets/x-mark.svg?react";
 
-export default function ToastListItem({ id, icon, content }: ToastItem) {
+export default function ToastListItem({
+  id,
+  icon,
+  content,
+}: ToastItem) {
   const { closeToast } = useToast();
   return (
     <div

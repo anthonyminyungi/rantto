@@ -17,6 +17,24 @@ export function getIntersectedNumbers(
   }
 }
 
+export function calculateRank(
+  intersectedLength: number,
+  hasBonus: boolean
+): number {
+  switch (intersectedLength) {
+    case 6:
+      return hasBonus ? 2 : 1;
+    case 5:
+      return 3;
+    case 4:
+      return 4;
+    case 3:
+      return 5;
+    default:
+      return -1;
+  }
+}
+
 export function getHighestRankByDrawsDiff(
   draws: DrawList,
   won: DrawListItem,
@@ -26,18 +44,7 @@ export function getHighestRankByDrawsDiff(
     .map((draw) => {
       const intersected = getIntersectedNumbers(draw, won, bonus);
       const hasBonus = intersected.includes(bonus);
-      switch (intersected.length) {
-        case 6:
-          return hasBonus ? 2 : 1;
-        case 5:
-          return 3;
-        case 4:
-          return 4;
-        case 3:
-          return 5;
-        default:
-          return -1;
-      }
+      return calculateRank(intersected.length, hasBonus);
     })
     .filter((rank) => rank > 0);
   return ranks.length > 0 ? Math.min(...ranks) : -1;
@@ -51,18 +58,7 @@ export function getRanksByDraw(
   return draws.map((draw) => {
     const intersected = getIntersectedNumbers(draw, won, bonus);
     const hasBonus = intersected.includes(bonus);
-    switch (intersected.length) {
-      case 6:
-        return hasBonus ? 2 : 1;
-      case 5:
-        return 3;
-      case 4:
-        return 4;
-      case 3:
-        return 5;
-      default:
-        return -1;
-    }
+    return calculateRank(intersected.length, hasBonus);
   });
 }
 
@@ -75,19 +71,14 @@ export function formatRankText(gameRanks: number[]): string {
   return `${highest}등 외 ${wins.length - 1}게임 당첨!`;
 }
 
+const RANK_BADGES: Record<number, string> = {
+  1: "🥇",
+  2: "🥈",
+  3: "🥉",
+  4: "4⃣",
+  5: "5⃣",
+};
+
 export function getRankBadge(rank: number): string | null {
-  switch (rank) {
-    case 1:
-      return "🥇";
-    case 2:
-      return "🥈";
-    case 3:
-      return "🥉";
-    case 4:
-      return "4⃣";
-    case 5:
-      return "5⃣";
-    default:
-      return null;
-  }
+  return RANK_BADGES[rank] || null;
 }

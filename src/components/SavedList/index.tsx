@@ -10,40 +10,32 @@ import { SAVE_ITEM_COUNT_PER_PAGE } from "@/constants";
 export default function SavedList() {
   const [page, setPage] = useState(1);
   const { sortKey, filterRank } = useSavedPageStore();
-  const list = useLiveQuery(
+  const limit = page * SAVE_ITEM_COUNT_PER_PAGE;
+
+  const rawList = useLiveQuery(
     async () => {
-      const collection = db.savedDraws.toCollection();
+      let collection = db.savedDraws.orderBy("createdAt");
 
-      let items =
-        sortKey === "CREATED_DESC"
-          ? await collection.reverse().sortBy("createdAt")
-          : await collection.sortBy("createdAt");
-
-      if (filterRank != null) {
-        items = items.filter((item) => item.gameRanks?.includes(filterRank));
+      if (sortKey === "CREATED_DESC") {
+        collection = collection.reverse();
       }
 
-      return items.slice(0, page * SAVE_ITEM_COUNT_PER_PAGE);
+      if (filterRank != null) {
+        collection = collection.filter(
+          (item) => !!item.gameRanks?.includes(filterRank)
+        );
+      }
+
+      // Fetch one extra item to determine if there are more pages
+      return await collection.limit(limit + 1).toArray();
     },
-    [sortKey, filterRank, page],
+    [sortKey, filterRank, limit],
     []
-  );
-  const total = useLiveQuery(
-    async () => {
-      if (filterRank != null) {
-        const all = await db.savedDraws.toArray();
-        return all.filter((item) => item.gameRanks?.includes(filterRank))
-          .length;
-      }
-      return db.savedDraws.count();
-    },
-    [filterRank],
-    0
   );
 
   const loadMore = () => setPage((prev) => prev + 1);
 
-  if (!list || list?.length === 0) {
+  if (!rawList || rawList.length === 0) {
     return (
       <div className="h-auto text-center font-semibold">
         {filterRank != null
@@ -53,12 +45,15 @@ export default function SavedList() {
     );
   }
 
+  const hasMore = rawList.length > limit;
+  const list = rawList.slice(0, limit);
+
   return (
     <div className="flex w-full flex-col items-center gap-2">
       {list.map((item) => (
         <SavedItem key={item.id} data={item} />
       ))}
-      {list.length < total && (
+      {hasMore && (
         <button
           className={cx(
             "my-4 cursor-pointer rounded-full px-6 py-4",

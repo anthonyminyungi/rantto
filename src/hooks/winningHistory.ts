@@ -2,7 +2,7 @@ import { useLiveQuery } from "dexie-react-hooks";
 import { useEffect } from "react";
 
 import { DrawListItem, WinningHistory } from "@/types";
-import { db, WinningHistoryRecord } from "@/db/savedDraw";
+import { db, SavedDraw, WinningHistoryRecord } from "@/db/savedDraw";
 import { getRanksByDraw } from "@/utils";
 
 const WINNING_HISTORY_GIST_URL =
@@ -15,7 +15,11 @@ async function backfillGameRanks() {
 
   if (pending.length === 0) return;
 
-  const rounds = [...new Set(pending.map((item) => item.round))];
+  const roundsSet = new Set<number>();
+  for (const item of pending) {
+    roundsSet.add(item.round);
+  }
+  const rounds = [...roundsSet];
   const historyRecords = await db.winningHistory
     .where("round")
     .anyOf(rounds)
@@ -23,7 +27,7 @@ async function backfillGameRanks() {
 
   const historyMap = new Map(historyRecords.map((h) => [h.round, h]));
 
-  const updates: { key: number; changes: { gameRanks: number[] } }[] = [];
+  const updatedItems: SavedDraw[] = [];
 
   for (const item of pending) {
     const history = historyMap.get(item.round);
@@ -32,14 +36,12 @@ async function backfillGameRanks() {
     const won = history.numbers as DrawListItem;
     const gameRanks = getRanksByDraw(item.draws, won, history.bonus);
     if (item.id != null) {
-      updates.push({ key: item.id, changes: { gameRanks } });
+      updatedItems.push({ ...item, gameRanks });
     }
   }
 
-  if (updates.length > 0) {
-    await Promise.all(
-      updates.map(({ key, changes }) => db.savedDraws.update(key, changes))
-    );
+  if (updatedItems.length > 0) {
+    await db.savedDraws.bulkPut(updatedItems);
   }
 }
 
@@ -51,11 +53,12 @@ async function backfillGameRanks() {
  * - 재방문: IndexedDB 캐시 즉시 반환 → 백그라운드 Gist fetch로 신규 회차만 추가
  */
 export const useWinningHistory = (targetRound?: number): WinningHistory => {
-  const allHistory = useLiveQuery(
-    () => db.winningHistory.orderBy("round").toArray(),
-    [],
-    [] as WinningHistoryRecord[]
-  );
+  const result = useLiveQuery(() => {
+    if (targetRound) {
+      return db.winningHistory.get(targetRound);
+    }
+    return db.winningHistory.orderBy("round").reverse().first();
+  }, [targetRound]);
 
   // 백그라운드에서 Gist fetch → IndexedDB 동기화
   useEffect(() => {
@@ -80,14 +83,6 @@ export const useWinningHistory = (targetRound?: number): WinningHistory => {
       active = false;
     };
   }, []);
-
-  // targetRound에 해당하는 회차 또는 최신 회차 반환
-  const lastHistory = allHistory[allHistory.length - 1];
-  const targetHistory = targetRound
-    ? allHistory.find((item) => item.round === targetRound)
-    : undefined;
-
-  const result = targetHistory ?? lastHistory;
 
   return {
     round: result?.round ?? 0,

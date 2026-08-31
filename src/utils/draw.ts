@@ -8,14 +8,17 @@ export function drawNumbers(): DrawListItem {
 }
 
 export function drawAllNumbers(): DrawList {
-  const res = [];
-  for (let i = 0; i < 5; i++) {
-    res[i] = drawNumbers();
-  }
-  return res as DrawList;
+  return [
+    drawNumbers(),
+    drawNumbers(),
+    drawNumbers(),
+    drawNumbers(),
+    drawNumbers(),
+  ] as DrawList;
 }
 
 export function isDrawEmpty(numbers: DrawList | DrawListItem) {
+  if ((numbers as unknown[]).length === 0) return true;
   const list = Array.isArray(numbers[0]) ? (numbers as DrawList) : [numbers];
   return (
     list.filter(

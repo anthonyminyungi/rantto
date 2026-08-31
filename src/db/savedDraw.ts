@@ -16,6 +16,14 @@ export interface WinningHistoryRecord {
   createdAt: string;
 }
 
+export interface WinningStatsResult {
+  /** 등수별 게임 수 */
+  rankCounts: Record<number, number>;
+  /** gameRanks가 존재하는 전체 게임 수 */
+  totalGames: number;
+  /** gameRanks가 undefined인 SavedDraw 수 (미추첨) */
+  pendingDraws: number;
+}
 const NEW_DB_NAME = "rantto";
 const OLD_DB_NAME = "savedDraws";
 
@@ -64,9 +72,6 @@ export async function migrateOldDatabase() {
 
     // 마이그레이션 성공 후 기존 DB 삭제
     await oldDb.delete();
-    console.log(
-      "[IndexedDB] Successfully migrated from 'savedDraws' to 'rantto'"
-    );
   } catch (error) {
     console.error("[IndexedDB] Failed to migrate old database:", error);
   }
