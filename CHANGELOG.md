@@ -1,5 +1,34 @@
 # Changelog
 
+## [1.5.0](https://github.com/anthonyminyungi/rantto/compare/v1.4.1...v1.5.0) (2026-08-31)
+
+
+### Features
+
+* add variant to ToastItem interface ([53cc064](https://github.com/anthonyminyungi/rantto/commit/53cc064682631be708cee61c12d8574f632497cc))
+* add variant to ToastItem interface ([382ed10](https://github.com/anthonyminyungi/rantto/commit/382ed10e9217ab756413e65abbf399ea67a5c743)), closes [#1](https://github.com/anthonyminyungi/rantto/issues/1)
+
+
+### Bug Fixes
+
+* add rel="noopener noreferrer" to external link ([862b4c7](https://github.com/anthonyminyungi/rantto/commit/862b4c73f20897c5b5e40ef1966f0b41f6f44242))
+* add rel="noopener noreferrer" to external links ([244493a](https://github.com/anthonyminyungi/rantto/commit/244493a9b7c19bff120321ccbdae34222f986046))
+
+
+### Performance Improvements
+
+* optimize array inclusion check with Set ([5c3cf51](https://github.com/anthonyminyungi/rantto/commit/5c3cf5195b10bd352d0715c0d80835b1634cdf7f))
+* optimize array inclusion check with Set ([4270510](https://github.com/anthonyminyungi/rantto/commit/4270510077daf5f498010fd073ba6f71273b0628))
+* optimize gameRanks update with bulkPut ([3ead45d](https://github.com/anthonyminyungi/rantto/commit/3ead45ddab941324960a2b2c2f8d1fec5eed6c7b))
+* optimize gameRanks update with bulkPut ([1cdf733](https://github.com/anthonyminyungi/rantto/commit/1cdf733e52177c7e28e3f2215120235270ea0754))
+* optimize saved draws counting by using database level filter and count ([e055001](https://github.com/anthonyminyungi/rantto/commit/e055001c65a8b4f7c9f82ccefa278b3ef4c1a831))
+* optimize SavedList pagination and sorting queries ([978cee2](https://github.com/anthonyminyungi/rantto/commit/978cee2f88ca4c4061e7a1ac386bc2878ef4124b))
+* Optimize Set construction by avoiding intermediate array ([151048e](https://github.com/anthonyminyungi/rantto/commit/151048e405381136e7fc96ba9da15a6c2efb5e51))
+* optimize useWinningStats aggregation ([e12743b](https://github.com/anthonyminyungi/rantto/commit/e12743b2f7ba73341b51b924d1439fbbfdc35784))
+* optimize useWinningStats hook by avoiding toArray() ([059532c](https://github.com/anthonyminyungi/rantto/commit/059532c9d07766fb02717a4d053b3123453bdf26))
+* Unroll loop in drawAllNumbers for array allocation optimization ([0e0ff5c](https://github.com/anthonyminyungi/rantto/commit/0e0ff5c899aa2ed667adeed8434885a31e6a54fd))
+* **winningHistory:** optimize single item fetch from IndexedDB ([8cd1b54](https://github.com/anthonyminyungi/rantto/commit/8cd1b548b4f36a5fe8b1b2aad1d4c40f4938f9b2))
+
 ## [1.4.1](https://github.com/anthonyminyungi/rantto/compare/v1.4.0...v1.4.1) (2026-07-25)
 
 ### Bug Fixes
