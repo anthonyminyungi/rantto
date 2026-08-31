@@ -91,4 +91,30 @@ describe("drawAllNumbers 테스트", () => {
       expect(numbers).toHaveLength(6);
     });
   });
+
+  it("모든 게임의 숫자는 1에서 45 사이여야 한다", () => {
+    const allNumbers = drawAllNumbers();
+    allNumbers.forEach((numbers) => {
+      numbers.forEach((num) => {
+        expect(num).toBeGreaterThanOrEqual(1);
+        expect(num).toBeLessThanOrEqual(45);
+      });
+    });
+  });
+
+  it("모든 게임의 숫자는 오름차순으로 정렬되어 있어야 한다", () => {
+    const allNumbers = drawAllNumbers();
+    allNumbers.forEach((numbers) => {
+      const sorted = [...numbers].sort((a, b) => a - b);
+      expect(numbers).toEqual(sorted);
+    });
+  });
+
+  it("각 게임 내에서 중복된 숫자가 없어야 한다", () => {
+    const allNumbers = drawAllNumbers();
+    allNumbers.forEach((numbers) => {
+      const unique = new Set(numbers);
+      expect(unique.size).toBe(6);
+    });
+  });
 });
