@@ -21,6 +21,8 @@ export const useOutsideClick = (
   }, [handler, ref]);
 };
 
+let fallbackIdCounter = 0;
+
 export const useToast = () => {
   const { addToast, removeToast } = useToastStore();
 
@@ -29,18 +31,10 @@ export const useToast = () => {
   };
 
   const showToast = (toastItem: ToastItem) => {
-    let id: string;
-    if (typeof crypto !== "undefined" && crypto.randomUUID) {
-      id = crypto.randomUUID();
-    } else if (typeof crypto !== "undefined" && crypto.getRandomValues) {
-      const buffer = new Uint8Array(16);
-      crypto.getRandomValues(buffer);
-      id = Array.from(buffer)
-        .map((b) => b.toString(16).padStart(2, "0"))
-        .join("");
-    } else {
-      id = `toast-${Date.now()}-${Math.random().toString(36).substring(2)}`;
-    }
+    const id =
+      typeof crypto !== "undefined" && crypto.randomUUID
+        ? crypto.randomUUID()
+        : `toast-${Date.now()}-${++fallbackIdCounter}`;
 
     addToast({ ...toastItem, id });
     setTimeout(() => removeToast(id), toastItem.duration ?? 3000);
