@@ -54,31 +54,21 @@ export default function SavedItem({ data }: SavedItemProps) {
       />
       <div className="my-2 flex justify-around">
         <div className="flex flex-col">
-          <NumberBallSet
-            numbers={draws[0]}
-            intersectedNumbers={
-              isAfterAnnounce
-                ? getIntersectedNumbers(draws[0], wonNumbers, wonBonus)
-                : []
-            }
-            rank={isAfterAnnounce ? gameRanks?.[0] : undefined}
-          />
-          {isExtended && (
-            <>
-              {draws.slice(1).map((draw, index) => (
-                <NumberBallSet
-                  key={index}
-                  numbers={draw}
-                  intersectedNumbers={
-                    isAfterAnnounce
-                      ? getIntersectedNumbers(draw, wonNumbers, wonBonus)
-                      : []
-                  }
-                  rank={isAfterAnnounce ? gameRanks?.[index + 1] : undefined}
-                />
-              ))}
-            </>
-          )}
+          {draws.map((draw, index) => {
+            if (index > 0 && !isExtended) return null;
+            return (
+              <NumberBallSet
+                key={index}
+                numbers={draw}
+                intersectedNumbers={
+                  isAfterAnnounce
+                    ? getIntersectedNumbers(draw, wonNumbers, wonBonus)
+                    : []
+                }
+                rank={isAfterAnnounce ? gameRanks?.[index] : undefined}
+              />
+            );
+          })}
         </div>
         <SavedActions data={data} />
       </div>
