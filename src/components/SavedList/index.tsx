@@ -10,7 +10,9 @@ import { SAVE_ITEM_COUNT_PER_PAGE } from "@/constants";
 export default function SavedList() {
   const [page, setPage] = useState(1);
   const { sortKey, filterRank } = useSavedPageStore();
-  const list = useLiveQuery(
+  const limit = page * SAVE_ITEM_COUNT_PER_PAGE;
+
+  const rawList = useLiveQuery(
     async () => {
       let collection = db.savedDraws.orderBy("createdAt");
 
@@ -24,27 +26,16 @@ export default function SavedList() {
         );
       }
 
-      return await collection.limit(page * SAVE_ITEM_COUNT_PER_PAGE).toArray();
+      // Fetch one extra item to determine if there are more pages
+      return await collection.limit(limit + 1).toArray();
     },
-    [sortKey, filterRank, page],
+    [sortKey, filterRank, limit],
     []
-  );
-  const total = useLiveQuery(
-    async () => {
-      if (filterRank != null) {
-        return db.savedDraws
-          .filter((item) => !!item.gameRanks?.includes(filterRank))
-          .count();
-      }
-      return db.savedDraws.count();
-    },
-    [filterRank],
-    0
   );
 
   const loadMore = () => setPage((prev) => prev + 1);
 
-  if (!list || list?.length === 0) {
+  if (!rawList || rawList.length === 0) {
     return (
       <div className="h-auto text-center font-semibold">
         {filterRank != null
@@ -54,12 +45,15 @@ export default function SavedList() {
     );
   }
 
+  const hasMore = rawList.length > limit;
+  const list = rawList.slice(0, limit);
+
   return (
     <div className="flex w-full flex-col items-center gap-2">
       {list.map((item) => (
         <SavedItem key={item.id} data={item} />
       ))}
-      {list.length < total && (
+      {hasMore && (
         <button
           className={cx(
             "my-4 cursor-pointer rounded-full px-6 py-4",
