@@ -1,15 +1,6 @@
 import { useLiveQuery } from "dexie-react-hooks";
 
-import { db } from "@/db/savedDraw";
-
-interface WinningStatsResult {
-  /** 등수별 게임 수 */
-  rankCounts: Record<number, number>;
-  /** gameRanks가 존재하는 전체 게임 수 */
-  totalGames: number;
-  /** gameRanks가 undefined인 SavedDraw 수 (미추첨) */
-  pendingDraws: number;
-}
+import { db, WinningStatsResult } from "@/db/savedDraw";
 
 const INITIAL_RANK_COUNTS: Record<number, number> = {
   1: 0,
@@ -23,22 +14,18 @@ const INITIAL_RANK_COUNTS: Record<number, number> = {
 export function useWinningStats(): WinningStatsResult {
   const stats = useLiveQuery(
     async () => {
-      const rankCounts: Record<number, number> = { ...INITIAL_RANK_COUNTS };
-      let totalGames = 0;
-      let pendingDraws = 0;
+      await db.initializeStatsCache();
 
-      await db.savedDraws.each((draw) => {
-        if (!draw.gameRanks) {
-          pendingDraws++;
-          return;
-        }
-        for (const rank of draw.gameRanks) {
-          totalGames++;
-          rankCounts[rank] = (rankCounts[rank] ?? 0) + 1;
-        }
-      });
+      // We read from db.savedDraws to ensure useLiveQuery tracks the table.
+      await db.savedDraws.count();
 
-      return { rankCounts, totalGames, pendingDraws };
+      // We must return a new object to ensure React state updates correctly
+      // if cachedStats has been mutated in-place by Dexie hooks.
+      return {
+        rankCounts: { ...db.cachedStats.rankCounts },
+        totalGames: db.cachedStats.totalGames,
+        pendingDraws: db.cachedStats.pendingDraws,
+      };
     },
     [],
     { rankCounts: { ...INITIAL_RANK_COUNTS }, totalGames: 0, pendingDraws: 0 }
